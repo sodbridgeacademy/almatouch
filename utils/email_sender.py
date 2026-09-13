@@ -31,7 +31,7 @@ os.getenv("RESEND_API_KEY")
 
 def send_email(to, subject, body=None, html=None):
     params = {
-        "from": "AlmaTouch <noreply@damsloop.com>",
+        "from": "Alma Touch <noreply@damsloop.com>",
         "to": [to],
         "subject": subject,
         "html": html or f"<p>{body}</p>"
