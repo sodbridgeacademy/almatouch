@@ -1,0 +1,205 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+
+<!-- Page Content -->
+<div class="max-w-[1200px] mx-auto px-xl py-xl">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-8 text-on-surface-variant font-label-md">
+<a class="hover:text-primary transition-colors" href="#">Members</a>
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+<span class="text-on-surface font-semibold">Invite Team</span>
+</nav>
+
+<!-- Hero Section -->
+<div class="mb-xl">
+<h2 class="font-display text-display text-on-surface mb-2">Invite your team to {{ org.name }}</h2>
+<p class="font-body-lg text-on-surface-variant max-w-2xl">Share this link with members to join your organization. Once they click the link, they will be prompted to create their profile and join the {{org.name}} workspace.</p>
+</div>
+
+<!-- Bento Layout Content -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Main Invite Card (Col 1-8) -->
+<div class="lg:col-span-8 space-y-8">
+<div class="bg-surface-container-lowest border border-outline-variant p-xl rounded-2xl shadow-sm">
+<div class="flex flex-col md:flex-row items-center gap-4 mb-6">
+<div class="flex-1 w-full relative">
+<label class="block font-label-md text-on-surface-variant mb-2">Invitation Link</label>
+<div class="flex items-center gap-2 bg-surface-container-low border border-outline-variant rounded-xl px-4 py-3">
+<span class="material-symbols-outlined text-primary" data-icon="link">link</span>
+<input id="inviteLink" class="bg-transparent border-none focus:ring-0 w-full text-on-surface font-body-md"
+       readonly type="text" value="{{ invite_link }}"/>
+</div>
+</div>
+<div class="flex items-end h-full pt-8">
+
+<button onclick="copyInviteLink(this)"
+    class="flex items-center gap-2 bg-primary text-white px-6 py-3.5 rounded-xl">
+    <span class="material-symbols-outlined text-[18px]">content_copy</span>
+    Copy Link
+</button>
+
+<button onclick="shareInviteLink()"
+    class="ml-2 p-3.5 border border-outline-variant text-on-surface-variant rounded-xl hover:bg-surface-container transition-all active:scale-95">
+    <span class="material-symbols-outlined">share</span>
+</button>
+
+<!-- <button class="ml-2 p-3.5 border border-outline-variant text-on-surface-variant rounded-xl hover:bg-surface-container transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="share">share</span>
+</button>
+ -->
+</div>
+</div>
+<div class="flex items-center gap-2 py-4 px-5 bg-secondary-container/30 border border-secondary-container/50 rounded-xl">
+<span class="material-symbols-outlined text-secondary" data-icon="info">info</span>
+<span class="font-caption text-on-secondary-container">
+    {% if invite.expires_at %}
+        This link expires on         
+<p class="font-body-md font-semibold text-on-surface">{{ expires_at.strftime('%b %d, %Y' ',' '%I:%M %p') }}</p> <hr>
+
+    {% else %}
+        This link does not expire
+    {% endif %}
+</span>
+
+</div>
+</div>
+<div class="bg-white/50 border border-slate-100 p-xl rounded-2xl flex flex-col md:flex-row items-center justify-between gap-6">
+<div>
+<h4 class="font-headline-md text-on-surface mb-1">Need a new link?</h4>
+<p class="font-caption text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-error text-[14px]" data-icon="warning">warning</span>
+                                Regenerating will deactivate the previous link
+                            </p>
+</div>
+<a href="{{ url_for('org.regenerate_invite') }}">
+    <button class="border border-primary text-primary px-6 py-3 rounded-xl font-label-md hover:bg-primary/5 transition-colors active:scale-95">
+        Regenerate Link
+    </button>
+</a>
+
+</div>
+</div>
+<!-- Sidebar Info (Col 9-12) -->
+<div class="lg:col-span-4 space-y-6">
+<div class="bg-surface-container border border-outline-variant rounded-2xl p-lg overflow-hidden relative">
+<!-- Decorative Background Image -->
+<div class="absolute top-0 right-0 w-32 h-32 opacity-10 translate-x-8 -translate-y-8 pointer-events-none">
+<span class="material-symbols-outlined text-[120px]" data-icon="diversity_3">diversity_3</span>
+</div>
+<h4 class="font-label-md text-on-surface-variant uppercase tracking-widest mb-6">Link Details</h4>
+<div class="space-y-6">
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant">Link created on</p>
+<p class="font-body-md font-semibold text-on-surface">{{ invite.created_at.strftime('%b %d, %Y') }}</p> <hr>
+<p class="text-caption text-on-surface-variant">{{ invite.created_at.strftime('%I:%M %p') }}</p>
+</div>
+</div>
+<div class="flex items-start gap-4">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+</div>
+<div>
+<p class="font-caption text-on-surface-variant">
+    {% if invite.is_active %}
+    Active
+    {% else %}
+        Expired
+    {% endif %}
+</p>
+
+<div class="flex items-center gap-2">
+    <div class="w-2 h-2 rounded-full 
+        {% if invite.is_active %} bg-[#10b981] {% else %} bg-red-500 {% endif %} animate-pulse">
+    </div>
+
+    <p class="font-body-md font-semibold text-on-surface">
+        {% if invite.is_active %}Active{% else %}Inactive{% endif %}
+    </p>
+</div>
+
+</div>
+</div>
+
+</div>
+    <div class="mt-8 pt-8 border-t border-outline-variant/30">
+        <div class="bg-white/60 p-4 rounded-xl">
+
+        <h5 class="font-label-md font-bold text-on-surface mb-2">Team Activity</h5>
+        <div class="flex -space-x-2">
+        <img alt="Team member" class="h-8 w-8 rounded-full border-2 border-surface" data-alt="Close-up portrait of a male team member with glasses and a warm smile, set in a bright, modern office with soft-focus greenery in the background. The aesthetic is clean, professional, and consistent with a high-end SaaS platform interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_3R00IBLui0zVCgfa4ETJx53RPwcQ91tvgk2F6j3QgcUlSTaqBMQqCslCKQmGhsaRY3XEcZR1twQ5cCSZZuIdAcfFYAxJ4xO0HywgZ-7JykrtVlOfm8hLhJAIt-LEXV9cjnNuRslkThN6L0LWiUOF_J7K7c0P9jMGYtWoxnr9cRRHisVtPE13O5qIFb-G0H1Wgg-KEOIcNXHtCrnObzIlRxS75DcrdQnrbdxbKV4-TTLf9ANLvwLFraxfPck4e9dY9KgaJ2Qyz2c"/>
+        <img alt="Team member" class="h-8 w-8 rounded-full border-2 border-surface" data-alt="Portrait of a diverse team member with a thoughtful expression, wearing a linen shirt in neutral earthy tones. The setting is a minimalist, brightly lit workspace that emphasizes clarity and human connection in a digital environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3pH-Y49vL4kOdXteZbyJET9KqFAtSSFOxJsoB5V91NgilAlhwK3nE6mDgd42eVhlrfFp5SOOnpGyDjw8LNW6XxE9Q8ncZDfJkSCoPkviNmmpcd-vUB_Yzvn06kIH6PiPf2IhZErZX_y2aERz05ixmmpWU7sUQgw0lOW4lJ2PYE8YOYd-TsFlRrLmysLzDXPZsReCHGMVnHNTAImjkBwgxV_XbgC12TBvA3AeH5JLIY5jBID8svtWej_TNBPmHA3mhyGOCjuI_DQQ"/>
+        <img alt="Team member" class="h-8 w-8 rounded-full border-2 border-surface" data-alt="Portrait of a cheerful female administrator in a light-filled healthcare environment. She is wearing professional attire in soft lavender, reflecting the tranquil and supportive nature of the AlmaTouch brand guidelines." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAplizxMD2ZHifeSieBP4HPDDTJ_iDSp-URC2uHXvaJe12fCD1rHYa8MSqBNlB5P37ObZxyZP1PCYozNYxldauPKBWz31RIFww7L3FQDfVBWt8JV8wLASOSMfZaTO27W0FDTzgjjYX2Vld5I6qMwgb1VhUrIAMG_IJRsWxuuLbImwLbgs8UvyntWiImkXDNOfuYmwXFAJQN0khRndc2-mpZc-jn7wTMnBXdKTWiNPmON_PcPFiHuMAU2y3glDpG-4YAO0WXrc8-XiY"/>
+        <div class="flex items-center justify-center h-8 w-8 rounded-full border-2 border-surface bg-primary text-white text-[10px] font-bold">+12</div>
+        </div>
+
+        <p class="text-[11px] text-on-surface-variant mt-2">{{ member_count }} members already joined</p>
+        </div>
+
+    </div>
+</div>
+
+<!-- Helpful Tips Card -->
+<div class="bg-tertiary-fixed text-on-tertiary-fixed rounded-2xl p-lg relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="font-label-md font-bold mb-2">Quick Tip</h4>
+<p class="font-caption opacity-80">You can also invite members individually by their email address from the Members dashboard for more granular permission control.</p>
+</div>
+<div class="absolute -bottom-4 -right-4 opacity-20 rotate-12">
+<span class="material-symbols-outlined text-[80px]" data-icon="tips_and_updates">tips_and_updates</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Visual Graphic Section -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-3 h-48 rounded-2xl overflow-hidden relative shadow-inner">
+<img alt="Collaboration environment" class="w-full h-full object-cover" data-alt="A wide-angle shot of a minimalist, sun-drenched collaboration space. People are working together at a large oak table, suggesting a sense of community and shared purpose. The color palette is dominated by sage greens, warm sands, and soft lavenders, creating a serene and productive atmosphere consistent with the AlmaTouch brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBgHvEvt2-hIHI1nF0-V-dMAsrfHsrMGYPT-Z3XVgDLFgHNKZXAAIiZyh9lfE51uqfLaIXt6OHnBiQB3VxgnyZfE-zYaI7Jfe0K17K8fUaEQEpVFVHfYSDDfEXCPgqfelRDLHHHKn1ZG28wbJtz6HtJ-cQJ16yAa5obS5dwZL2FgCn-EU5RH4NlBVuTTvozNQzVSOF_7AyUKCROZ8Cc9LjDLpxD3KkCh67TGrO6SyfBbw-O3ThPLEySYB-zJYrlH53C_XrQMjbqRY"/>
+<div class="absolute inset-0 bg-gradient-to-r from-primary/60 to-transparent flex items-center px-lg">
+<div class="max-w-md text-white">
+<h3 class="font-headline-md mb-2">Build your community</h3>
+<p class="font-body-md opacity-90">Stronger care teams provide better support. Start inviting your network today.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<script>
+// Copy Link
+function copyInviteLink(button) {
+    const input = document.getElementById("inviteLink");
+
+    navigator.clipboard.writeText(input.value);
+
+    const original = button.innerText;
+    button.innerText = "Copied!";
+
+    setTimeout(() => {
+        button.innerText = original;
+    }, 5000);
+}
+
+// Share Link
+function shareInviteLink() {
+    const link = document.getElementById("inviteLink").value;
+
+    if (navigator.share) {
+        navigator.share({
+            title: "Join our organization",
+            text: "Use this link to join our team:",
+            url: link
+        });
+    } else {
+        alert("Sharing not supported on this device. Copy the link instead.");
+    }
+}
+</script>
+{% endblock %}

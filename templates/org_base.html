@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- SEO -->
+    <title>{% block title %}AlmaTouch Dashboard{% endblock %}</title>
+    <meta name="description"
+      content="AlmaTouch is an employee wellbeing and engagement platform that helps organizations remember, recognize, and care for their people.">
+
+    <meta name="keywords"
+          content="AlmaTouch, employee wellbeing, employee engagement, workplace wellbeing, employee experience, organizational wellbeing, employee recognition, workplace communication, people management, Sodbridge">
+
+    <meta name="author" content="Sodbridge Ltd">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/almatouch-icon.png') }}">
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <!-- Tailwind Config (UNCHANGED - preserved as requested) -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1b1a2b",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e4e2e2",
+                    "secondary": "#645e53",
+                    "on-secondary-fixed-variant": "#4c463c",
+                    "on-primary-container": "#163623",
+                    "inverse-primary": "#abcfb3",
+                    "on-tertiary-fixed-variant": "#464558",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#ebe1d3",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f2f0f0",
+                    "tertiary": "#5e5c71",
+                    "on-secondary-container": "#6a6459",
+                    "on-secondary-fixed": "#1f1b13",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#c6ecce",
+                    "on-primary-fixed": "#00210f",
+                    "outline": "#727972",
+                    "inverse-surface": "#303031",
+                    "background": "#fbf9f8",
+                    "tertiary-container": "#9895ab",
+                    "on-background": "#1b1c1c",
+                    "surface-container": "#efeded",
+                    "on-tertiary-container": "#2f2e40",
+                    "surface-container-low": "#f5f3f3",
+                    "surface-container-high": "#e9e8e7",
+                    "surface-tint": "#45664f",
+                    "surface": "#fbf9f8",
+                    "secondary-fixed-dim": "#cec5b8",
+                    "surface-container-highest": "#e4e2e2",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#e4e0f8",
+                    "surface-bright": "#fbf9f8",
+                    "on-primary-fixed-variant": "#2d4e38",
+                    "tertiary-fixed-dim": "#c8c4dc",
+                    "primary-container": "#7da086",
+                    "primary-fixed-dim": "#abcfb3",
+                    "primary": "#45664f",
+                    "on-surface-variant": "#424842",
+                    "surface-dim": "#dbdad9",
+                    "secondary-fixed": "#ebe1d3",
+                    "outline-variant": "#c2c8c0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "2.5rem",
+                    "md": "1rem",
+                    "sm": "0.5rem",
+                    "xs": "0.25rem",
+                    "margin": "2rem",
+                    "lg": "1.5rem",
+                    "gutter": "1.5rem"
+            },
+            "fontFamily": {
+                    "caption": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["22px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "display": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+
+    <!-- Your original styles (PRESERVED) -->
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: 1.5rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 224, 224, 0.5);
+        }
+    </style>
+</head>
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+
+<!-- MOBILE MENU BUTTON -->
+<button id="menuToggle"
+        class="md:hidden fixed top-4 left-4 z-50 bg-white p-2 rounded-xl shadow-md">
+    <span class="material-symbols-outlined">menu</span>
+</button>
+
+<!-- BACKDROP -->
+<div id="backdrop"
+     class="fixed inset-0 bg-black/30 hidden md:hidden z-30"></div>
+
+
+    <!-- SIDEBAR -->
+    <aside
+        id="sidebar"
+        class="
+            fixed
+            left-0
+            top-0
+            z-40
+            flex
+            h-screen
+            w-64
+            flex-col
+            overflow-y-auto
+            border-r
+            border-slate-200
+            bg-white
+            py-6
+            shadow
+            transition-transform
+            duration-300
+            md:translate-x-0
+            -translate-x-full
+        "
+    >
+
+        <!-- ========================= -->
+        <!-- ORGANIZATION IDENTITY -->
+        <!-- ========================= -->
+
+        <div class="px-6 mb-8">
+
+            <div class="flex items-center gap-3">
+
+                {% if org and org.logo %}
+
+                    <img
+                        src="{{ url_for('static', filename=org.logo) }}"
+                        alt="{{ org.name }} logo"
+                        class="
+                            h-10
+                            w-10
+                            rounded-xl
+                            border
+                            bg-gray-50
+                            object-contain
+                            p-1
+                        "
+                    >
+
+                {% else %}
+
+                    <div
+                        class="
+                            flex
+                            h-10
+                            w-10
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-primary/10
+                        "
+                    >
+                        <span class="text-sm font-bold text-primary">
+                            {{ org.name[:1] if org and org.name else "A" }}
+                        </span>
+                    </div>
+
+                {% endif %}
+
+                <div class="min-w-0">
+
+                    <p class="truncate text-sm font-semibold text-gray-900">
+                        {{ org.name if org else "Organization" }}
+                    </p>
+
+                    <p class="
+                        text-[10px]
+                        uppercase
+                        tracking-wide
+                        text-slate-400
+                    ">
+                        Organization
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- NAVIGATION -->
+        <!-- ========================= -->
+
+        <nav class="flex-1 space-y-6 px-4">
+
+
+            <!-- ========================= -->
+            <!-- HOME -->
+            <!-- ========================= -->
+
+            <div>
+
+                <p class="
+                    mb-2
+                    px-4
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-400
+                ">
+                    Home
+                </p>
+
+                <a
+                    href="{{ url_for('org.org_dashboard') }}"
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                        rounded-xl
+                        bg-primary/10
+                        px-4
+                        py-3
+                        font-semibold
+                        text-primary
+                        transition
+                        hover:bg-primary/15
+                    "
+                >
+                    <span class="material-symbols-outlined">
+                        dashboard
+                    </span>
+
+                    <span class="font-label-md">
+                        Dashboard
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- REMEMBER -->
+            <!-- ========================= -->
+
+            <div>
+
+                <p class="
+                    mb-2
+                    px-4
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-400
+                ">
+                    Remember
+                </p>
+
+                <a
+                    href="{{ url_for('org.org_remembers') }}"
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-slate-500
+                        transition
+                        hover:bg-slate-50
+                        hover:text-primary
+                    "
+                >
+                    <span class="material-symbols-outlined">
+                        event_note
+                    </span>
+
+                    <span class="font-label-md">
+                        Remembers
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- RECOGNIZE -->
+            <!-- ========================= -->
+
+            <div>
+
+                <p class="
+                    mb-2
+                    px-4
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-400
+                ">
+                    Recognize
+                </p>
+
+                <a
+                    href="#"
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-slate-400
+                        transition
+                    "
+                    title="Coming soon"
+                >
+                    <span class="material-symbols-outlined">
+                        star
+                    </span>
+
+                    <span class="font-label-md">
+                        Recognize
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- CARE -->
+            <!-- ========================= -->
+
+            <div>
+
+                <p class="
+                    mb-2
+                    px-4
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-400
+                ">
+                    Care
+                </p>
+
+                <a
+                    href="{{ url_for('org.org_checkin_overview') }}"
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-slate-500
+                        transition
+                        hover:bg-slate-50
+                        hover:text-primary
+                    "
+                >
+                    <span class="material-symbols-outlined">
+                        fact_check
+                    </span>
+
+                    <span class="font-label-md">
+                        Check-ins
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- PEOPLE -->
+            <!-- ========================= -->
+
+            <div>
+
+                <p class="
+                    mb-2
+                    px-4
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-400
+                ">
+                    People
+                </p>
+
+                <button
+                    id="memberToggle"
+                    type="button"
+                    class="
+                        flex
+                        w-full
+                        items-center
+                        justify-between
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-slate-500
+                        transition
+                        hover:bg-slate-50
+                        hover:text-primary
+                    "
+                >
+
+                    <div class="flex items-center gap-3">
+
+                        <span class="material-symbols-outlined">
+                            group
+                        </span>
+
+                        <span class="font-label-md">
+                            Members
+                        </span>
+
+                    </div>
+
+                    <span
+                        id="memberIcon"
+                        class="material-symbols-outlined text-sm"
+                    >
+                        expand_more
+                    </span>
+
+                </button>
+
+
+                <div
+                    id="memberMenu"
+                    class="hidden ml-10 mt-1 space-y-1"
+                >
+
+                    <a
+                        href="{{ url_for('user.list_members') }}"
+                        class="
+                            flex
+                            items-center
+                            gap-2
+                            rounded-lg
+                            px-3
+                            py-2
+                            text-sm
+                            text-slate-500
+                            transition
+                            hover:bg-slate-50
+                            hover:text-primary
+                        "
+                    >
+                        <span class="material-symbols-outlined text-[18px]">
+                            group
+                        </span>
+
+                        All Members
+                    </a>
+
+                    <a
+                        href="{{ url_for('dept.list_departments') }}"
+                        class="
+                            flex
+                            items-center
+                            gap-2
+                            rounded-lg
+                            px-3
+                            py-2
+                            text-sm
+                            text-slate-500
+                            transition
+                            hover:bg-slate-50
+                            hover:text-primary
+                        "
+                    >
+                        <span class="material-symbols-outlined text-[18px]">
+                            account_tree
+                        </span>
+
+                        Departments
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- WORKSPACE -->
+            <!-- ========================= -->
+
+            <div>
+
+                <p class="
+                    mb-2
+                    px-4
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-400
+                ">
+                    Workspace
+                </p>
+
+                <a
+                    href="{{ url_for('org.events_dashboard') }}"
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-slate-500
+                        transition
+                        hover:bg-slate-50
+                        hover:text-primary
+                    "
+                >
+                    <span class="material-symbols-outlined">
+                        event
+                    </span>
+
+                    <span class="font-label-md">
+                        Events
+                    </span>
+                </a>
+
+
+                <a
+                    href="{{ url_for('org.org_analytics') }}"
+                    class="
+                        mt-1
+                        flex
+                        items-center
+                        gap-3
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-slate-500
+                        transition
+                        hover:bg-slate-50
+                        hover:text-primary
+                    "
+                >
+                    <span class="material-symbols-outlined">
+                        analytics
+                    </span>
+
+                    <span class="font-label-md">
+                        Analytics
+                    </span>
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ACCOUNT -->
+            <!-- ========================= -->
+
+            <div>
+
+                <p class="
+                    mb-2
+                    px-4
+                    text-[10px]
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-slate-400
+                ">
+                    Account
+                </p>
+
+                <a
+                    href="{{ url_for('org.org_settings') }}"
+                    class="
+                        flex
+                        items-center
+                        gap-3
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-slate-500
+                        transition
+                        hover:bg-slate-50
+                        hover:text-primary
+                    "
+                >
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+
+                    <span class="font-label-md">
+                        Settings
+                    </span>
+                </a>
+
+            </div>
+
+        </nav>
+
+
+        <!-- ========================= -->
+        <!-- FOOTER -->
+        <!-- ========================= -->
+
+        <div class="mt-auto px-4 pt-6">
+
+            <div class="rounded-2xl bg-secondary-container/50 p-4">
+
+                <p class="
+                    mb-2
+                    text-caption
+                    font-medium
+                    text-on-secondary-container
+                ">
+                    Help Center
+                </p>
+
+                <p class="
+                    mb-3
+                    text-[11px]
+                    leading-relaxed
+                    text-on-secondary-container/70
+                ">
+                    Need help managing your organization?
+                    We're here to help.
+                </p>
+
+                <button
+                    type="button"
+                    class="
+                        w-full
+                        rounded-xl
+                        bg-white
+                        py-2
+                        text-caption
+                        font-bold
+                        text-primary
+                        shadow-sm
+                        transition
+                        hover:shadow-md
+                    "
+                >
+                    Contact Support
+                </button>
+
+            </div>
+
+            <div class="my-4 border-t border-slate-200"></div>
+
+            <a
+                href="/logout"
+                class="
+                    flex
+                    items-center
+                    gap-3
+                    rounded-xl
+                    px-4
+                    py-3
+                    text-red-500
+                    transition
+                    hover:bg-red-50
+                "
+            >
+                <span class="material-symbols-outlined">
+                    logout
+                </span>
+
+                <span class="font-label-md">
+                    Logout
+                </span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+<!-- MAIN -->
+<main class="md:ml-64 min-h-screen flex flex-col">
+
+    
+    <!-- TOPBAR -->
+    <header class="sticky top-0 z-30 bg-white border-b
+                   flex items-center px-4 md:px-6 h-16">
+
+        <!-- LEFT SIDE -->
+        <div class="flex items-center">
+
+            <span class="text-lg font-semibold text-gray-900">
+                {{ org.name if org else "Alma Touch" }}
+            </span>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div class="flex items-center gap-5 ml-auto">
+
+            <!-- NOTIFICATIONS -->
+            <a
+                href="{{ url_for('org.org_notifications') }}"
+                aria-label="Organization notifications"
+                class="
+                    relative
+                    w-10 h-10
+                    rounded-xl
+                    flex items-center justify-center
+                    text-gray-500
+                    hover:bg-gray-100
+                    hover:text-gray-800
+                    transition
+                "
+            >
+
+                <span class="material-symbols-outlined">
+                    notifications
+                </span>
+
+                {% if unread_org_notification_count > 0 %}
+
+                    <span
+                        class="
+                            absolute
+                            -top-0.5
+                            -right-0.5
+                            min-w-5
+                            h-5
+                            px-1
+                            rounded-full
+                            flex
+                            items-center
+                            justify-center
+                            text-[10px]
+                            font-bold
+                            text-white
+                        "
+                        style="background-color: #45664f;"
+                    >
+                        {{ unread_org_notification_count }}
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <!-- PROFILE -->
+            <div class="relative">
+
+                <button
+                    type="button"
+                    id="profileBtn"
+                    class="flex items-center gap-3
+                           cursor-pointer">
+
+                    <!-- ORGANIZATION LOGO -->
+                    {% if user and user.profile_pic %}
+
+                        <img
+                            src="{{ url_for('static', filename=user.profile_pic) }}"
+                            alt="{{ user.first_name }} {{ user.last_name }}"
+                            class="w-10 h-10 rounded-full object-cover">
+
+                    {% else %}
+
+                        <div class="w-10 h-10 rounded-full
+                                    bg-primary/10
+                                    flex items-center justify-center">
+
+                            <span class="text-sm font-bold text-primary">
+                                {{ user.first_name[:1] if user and user.first_name else "" }}{{ user.last_name[:1] if user and user.last_name else "" }}
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- USER NAME -->
+                    {% if user %}
+
+                        <div class="hidden md:block text-left">
+
+                            <p class="text-sm font-semibold text-gray-800">
+                                {{ user.first_name }} {{ user.last_name }}
+                            </p>
+
+                            <p class="text-xs text-gray-400 capitalize">
+                                {{ user.role }}
+                            </p>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <span class="material-symbols-outlined
+                                 text-gray-400 text-lg">
+                        expand_more
+                    </span>
+
+                </button>
+
+
+                <!-- PROFILE MENU -->
+                <div id="profileMenu"
+                     class="hidden absolute right-0 mt-2 w-56
+                            bg-white border shadow-lg
+                            rounded-xl p-2 z-50">
+
+                    <a
+                        href="{{ url_for('user.user_profile') }}"
+                        class="flex items-center gap-3
+                               px-4 py-3 rounded-lg
+                               hover:bg-gray-100">
+
+                        <span class="material-symbols-outlined text-gray-500">
+                            account_circle
+                        </span>
+
+                        <span class="text-sm">
+                            Profile
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('org.org_settings') }}"
+                        class="flex items-center gap-3
+                               px-4 py-3 rounded-lg
+                               hover:bg-gray-100">
+
+                        <span class="material-symbols-outlined text-gray-500">
+                            settings
+                        </span>
+
+                        <span class="text-sm">
+                            Org Settings
+                        </span>
+
+                    </a>
+
+
+                    <div class="border-t my-1"></div>
+
+
+                    <a
+                        href="/logout"
+                        class="flex items-center gap-3
+                               px-4 py-3 rounded-lg
+                               text-red-500
+                               hover:bg-red-50">
+
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+
+                        <span class="text-sm">
+                            Logout
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div id="flash-container" class="mb-4 space-y-2">
+
+            {% for category, message in messages %}
+            <div class="flash-message relative p-4 rounded-lg flex justify-between items-center
+                {% if category == 'error' %}
+                    bg-red-100 text-red-700
+                {% else %}
+                    bg-green-100 text-green-700
+                {% endif %}">
+
+                <span>{{ message }}</span>
+
+                <!-- CLOSE BUTTON -->
+                <button onclick="this.parentElement.remove()"
+                        class="ml-4 text-lg font-bold hover:opacity-70">
+                    &times;
+                </button>
+
+            </div>
+            {% endfor %}
+
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <!-- CONTENT -->
+    <div class="p-6 flex-1">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-4 text-sm text-gray-500 border-t">
+        © <span id="year"></span> AlmaTouch — Built by Sodbridge
+    </footer>
+
+</main>
+<!-- SCRIPTS -->
+<script>
+
+    // =========================================
+    // MEMBER SIDEBAR DROPDOWN
+    // =========================================
+
+    const memberToggle = document.getElementById("memberToggle");
+    const memberMenu = document.getElementById("memberMenu");
+    const memberIcon = document.getElementById("memberIcon");
+
+    if (memberToggle && memberMenu && memberIcon) {
+
+        memberToggle.addEventListener("click", () => {
+
+            memberMenu.classList.toggle("hidden");
+
+            if (memberMenu.classList.contains("hidden")) {
+                memberIcon.innerText = "expand_more";
+            } else {
+                memberIcon.innerText = "expand_less";
+            }
+
+        });
+
+    }
+
+
+    // =========================================
+    // MOBILE SIDEBAR
+    // =========================================
+
+    const toggle = document.getElementById("menuToggle");
+    const sidebar = document.getElementById("sidebar");
+    const backdrop = document.getElementById("backdrop");
+
+    function openSidebar() {
+
+        if (!sidebar || !backdrop) return;
+
+        sidebar.classList.remove("-translate-x-full");
+        backdrop.classList.remove("hidden");
+
+    }
+
+    function closeSidebar() {
+
+        if (!sidebar || !backdrop) return;
+
+        sidebar.classList.add("-translate-x-full");
+        backdrop.classList.add("hidden");
+
+    }
+
+    if (toggle && sidebar && backdrop) {
+
+        toggle.addEventListener("click", () => {
+
+            if (sidebar.classList.contains("-translate-x-full")) {
+                openSidebar();
+            } else {
+                closeSidebar();
+            }
+
+        });
+
+        backdrop.addEventListener("click", closeSidebar);
+
+    }
+
+
+    // =========================================
+    // PROFILE DROPDOWN
+    // =========================================
+
+    const btn = document.getElementById("profileBtn");
+    const menu = document.getElementById("profileMenu");
+
+    if (btn && menu) {
+
+        btn.addEventListener("click", (event) => {
+
+            event.stopPropagation();
+
+            menu.classList.toggle("hidden");
+
+        });
+
+        document.addEventListener("click", (event) => {
+
+            if (!btn.contains(event.target)) {
+                menu.classList.add("hidden");
+            }
+
+        });
+
+    }
+
+
+    // =========================================
+    // FLASH MESSAGES
+    // =========================================
+
+    setTimeout(() => {
+
+        const messages = document.querySelectorAll(".flash-message");
+
+        messages.forEach(msg => {
+
+            msg.style.transition = "opacity 0.5s ease";
+            msg.style.opacity = "0";
+
+            setTimeout(() => {
+                msg.remove();
+            }, 500);
+
+        });
+
+    }, 3000);
+
+
+    // =========================================
+    // FOOTER YEAR
+    // =========================================
+
+    const year = document.getElementById("year");
+
+    if (year) {
+        year.innerText = new Date().getFullYear();
+    }
+
+</script>
+
+</body>
+</html>

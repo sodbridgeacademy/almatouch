@@ -1,0 +1,3661 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <meta
+        name="description"
+        content="AlmaTouch helps organizations remember important moments, recognize their people, and build a culture of care."
+    >
+
+    <meta
+        name="keywords"
+        content="AlmaTouch, employee engagement, employee wellbeing, workplace culture, people experience, recognition, organizational wellbeing"
+    >
+
+    <meta
+        name="theme-color"
+        content="#45664f"
+    >
+
+    <meta
+        name="application-name"
+        content="AlmaTouch"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
+    >
+
+    <!-- Open Graph -->
+
+    <meta
+        property="og:title"
+        content="AlmaTouch | Remember. Recognize. Care."
+    >
+
+    <meta
+        property="og:description"
+        content="A thoughtful people experience platform for organizations that want to remember important moments, recognize contributions, and care for their people."
+    >
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:site_name"
+        content="AlmaTouch"
+    >
+
+    <title>
+        AlmaTouch | Remember. Recognize. Care.
+    </title>
+
+
+    <!-- Tailwind -->
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+
+    <!-- Fonts -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- Theme -->
+
+    <script>
+
+        tailwind.config = {
+
+            darkMode: "class",
+
+            theme: {
+
+                extend: {
+
+                    colors: {
+
+                        primary: "#45664f",
+                        "primary-container": "#7da086",
+                        "primary-fixed": "#c6ecce",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#163623",
+
+                        background: "#fbf9f8",
+                        surface: "#fbf9f8",
+                        "surface-container": "#efeded",
+                        "surface-container-low": "#f5f3f3",
+                        "surface-container-lowest": "#ffffff",
+
+                        "on-surface": "#1b1c1c",
+                        "on-surface-variant": "#424842",
+
+                        outline: "#727972",
+                        "outline-variant": "#c2c8c0",
+
+                        secondary: "#645e53",
+                        "secondary-container": "#ebe1d3",
+                        "on-secondary-container": "#6a6459",
+
+                        error: "#ba1a1a"
+
+                    },
+
+                    fontFamily: {
+
+                        sans: ["Plus Jakarta Sans"],
+                        display: ["Plus Jakarta Sans"]
+
+                    },
+
+                    boxShadow: {
+
+                        soft:
+                            "0 20px 60px rgba(0,0,0,0.06)",
+
+                        glow:
+                            "0 20px 60px rgba(69,102,79,0.14)"
+
+                    }
+
+                }
+
+            }
+
+        };
+
+    </script>
+
+
+    <style>
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .material-symbols-outlined {
+
+            font-variation-settings:
+                "FILL" 0,
+                "wght" 400,
+                "GRAD" 0,
+                "opsz" 24;
+
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+        }
+
+        @keyframes pulse-soft {
+
+            0%,
+            100% {
+                opacity: .55;
+            }
+
+            50% {
+                opacity: .9;
+            }
+
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-pulse-soft {
+            animation: pulse-soft 5s ease-in-out infinite;
+        }
+
+        .hero-grid {
+
+            background-image:
+                linear-gradient(
+                    rgba(69,102,79,0.06) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(69,102,79,0.06) 1px,
+                    transparent 1px
+                );
+
+            background-size: 36px 36px;
+
+            mask-image: linear-gradient(
+                to bottom,
+                black,
+                transparent
+            );
+
+        }
+
+        .glass {
+
+            background: rgba(255,255,255,.72);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="
+    bg-background
+    text-on-surface
+    antialiased
+    transition-colors
+    duration-300
+">
+
+
+<!-- ===================================================== -->
+<!-- NAVIGATION -->
+<!-- ===================================================== -->
+
+<!-- ===================================================== -->
+<!-- NAVIGATION -->
+<!-- ===================================================== -->
+
+<header class="
+    fixed
+    inset-x-0
+    top-0
+    z-50
+    border-b
+    border-outline-variant/30
+    bg-white/85
+    backdrop-blur-xl
+    dark:bg-slate-950/85
+">
+
+    <div class="
+        mx-auto
+        flex
+        max-w-7xl
+        items-center
+        justify-between
+        px-6
+        py-4
+        lg:px-8
+    ">
+
+        <!-- BRAND -->
+
+        <a
+            href="#top"
+            class="
+                flex
+                items-center
+                gap-3
+            "
+        >
+
+            <div class="
+                flex
+                h-9
+                w-9
+                items-center
+                justify-center
+                rounded-xl
+                bg-primary
+            ">
+
+                <span class="
+                    text-sm
+                    font-bold
+                    text-white
+                ">
+                    A
+                </span>
+
+            </div>
+
+            <span class="
+                text-xl
+                font-bold
+                tracking-tight
+                text-primary
+            ">
+                AlmaTouch
+            </span>
+
+        </a>
+
+
+        <!-- DESKTOP NAV -->
+
+        <nav class="
+            hidden
+            items-center
+            gap-7
+            lg:flex
+        ">
+
+            <a
+                href="#how-it-works"
+                class="
+                    text-sm
+                    font-medium
+                    text-on-surface-variant
+                    transition
+                    hover:text-primary
+                "
+            >
+                How it works
+            </a>
+
+            <a
+                href="#features"
+                class="
+                    text-sm
+                    font-medium
+                    text-on-surface-variant
+                    transition
+                    hover:text-primary
+                "
+            >
+                Features
+            </a>
+
+            <a
+                href="#pricing"
+                class="
+                    text-sm
+                    font-medium
+                    text-on-surface-variant
+                    transition
+                    hover:text-primary
+                "
+            >
+                Pricing
+            </a>
+
+            <a
+                href="#rrc"
+                class="
+                    text-sm
+                    font-medium
+                    text-on-surface-variant
+                    transition
+                    hover:text-primary
+                "
+            >
+                RRC
+            </a>
+
+            <a
+                href="#about"
+                class="
+                    text-sm
+                    font-medium
+                    text-on-surface-variant
+                    transition
+                    hover:text-primary
+                "
+            >
+                About
+            </a>
+
+        </nav>
+
+
+        <!-- DESKTOP ACTIONS -->
+
+        <div class="
+            hidden
+            items-center
+            gap-2
+            lg:flex
+        ">
+
+            <!-- THEME TOGGLE -->
+
+            <button
+                id="themeToggleDesktop"
+                type="button"
+                aria-label="Toggle theme"
+                class="
+                    flex
+                    h-10
+                    w-10
+                    items-center
+                    justify-center
+                    rounded-xl
+                    text-on-surface-variant
+                    transition
+                    hover:bg-surface-container
+                "
+            >
+
+                <span
+                    id="themeIconDesktop"
+                    class="material-symbols-outlined"
+                >
+                    dark_mode
+                </span>
+
+            </button>
+
+
+            <a
+                href="{{ url_for('user.user_login') }}"
+                class="
+                    rounded-xl
+                    px-4
+                    py-2
+                    text-sm
+                    font-semibold
+                    text-on-surface-variant
+                    transition
+                    hover:bg-surface-container
+                "
+            >
+                Sign in
+            </a>
+
+
+            <a
+                href="{{ url_for('org.org_signup') }}"
+                class="
+                    inline-flex
+                    items-center
+                    gap-2
+                    rounded-xl
+                    bg-primary
+                    px-4
+                    py-2.5
+                    text-sm
+                    font-semibold
+                    text-white
+                    shadow-sm
+                    transition
+                    hover:bg-primary-container
+                "
+            >
+
+                Get started
+
+                <span class="
+                    material-symbols-outlined
+                    text-lg
+                ">
+                    arrow_forward
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <!-- MOBILE ACTIONS -->
+
+        <div class="
+            flex
+            items-center
+            gap-1
+            lg:hidden
+        ">
+
+            <!-- MOBILE THEME TOGGLE -->
+
+            <button
+                id="themeToggleMobile"
+                type="button"
+                aria-label="Toggle theme"
+                class="
+                    flex
+                    h-10
+                    w-10
+                    items-center
+                    justify-center
+                    rounded-xl
+                    text-on-surface-variant
+                    transition
+                    hover:bg-surface-container
+                "
+            >
+
+                <span
+                    id="themeIconMobile"
+                    class="material-symbols-outlined"
+                >
+                    dark_mode
+                </span>
+
+            </button>
+
+
+            <!-- HAMBURGER -->
+
+            <button
+                id="mobileMenuToggle"
+                type="button"
+                aria-label="Open menu"
+                aria-expanded="false"
+                class="
+                    flex
+                    h-10
+                    w-10
+                    items-center
+                    justify-center
+                    rounded-xl
+                    text-on-surface-variant
+                    transition
+                    hover:bg-surface-container
+                "
+            >
+
+                <span
+                    id="mobileMenuIcon"
+                    class="material-symbols-outlined"
+                >
+                    menu
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- MOBILE MENU -->
+    <!-- ================================================= -->
+
+    <div
+        id="mobileMenu"
+        class="
+            hidden
+            border-t
+            border-outline-variant/30
+            bg-white/95
+            backdrop-blur-xl
+            lg:hidden
+        "
+    >
+
+        <nav class="
+            mx-auto
+            max-w-7xl
+            px-6
+            py-5
+        ">
+
+            <div class="space-y-1">
+
+                <a
+                    href="#how-it-works"
+                    class="
+                        block
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-sm
+                        font-medium
+                        text-on-surface-variant
+                        transition
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                    "
+                >
+                    How it works
+                </a>
+
+
+                <a
+                    href="#features"
+                    class="
+                        block
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-sm
+                        font-medium
+                        text-on-surface-variant
+                        transition
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                    "
+                >
+                    Features
+                </a>
+
+
+                <a
+                    href="#pricing"
+                    class="
+                        block
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-sm
+                        font-medium
+                        text-on-surface-variant
+                        transition
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                    "
+                >
+                    Pricing
+                </a>
+
+
+                <a
+                    href="#rrc"
+                    class="
+                        block
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-sm
+                        font-medium
+                        text-on-surface-variant
+                        transition
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                    "
+                >
+                    RRC
+                </a>
+
+
+                <a
+                    href="#about"
+                    class="
+                        block
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-sm
+                        font-medium
+                        text-on-surface-variant
+                        transition
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                    "
+                >
+                    About
+                </a>
+
+            </div>
+
+
+            <div class="
+                mt-4
+                border-t
+                border-outline-variant/30
+                pt-4
+            ">
+
+                <a
+                    href="{{ url_for('user.user_login') }}"
+                    class="
+                        block
+                        rounded-xl
+                        px-4
+                        py-3
+                        text-sm
+                        font-semibold
+                        text-on-surface-variant
+                        transition
+                        hover:bg-surface-container-low
+                    "
+                >
+                    Sign in
+                </a>
+
+
+                <a
+                    href="{{ url_for('org.org_signup') }}"
+                    class="
+                        mt-2
+                        flex
+                        items-center
+                        justify-center
+                        gap-2
+                        rounded-xl
+                        bg-primary
+                        px-5
+                        py-3
+                        text-sm
+                        font-semibold
+                        text-white
+                        shadow-sm
+                        transition
+                        hover:bg-primary-container
+                    "
+                >
+                    Get started
+
+                    <span class="
+                        material-symbols-outlined
+                        text-lg
+                    ">
+                        arrow_forward
+                    </span>
+
+                </a>
+
+            </div>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<!-- ===================================================== -->
+<!-- HERO -->
+<!-- ===================================================== -->
+
+<main id="top" class="pt-24">
+
+    <section class="
+        relative
+        overflow-hidden
+        px-6
+        pb-20
+        pt-16
+        lg:px-8
+        lg:pb-28
+        lg:pt-24
+    ">
+
+        <!-- GRID -->
+
+        <div class="
+            hero-grid
+            pointer-events-none
+            absolute
+            inset-x-0
+            top-0
+            h-[620px]
+            opacity-70
+        "></div>
+
+
+        <!-- DECORATIVE BLOBS -->
+
+        <div class="
+            pointer-events-none
+            absolute
+            right-[-120px]
+            top-20
+            h-80
+            w-80
+            rounded-full
+            bg-primary/10
+            blur-3xl
+            animate-pulse-soft
+        "></div>
+
+
+        <div class="
+            pointer-events-none
+            absolute
+            left-[-100px]
+            top-80
+            h-72
+            w-72
+            rounded-full
+            bg-secondary-container/60
+            blur-3xl
+        "></div>
+
+
+        <div class="
+            relative
+            mx-auto
+            max-w-7xl
+        ">
+
+            <div class="
+                grid
+                items-center
+                gap-14
+                lg:grid-cols-2
+            ">
+
+
+                <!-- COPY -->
+
+                <div>
+
+                    <div class="
+                        inline-flex
+                        items-center
+                        gap-2
+                        rounded-full
+                        border
+                        border-primary/15
+                        bg-primary/5
+                        px-3
+                        py-1.5
+                        text-xs
+                        font-semibold
+                        text-primary
+                    ">
+
+                        <span class="
+                            h-1.5
+                            w-1.5
+                            rounded-full
+                            bg-primary
+                        "></span>
+
+                        People experience, thoughtfully designed.
+
+                    </div>
+
+
+                    <h1 class="
+                        mt-7
+                        max-w-2xl
+                        text-4xl
+                        font-bold
+                        leading-tight
+                        tracking-tight
+                        sm:text-5xl
+                        lg:text-6xl
+                    ">
+
+                        Build a workplace
+                        <span class="text-primary">
+                            people feel remembered in.
+                        </span>
+
+                    </h1>
+
+
+                    <p class="
+                        mt-6
+                        max-w-xl
+                        text-base
+                        leading-8
+                        text-on-surface-variant
+                        sm:text-lg
+                    ">
+
+                        AlmaTouch helps organizations remember important
+                        moments, recognize their people, and create a
+                        culture where care becomes part of everyday work.
+
+                    </p>
+
+
+                    <!-- CTA -->
+
+                    <div class="
+                        mt-8
+                        flex
+                        flex-col
+                        gap-3
+                        sm:flex-row
+                    ">
+
+                        <a
+                            href="{{ url_for('org.org_signup') }}"
+                            class="
+                                inline-flex
+                                items-center
+                                justify-center
+                                gap-2
+                                rounded-xl
+                                bg-primary
+                                px-6
+                                py-3.5
+                                text-sm
+                                font-semibold
+                                text-white
+                                shadow-glow
+                                transition
+                                hover:bg-primary-container
+                            "
+                        >
+
+                            Create your organization
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                            ">
+                                arrow_forward
+                            </span>
+
+                        </a>
+
+
+                        <a
+                            href="#how-it-works"
+                            class="
+                                inline-flex
+                                items-center
+                                justify-center
+                                gap-2
+                                rounded-xl
+                                border
+                                border-outline-variant
+                                bg-white
+                                px-6
+                                py-3.5
+                                text-sm
+                                font-semibold
+                                text-on-surface
+                                transition
+                                hover:bg-surface-container-low
+                            "
+                        >
+
+                            See how it works
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                            ">
+                                south
+                            </span>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- MICRO TRUST -->
+
+                    <div class="
+                        mt-8
+                        flex
+                        flex-wrap
+                        gap-x-6
+                        gap-y-3
+                        text-xs
+                        text-on-surface-variant
+                    ">
+
+                        <span class="flex items-center gap-2">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-base
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            Simple to start
+
+                        </span>
+
+
+                        <span class="flex items-center gap-2">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-base
+                                text-primary
+                            ">
+                                lock
+                            </span>
+
+                            Privacy-conscious
+
+                        </span>
+
+
+                        <span class="flex items-center gap-2">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-base
+                                text-primary
+                            ">
+                                groups
+                            </span>
+
+                            Built for organizations
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- HERO VISUAL -->
+
+                <div class="
+                    relative
+                    w-full
+                    min-h-[480px]
+                    lg:min-h-[540px]
+                ">
+
+                    <!-- BACK CARD -->
+
+                    <div class="
+                        pointer-events-none
+                        absolute
+                        right-0
+                        top-10
+                        hidden
+                        h-[420px]
+                        w-[84%]
+                        rounded-[2rem]
+                        bg-secondary-container/55
+                        lg:block
+                        animate-float
+                    "></div>
+
+
+                    <!-- MAIN GLASS PANEL -->
+
+                    <div class="
+                        glass
+                        relative
+                        mx-auto
+                        w-full
+                        max-w-[560px]
+                        rounded-[2rem]
+                        border
+                        border-white/70
+                        p-4
+                        shadow-soft
+                        sm:p-5
+                    ">
+
+                        <!-- TOP -->
+
+                        <div class="
+                            flex
+                            items-center
+                            justify-between
+                            gap-4
+                            rounded-2xl
+                            border
+                            border-outline-variant/30
+                            bg-white/80
+                            p-4
+                            sm:p-5
+                        ">
+
+                            <div class="min-w-0">
+
+                                <p class="
+                                    text-[10px]
+                                    font-semibold
+                                    uppercase
+                                    tracking-wider
+                                    text-on-surface-variant
+                                ">
+                                    Today
+                                </p>
+
+                                <p class="
+                                    mt-1
+                                    truncate
+                                    text-sm
+                                    font-semibold
+                                    text-on-surface
+                                    sm:text-base
+                                ">
+                                    Your people, at a glance
+                                </p>
+
+                            </div>
+
+
+                            <div class="
+                                flex
+                                h-10
+                                w-10
+                                shrink-0
+                                items-center
+                                justify-center
+                                rounded-xl
+                                bg-primary/10
+                                text-primary
+                            ">
+
+                                <span class="material-symbols-outlined">
+                                    dashboard
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- RRC CARDS -->
+
+                        <div class="
+                            mt-4
+                            grid
+                            grid-cols-2
+                            gap-3
+                            sm:grid-cols-3
+                        ">
+
+                            <!-- REMEMBER -->
+
+                            <div class="
+                                min-w-0
+                                rounded-2xl
+                                bg-primary
+                                p-4
+                                text-white
+                                sm:p-5
+                            ">
+
+                                <span class="
+                                    material-symbols-outlined
+                                    text-xl
+                                    sm:text-2xl
+                                ">
+                                    event_note
+                                </span>
+
+                                <p class="
+                                    mt-5
+                                    text-sm
+                                    font-bold
+                                    leading-5
+                                    sm:mt-8
+                                    sm:text-base
+                                ">
+                                    Remember
+                                </p>
+
+                                <p class="
+                                    mt-1
+                                    text-[10px]
+                                    leading-4
+                                    text-white/70
+                                    sm:text-[11px]
+                                    sm:leading-5
+                                ">
+                                    Important moments
+                                </p>
+
+                            </div>
+
+
+                            <!-- RECOGNIZE -->
+
+                            <div class="
+                                min-w-0
+                                rounded-2xl
+                                bg-secondary-container
+                                p-4
+                                sm:p-5
+                            ">
+
+                                <span class="
+                                    material-symbols-outlined
+                                    text-xl
+                                    text-primary
+                                    sm:text-2xl
+                                ">
+                                    star
+                                </span>
+
+                                <p class="
+                                    mt-5
+                                    text-sm
+                                    font-bold
+                                    leading-5
+                                    break-words
+                                    sm:mt-8
+                                    sm:text-base
+                                ">
+                                    Recognize
+                                </p>
+
+                                <p class="
+                                    mt-1
+                                    text-[10px]
+                                    leading-4
+                                    text-on-secondary-container
+                                    sm:text-[11px]
+                                    sm:leading-5
+                                ">
+                                    Celebrate people
+                                </p>
+
+                            </div>
+
+
+                            <!-- CARE -->
+
+                            <div class="
+                                col-span-2
+                                min-w-0
+                                rounded-2xl
+                                bg-surface-container
+                                p-4
+                                sm:col-span-1
+                                sm:p-5
+                            ">
+
+                                <span class="
+                                    material-symbols-outlined
+                                    text-xl
+                                    text-primary
+                                    sm:text-2xl
+                                ">
+                                    favorite
+                                </span>
+
+                                <p class="
+                                    mt-5
+                                    text-sm
+                                    font-bold
+                                    leading-5
+                                    sm:mt-8
+                                    sm:text-base
+                                ">
+                                    Care
+                                </p>
+
+                                <p class="
+                                    mt-1
+                                    text-[10px]
+                                    leading-4
+                                    text-on-surface-variant
+                                    sm:text-[11px]
+                                    sm:leading-5
+                                ">
+                                    Pay attention
+                                </p>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- UPCOMING -->
+
+                        <div class="
+                            mt-4
+                            rounded-2xl
+                            border
+                            border-outline-variant/30
+                            bg-white/80
+                            p-4
+                            sm:p-5
+                        ">
+
+                            <div class="
+                                flex
+                                items-center
+                                justify-between
+                                gap-3
+                            ">
+
+                                <p class="
+                                    text-xs
+                                    font-semibold
+                                    sm:text-sm
+                                ">
+                                    Coming up
+                                </p>
+
+                                <span class="
+                                    shrink-0
+                                    text-[10px]
+                                    font-medium
+                                    text-primary
+                                    sm:text-xs
+                                ">
+                                    View all
+                                </span>
+
+                            </div>
+
+
+                            <div class="
+                                mt-4
+                                space-y-3
+                            ">
+
+                                <!-- ITEM 1 -->
+
+                                <div class="
+                                    flex
+                                    min-w-0
+                                    items-center
+                                    gap-3
+                                ">
+
+                                    <div class="
+                                        flex
+                                        h-9
+                                        w-9
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-xl
+                                        bg-primary/10
+                                        text-primary
+                                    ">
+
+                                        <span class="
+                                            material-symbols-outlined
+                                            text-lg
+                                        ">
+                                            cake
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="min-w-0 flex-1">
+
+                                        <p class="
+                                            truncate
+                                            text-xs
+                                            font-semibold
+                                            sm:text-sm
+                                        ">
+                                            Sarah's Birthday
+                                        </p>
+
+                                        <p class="
+                                            mt-0.5
+                                            text-[10px]
+                                            text-on-surface-variant
+                                            sm:text-xs
+                                        ">
+                                            Tomorrow
+                                        </p>
+
+                                    </div>
+
+
+                                    <span class="
+                                        h-2
+                                        w-2
+                                        shrink-0
+                                        rounded-full
+                                        bg-primary
+                                    "></span>
+
+                                </div>
+
+
+                                <!-- ITEM 2 -->
+
+                                <div class="
+                                    flex
+                                    min-w-0
+                                    items-center
+                                    gap-3
+                                ">
+
+                                    <div class="
+                                        flex
+                                        h-9
+                                        w-9
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-xl
+                                        bg-secondary-container
+                                        text-primary
+                                    ">
+
+                                        <span class="
+                                            material-symbols-outlined
+                                            text-lg
+                                        ">
+                                            workspace_premium
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="min-w-0 flex-1">
+
+                                        <p class="
+                                            truncate
+                                            text-xs
+                                            font-semibold
+                                            sm:text-sm
+                                        ">
+                                            James' Work Anniversary
+                                        </p>
+
+                                        <p class="
+                                            mt-0.5
+                                            text-[10px]
+                                            text-on-surface-variant
+                                            sm:text-xs
+                                        ">
+                                            In 3 days
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ITEM 3 -->
+
+                                <div class="
+                                    flex
+                                    min-w-0
+                                    items-center
+                                    gap-3
+                                ">
+
+                                    <div class="
+                                        flex
+                                        h-9
+                                        w-9
+                                        shrink-0
+                                        items-center
+                                        justify-center
+                                        rounded-xl
+                                        bg-surface-container
+                                        text-primary
+                                    ">
+
+                                        <span class="
+                                            material-symbols-outlined
+                                            text-lg
+                                        ">
+                                            celebration
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="min-w-0 flex-1">
+
+                                        <p class="
+                                            truncate
+                                            text-xs
+                                            font-semibold
+                                            sm:text-sm
+                                        ">
+                                            Team milestone
+                                        </p>
+
+                                        <p class="
+                                            mt-0.5
+                                            text-[10px]
+                                            text-on-surface-variant
+                                            sm:text-xs
+                                        ">
+                                            This week
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- SMALL FLOATING CARD -->
+
+                        <div class="
+                            pointer-events-none
+                            absolute
+                            -bottom-8
+                            -left-6
+                            hidden
+                            w-52
+                            rounded-2xl
+                            border
+                            border-outline-variant/30
+                            bg-white
+                            p-4
+                            shadow-soft
+                            sm:block
+                            lg:-left-10
+                            animate-float
+                        ">
+
+                            <div class="
+                                flex
+                                items-center
+                                gap-3
+                            ">
+
+                                <div class="
+                                    flex
+                                    h-9
+                                    w-9
+                                    shrink-0
+                                    items-center
+                                    justify-center
+                                    rounded-xl
+                                    bg-primary/10
+                                    text-primary
+                                ">
+
+                                    <span class="
+                                        material-symbols-outlined
+                                        text-lg
+                                    ">
+                                        notifications
+                                    </span>
+
+                                </div>
+
+
+                                <div class="min-w-0">
+
+                                    <p class="
+                                        text-xs
+                                        font-semibold
+                                    ">
+                                        You're all caught up
+                                    </p>
+
+                                    <p class="
+                                        mt-0.5
+                                        truncate
+                                        text-[10px]
+                                        text-on-surface-variant
+                                    ">
+                                        0 unread notifications
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- PROBLEM / VALUE -->
+    <!-- ================================================= -->
+
+    <section class="
+        border-y
+        border-outline-variant/30
+        bg-white
+        px-6
+        py-20
+        lg:px-8
+    ">
+
+        <div class="mx-auto max-w-7xl">
+
+            <div class="
+                grid
+                gap-10
+                lg:grid-cols-3
+            ">
+
+                <div>
+
+                    <p class="
+                        text-xs
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-primary
+                    ">
+                        The challenge
+                    </p>
+
+                    <h2 class="
+                        mt-3
+                        text-2xl
+                        font-bold
+                        tracking-tight
+                    ">
+                        Good intentions are easy to forget.
+                    </h2>
+
+                </div>
+
+
+                <div class="lg:col-span-2">
+
+                    <p class="
+                        max-w-3xl
+                        text-base
+                        leading-8
+                        text-on-surface-variant
+                    ">
+                        Birthdays get missed. Milestones pass quietly.
+                        Good work goes unrecognized. Important check-ins
+                        happen inconsistently. AlmaTouch gives organizations
+                        a simple way to keep people and moments in view.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- RRC -->
+    <!-- ================================================= -->
+
+    <section
+        id="rrc"
+        class="
+            px-6
+            py-20
+            lg:px-8
+            lg:py-24
+        "
+    >
+
+        <div class="mx-auto max-w-7xl">
+
+            <div class="mx-auto max-w-2xl text-center">
+
+                <p class="
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-primary
+                ">
+                    The AlmaTouch framework
+                </p>
+
+                <h2 class="
+                    mt-3
+                    text-3xl
+                    font-bold
+                    tracking-tight
+                    sm:text-4xl
+                ">
+                    Remember. Recognize. Care.
+                </h2>
+
+                <p class="
+                    mt-4
+                    text-sm
+                    leading-7
+                    text-on-surface-variant
+                    sm:text-base
+                ">
+                    Three simple ideas that turn everyday workplace
+                    interactions into a more thoughtful people experience.
+                </p>
+
+            </div>
+
+
+            <div class="
+                mt-12
+                grid
+                gap-5
+                md:grid-cols-3
+            ">
+
+                <!-- REMEMBER -->
+
+                <article class="
+                    group
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-7
+                    shadow-sm
+                    transition
+                    duration-300
+                    hover:-translate-y-1
+                    hover:shadow-soft
+                ">
+
+                    <div class="
+                        flex
+                        h-12
+                        w-12
+                        items-center
+                        justify-center
+                        rounded-2xl
+                        bg-primary/10
+                        text-primary
+                    ">
+
+                        <span class="material-symbols-outlined">
+                            event_note
+                        </span>
+
+                    </div>
+
+                    <h3 class="
+                        mt-6
+                        text-xl
+                        font-semibold
+                    ">
+                        Remember
+                    </h3>
+
+                    <p class="
+                        mt-3
+                        text-sm
+                        leading-7
+                        text-on-surface-variant
+                    ">
+                        Keep birthdays, anniversaries, milestones,
+                        organizational dates, and important moments
+                        from slipping through the cracks.
+                    </p>
+
+                </article>
+
+
+                <!-- RECOGNIZE -->
+
+                <article class="
+                    group
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-7
+                    shadow-sm
+                    transition
+                    duration-300
+                    hover:-translate-y-1
+                    hover:shadow-soft
+                ">
+
+                    <div class="
+                        flex
+                        h-12
+                        w-12
+                        items-center
+                        justify-center
+                        rounded-2xl
+                        bg-secondary-container
+                        text-primary
+                    ">
+
+                        <span class="material-symbols-outlined">
+                            star
+                        </span>
+
+                    </div>
+
+                    <h3 class="
+                        mt-6
+                        text-xl
+                        font-semibold
+                    ">
+                        Recognize
+                    </h3>
+
+                    <p class="
+                        mt-3
+                        text-sm
+                        leading-7
+                        text-on-surface-variant
+                    ">
+                        Make appreciation visible by celebrating
+                        contributions, milestones, achievements,
+                        and the people behind the work.
+                    </p>
+
+                </article>
+
+
+                <!-- CARE -->
+
+                <article class="
+                    group
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-7
+                    shadow-sm
+                    transition
+                    duration-300
+                    hover:-translate-y-1
+                    hover:shadow-soft
+                ">
+
+                    <div class="
+                        flex
+                        h-12
+                        w-12
+                        items-center
+                        justify-center
+                        rounded-2xl
+                        bg-surface-container
+                        text-primary
+                    ">
+
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+
+                    </div>
+
+                    <h3 class="
+                        mt-6
+                        text-xl
+                        font-semibold
+                    ">
+                        Care
+                    </h3>
+
+                    <p class="
+                        mt-3
+                        text-sm
+                        leading-7
+                        text-on-surface-variant
+                    ">
+                        Create simple opportunities to check in,
+                        listen, support people, and notice what
+                        matters beyond the task at hand.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- HOW IT WORKS -->
+    <!-- ================================================= -->
+
+    <section
+        id="how-it-works"
+        class="
+            bg-surface-container-low
+            px-6
+            py-20
+            lg:px-8
+            lg:py-24
+        "
+    >
+
+        <div class="mx-auto max-w-7xl">
+
+            <div class="
+                grid
+                gap-12
+                lg:grid-cols-2
+                lg:items-center
+            ">
+
+                <div>
+
+                    <p class="
+                        text-xs
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-primary
+                    ">
+                        How it works
+                    </p>
+
+                    <h2 class="
+                        mt-3
+                        text-3xl
+                        font-bold
+                        tracking-tight
+                        sm:text-4xl
+                    ">
+                        Simple enough to use.
+                        Powerful enough to matter.
+                    </h2>
+
+                    <p class="
+                        mt-5
+                        max-w-xl
+                        text-sm
+                        leading-7
+                        text-on-surface-variant
+                    ">
+                        AlmaTouch fits naturally into the way organizations
+                        already work. Set up your people, define what matters,
+                        and let the platform help keep those moments visible.
+                    </p>
+
+                </div>
+
+
+                <div class="space-y-4">
+
+                    <!-- STEP 1 -->
+
+                    <div class="
+                        flex
+                        gap-4
+                        rounded-2xl
+                        border
+                        border-outline-variant/30
+                        bg-white
+                        p-5
+                    ">
+
+                        <div class="
+                            flex
+                            h-10
+                            w-10
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-primary
+                            text-sm
+                            font-bold
+                            text-white
+                        ">
+                            01
+                        </div>
+
+                        <div>
+
+                            <h3 class="
+                                text-sm
+                                font-semibold
+                            ">
+                                Set up your organization
+                            </h3>
+
+                            <p class="
+                                mt-1
+                                text-xs
+                                leading-6
+                                text-on-surface-variant
+                            ">
+                                Create your organization and invite your people.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STEP 2 -->
+
+                    <div class="
+                        flex
+                        gap-4
+                        rounded-2xl
+                        border
+                        border-outline-variant/30
+                        bg-white
+                        p-5
+                    ">
+
+                        <div class="
+                            flex
+                            h-10
+                            w-10
+                            shrink-0
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-secondary-container
+                            text-sm
+                            font-bold
+                            text-primary
+                        ">
+                            02
+                        </div>
+
+                        <div>
+
+                            <h3 class="
+                                text-sm
+                                font-semibold
+                            ">
+                                Remember what matters
+                            </h3>
+
+                            <p class="
+                                mt-1
+                                text-xs
+                                leading-6
+                                text-on-surface-variant
+                            ">
+                                Add key dates, moments, and organizational reminders.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- STEP 3 -->
+
+                    <div class="
+                        flex
+                        gap-4
+                        rounded-2xl
+                        border
+                        border-outline-variant/30
+                        bg-white
+                        p-5
+                    ">
+
+                        <div class="
+                            flex
+                            h-10
+                            w-10
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-surface-container
+                            text-sm
+                            font-bold
+                            text-primary
+                        ">
+                            03
+                        </div>
+
+                        <div>
+
+                            <h3 class="
+                                text-sm
+                                font-semibold
+                            ">
+                                Recognize and care
+                            </h3>
+
+                            <p class="
+                                mt-1
+                                text-xs
+                                leading-6
+                                text-on-surface-variant
+                            ">
+                                Give your organization better opportunities
+                                to notice, appreciate, and support its people.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- FEATURES -->
+    <!-- ================================================= -->
+
+    <section
+        id="features"
+        class="
+            px-6
+            py-20
+            lg:px-8
+            lg:py-24
+        "
+    >
+
+        <div class="mx-auto max-w-7xl">
+
+            <div class="max-w-2xl">
+
+                <p class="
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-primary
+                ">
+                    Platform
+                </p>
+
+                <h2 class="
+                    mt-3
+                    text-3xl
+                    font-bold
+                    tracking-tight
+                    sm:text-4xl
+                ">
+                    Everything you need to pay better attention.
+                </h2>
+
+                <p class="
+                    mt-4
+                    text-sm
+                    leading-7
+                    text-on-surface-variant
+                ">
+                    AlmaTouch connects everyday people practices into
+                    one simple experience.
+                </p>
+
+            </div>
+
+
+            <div class="
+                mt-12
+                grid
+                gap-5
+                sm:grid-cols-2
+                lg:grid-cols-3
+            ">
+
+                <!-- SMART REMEMBERS -->
+
+                <div class="
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-6
+                    shadow-sm
+                ">
+
+                    <span class="material-symbols-outlined text-primary">
+                        event_note
+                    </span>
+
+                    <h3 class="mt-5 text-base font-semibold">
+                        Smart Remembers
+                    </h3>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        leading-6
+                        text-on-surface-variant
+                    ">
+                        Track birthdays, anniversaries, milestones,
+                        public and private reminders.
+                    </p>
+
+                </div>
+
+
+                <!-- NOTIFICATIONS -->
+
+                <div class="
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-6
+                    shadow-sm
+                ">
+
+                    <span class="material-symbols-outlined text-primary">
+                        notifications
+                    </span>
+
+                    <h3 class="mt-5 text-base font-semibold">
+                        Timely Notifications
+                    </h3>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        leading-6
+                        text-on-surface-variant
+                    ">
+                        Help people notice important moments at
+                        the right time instead of discovering them too late.
+                    </p>
+
+                </div>
+
+
+                <!-- PEOPLE -->
+
+                <div class="
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-6
+                    shadow-sm
+                ">
+
+                    <span class="material-symbols-outlined text-primary">
+                        groups
+                    </span>
+
+                    <h3 class="mt-5 text-base font-semibold">
+                        People Management
+                    </h3>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        leading-6
+                        text-on-surface-variant
+                    ">
+                        Organize members, departments, roles,
+                        and workplace relationships.
+                    </p>
+
+                </div>
+
+
+                <!-- CHECK-INS -->
+
+                <div class="
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-6
+                    shadow-sm
+                ">
+
+                    <span class="material-symbols-outlined text-primary">
+                        fact_check
+                    </span>
+
+                    <h3 class="mt-5 text-base font-semibold">
+                        Check-ins
+                    </h3>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        leading-6
+                        text-on-surface-variant
+                    ">
+                        Create simple moments for listening,
+                        reflection, and employee care.
+                    </p>
+
+                </div>
+
+
+                <!-- INSIGHTS -->
+
+                <div class="
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-6
+                    shadow-sm
+                ">
+
+                    <span class="material-symbols-outlined text-primary">
+                        analytics
+                    </span>
+
+                    <h3 class="mt-5 text-base font-semibold">
+                        Insights
+                    </h3>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        leading-6
+                        text-on-surface-variant
+                    ">
+                        Understand participation, engagement,
+                        and people patterns over time.
+                    </p>
+
+                </div>
+
+
+                <!-- CUSTOMIZATION -->
+
+                <div class="
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    bg-white
+                    p-6
+                    shadow-sm
+                ">
+
+                    <span class="material-symbols-outlined text-primary">
+                        tune
+                    </span>
+
+                    <h3 class="mt-5 text-base font-semibold">
+                        Built for your organization
+                    </h3>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        leading-6
+                        text-on-surface-variant
+                    ">
+                        Configure communication preferences,
+                        organizational settings, and experiences.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- PRICING -->
+    <!-- ================================================= -->
+
+    <section
+        id="pricing"
+        class="
+            border-y
+            border-outline-variant/30
+            bg-surface-container-low
+            px-6
+            py-20
+            lg:px-8
+            lg:py-24
+        "
+    >
+
+        <div class="mx-auto max-w-7xl">
+
+            <!-- PRICING HEADER -->
+
+            <div class="mx-auto max-w-2xl text-center">
+
+                <p class="
+                    text-xs
+                    font-semibold
+                    uppercase
+                    tracking-wider
+                    text-primary
+                ">
+                    Simple pricing
+                </p>
+
+                <h2 class="
+                    mt-3
+                    text-3xl
+                    font-bold
+                    tracking-tight
+                    sm:text-4xl
+                ">
+                    Start free. Grow as your people do.
+                </h2>
+
+                <p class="
+                    mt-4
+                    text-sm
+                    leading-7
+                    text-on-surface-variant
+                    sm:text-base
+                ">
+                    AlmaTouch starts free for small teams, with more
+                    RRC capabilities and communication options as your
+                    organization grows.
+                </p>
+
+            </div>
+
+
+            <!-- PRICING CARDS -->
+
+            <div class="
+                mt-12
+                grid
+                gap-5
+                lg:grid-cols-3
+            ">
+
+
+                <!-- ================================= -->
+                <!-- FREE -->
+                <!-- ================================= -->
+
+                <article class="
+                    flex
+                    flex-col
+                    rounded-3xl
+                    border
+                    border-outline-variant/40
+                    bg-white
+                    p-7
+                    shadow-sm
+                ">
+
+                    <div>
+
+                        <p class="
+                            text-sm
+                            font-semibold
+                            text-primary
+                        ">
+                            Free
+                        </p>
+
+                        <p class="
+                            mt-2
+                            text-sm
+                            leading-6
+                            text-on-surface-variant
+                        ">
+                            A simple starting point for small teams.
+                        </p>
+
+                        <div class="mt-6">
+
+                            <span class="
+                                text-4xl
+                                font-bold
+                                tracking-tight
+                            ">
+                                ₦0
+                            </span>
+
+                            <span class="
+                                text-sm
+                                text-on-surface-variant
+                            ">
+                                /month
+                            </span>
+
+                        </div>
+
+                        <p class="
+                            mt-2
+                            text-xs
+                            font-medium
+                            text-on-surface-variant
+                        ">
+                            Up to 50 active members
+                        </p>
+
+                    </div>
+
+
+                    <div class="
+                        my-7
+                        h-px
+                        bg-outline-variant/30
+                    "></div>
+
+
+                    <ul class="space-y-4">
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Remember
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Personal and organization Remembers
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Email notifications included
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Members and departments
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+
+                    <div class="mt-auto pt-8">
+
+                        <a
+                            href="{{ url_for('org.org_signup') }}"
+                            class="
+                                inline-flex
+                                w-full
+                                items-center
+                                justify-center
+                                gap-2
+                                rounded-xl
+                                border
+                                border-outline-variant
+                                px-5
+                                py-3
+                                text-sm
+                                font-semibold
+                                text-on-surface
+                                transition
+                                hover:bg-surface-container-low
+                            "
+                        >
+                            Start for free
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                            ">
+                                arrow_forward
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- ================================= -->
+                <!-- GROWTH -->
+                <!-- ================================= -->
+
+                <article class="
+                    relative
+                    flex
+                    flex-col
+                    rounded-3xl
+                    border-2
+                    border-primary
+                    bg-white
+                    p-7
+                    shadow-glow
+                ">
+
+                    <div class="
+                        absolute
+                        right-5
+                        top-5
+                        rounded-full
+                        bg-primary
+                        px-3
+                        py-1
+                        text-[10px]
+                        font-bold
+                        uppercase
+                        tracking-wider
+                        text-white
+                    ">
+                        Most popular
+                    </div>
+
+
+                    <div class="pr-24">
+
+                        <p class="
+                            text-sm
+                            font-semibold
+                            text-primary
+                        ">
+                            Growth
+                        </p>
+
+                        <p class="
+                            mt-2
+                            text-sm
+                            leading-6
+                            text-on-surface-variant
+                        ">
+                            For organizations ready to engage their people
+                            across the full RRC experience.
+                        </p>
+
+                        <div class="mt-6">
+
+                            <span class="
+                                text-4xl
+                                font-bold
+                                tracking-tight
+                            ">
+                                ₦25,000
+                            </span>
+
+                            <span class="
+                                text-sm
+                                text-on-surface-variant
+                            ">
+                                /month
+                            </span>
+
+                        </div>
+
+                        <p class="
+                            mt-2
+                            text-xs
+                            font-medium
+                            text-on-surface-variant
+                        ">
+                            51–250 active members
+                        </p>
+
+                    </div>
+
+
+                    <div class="
+                        my-7
+                        h-px
+                        bg-outline-variant/30
+                    "></div>
+
+
+                    <ul class="space-y-4">
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Full RRC — Remember, Recognize & Care
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Analytics and engagement insights
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Email notifications included
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                SMS messaging available
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                WhatsApp messaging available
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                SMS & WhatsApp billed by usage
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+
+                    <div class="mt-auto pt-8">
+
+                        <a
+                            href="{{ url_for('org.org_signup') }}"
+                            class="
+                                inline-flex
+                                w-full
+                                items-center
+                                justify-center
+                                gap-2
+                                rounded-xl
+                                bg-primary
+                                px-5
+                                py-3
+                                text-sm
+                                font-semibold
+                                text-white
+                                shadow-sm
+                                transition
+                                hover:bg-primary-container
+                            "
+                        >
+                            Start with Growth
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                            ">
+                                arrow_forward
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- ================================= -->
+                <!-- BUSINESS -->
+                <!-- ================================= -->
+
+                <article class="
+                    flex
+                    flex-col
+                    rounded-3xl
+                    border
+                    border-outline-variant/40
+                    bg-white
+                    p-7
+                    shadow-sm
+                ">
+
+                    <div>
+
+                        <p class="
+                            text-sm
+                            font-semibold
+                            text-primary
+                        ">
+                            Business
+                        </p>
+
+                        <p class="
+                            mt-2
+                            text-sm
+                            leading-6
+                            text-on-surface-variant
+                        ">
+                            For larger organizations that need more scale
+                            and deeper people insights.
+                        </p>
+
+                        <div class="mt-6">
+
+                            <span class="
+                                text-4xl
+                                font-bold
+                                tracking-tight
+                            ">
+                                From ₦50,000
+                            </span>
+
+                            <span class="
+                                text-sm
+                                text-on-surface-variant
+                            ">
+                                /month
+                            </span>
+
+                        </div>
+
+                        <p class="
+                            mt-2
+                            text-xs
+                            font-medium
+                            text-on-surface-variant
+                        ">
+                            251+ active members
+                        </p>
+
+                    </div>
+
+
+                    <div class="
+                        my-7
+                        h-px
+                        bg-outline-variant/30
+                    "></div>
+
+
+                    <ul class="space-y-4">
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Full RRC — Remember, Recognize & Care
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Advanced analytics and insights
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Email notifications included
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                SMS messaging available
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                WhatsApp messaging available
+                            </span>
+
+                        </li>
+
+
+                        <li class="flex gap-3">
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                                text-primary
+                            ">
+                                check_circle
+                            </span>
+
+                            <span class="text-sm">
+                                SMS & WhatsApp billed by usage
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+
+                    <div class="mt-auto pt-8">
+
+                        <a
+                            href="{{ url_for('org.org_signup') }}"
+                            class="
+                                inline-flex
+                                w-full
+                                items-center
+                                justify-center
+                                gap-2
+                                rounded-xl
+                                border
+                                border-outline-variant
+                                px-5
+                                py-3
+                                text-sm
+                                font-semibold
+                                text-on-surface
+                                transition
+                                hover:bg-surface-container-low
+                            "
+                        >
+                            Get started
+
+                            <span class="
+                                material-symbols-outlined
+                                text-lg
+                            ">
+                                arrow_forward
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+            <!-- PRICING NOTE -->
+
+            <div class="
+                mx-auto
+                mt-8
+                max-w-3xl
+                text-center
+            ">
+
+                <p class="
+                    text-xs
+                    leading-6
+                    text-on-surface-variant
+                ">
+                    Email notifications are included at no extra cost.
+                    SMS and WhatsApp messaging are usage-based and billed
+                    separately.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- AUDIENCE -->
+    <!-- ================================================= -->
+
+    <section class="
+        border-y
+        border-outline-variant/30
+        bg-white
+        px-6
+        py-20
+        lg:px-8
+    ">
+
+        <div class="mx-auto max-w-7xl">
+
+            <div class="grid gap-10 lg:grid-cols-2">
+
+                <div>
+
+                    <p class="
+                        text-xs
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-primary
+                    ">
+                        Who it's for
+                    </p>
+
+                    <h2 class="
+                        mt-3
+                        text-3xl
+                        font-bold
+                        tracking-tight
+                    ">
+                        Designed for organizations of all kinds.
+                    </h2>
+
+                </div>
+
+
+                <div class="grid gap-3 sm:grid-cols-2">
+
+                    <div class="
+                        rounded-2xl
+                        bg-surface-container-low
+                        p-4
+                    ">
+                        <p class="text-sm font-semibold">
+                            Startups & tech teams
+                        </p>
+                    </div>
+
+                    <div class="
+                        rounded-2xl
+                        bg-surface-container-low
+                        p-4
+                    ">
+                        <p class="text-sm font-semibold">
+                            Schools & institutions
+                        </p>
+                    </div>
+
+                    <div class="
+                        rounded-2xl
+                        bg-surface-container-low
+                        p-4
+                    ">
+                        <p class="text-sm font-semibold">
+                            NGOs & mission-driven teams
+                        </p>
+                    </div>
+
+                    <div class="
+                        rounded-2xl
+                        bg-surface-container-low
+                        p-4
+                    ">
+                        <p class="text-sm font-semibold">
+                            Growing businesses
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================================================= -->
+    <!-- CTA -->
+    <!-- ================================================= -->
+
+    <section
+        id="about"
+        class="
+            px-6
+            py-20
+            lg:px-8
+            lg:py-24
+        "
+    >
+
+        <div class="
+            mx-auto
+            max-w-5xl
+            overflow-hidden
+            rounded-[2rem]
+            bg-primary
+            p-8
+            text-white
+            shadow-glow
+            sm:p-12
+        ">
+
+            <div class="
+                grid
+                gap-10
+                lg:grid-cols-2
+                lg:items-center
+            ">
+
+                <div>
+
+                    <p class="
+                        text-xs
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-white/60
+                    ">
+                        Start with AlmaTouch
+                    </p>
+
+                    <h2 class="
+                        mt-3
+                        text-3xl
+                        font-bold
+                        tracking-tight
+                        sm:text-4xl
+                    ">
+                        Make remembering people
+                        part of how you work.
+                    </h2>
+
+                    <p class="
+                        mt-4
+                        max-w-xl
+                        text-sm
+                        leading-7
+                        text-white/75
+                    ">
+                        Start free for up to 50 members and build
+                        a more thoughtful people experience as your
+                        organization grows.
+                    </p>
+
+                </div>
+
+
+                <div class="
+                    flex
+                    flex-col
+                    gap-3
+                    sm:flex-row
+                    lg:justify-end
+                ">
+
+                    <a
+                        href="{{ url_for('org.org_signup') }}"
+                        class="
+                            inline-flex
+                            items-center
+                            justify-center
+                            gap-2
+                            rounded-xl
+                            bg-white
+                            px-6
+                            py-3.5
+                            text-sm
+                            font-semibold
+                            text-primary
+                            transition
+                            hover:bg-primary-fixed
+                        "
+                    >
+                        Start for free
+
+                        <span class="
+                            material-symbols-outlined
+                            text-lg
+                        ">
+                            arrow_forward
+                        </span>
+
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('user.user_login') }}"
+                        class="
+                            inline-flex
+                            items-center
+                            justify-center
+                            rounded-xl
+                            border
+                            border-white/20
+                            px-6
+                            py-3.5
+                            text-sm
+                            font-semibold
+                            text-white
+                            transition
+                            hover:bg-white/10
+                        "
+                    >
+                        Sign in
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+
+<!-- ===================================================== -->
+<!-- FOOTER -->
+<!-- ===================================================== -->
+
+<footer class="
+    border-t
+    border-outline-variant/30
+    bg-secondary-container/30
+">
+
+    <div class="
+        mx-auto
+        flex
+        max-w-7xl
+        flex-col
+        gap-5
+        px-6
+        py-8
+        sm:flex-row
+        sm:items-center
+        sm:justify-between
+        lg:px-8
+    ">
+
+        <div>
+
+            <p class="
+                text-lg
+                font-bold
+                text-primary
+            ">
+                AlmaTouch
+            </p>
+
+            <p class="
+                mt-1
+                text-xs
+                text-on-surface-variant
+            ">
+                Remember · Recognize · Care
+            </p>
+
+        </div>
+
+
+        <div class="
+            flex
+            flex-wrap
+            gap-x-6
+            gap-y-2
+        ">
+
+            <a
+                href="#"
+                class="
+                    text-xs
+                    text-on-surface-variant
+                    hover:text-primary
+                "
+            >
+                Privacy
+            </a>
+
+            <a
+                href="#"
+                class="
+                    text-xs
+                    text-on-surface-variant
+                    hover:text-primary
+                "
+            >
+                Terms
+            </a>
+
+            <a
+                href="#"
+                class="
+                    text-xs
+                    text-on-surface-variant
+                    hover:text-primary
+                "
+            >
+                Contact
+            </a>
+
+        </div>
+
+
+        <p class="
+            text-xs
+            text-on-surface-variant
+        ">
+            © <span id="year"></span> AlmaTouch
+        </p>
+
+    </div>
+
+</footer>
+
+
+
+<!-- ===================================================== -->
+<!-- THEME SCRIPT -->
+<!-- ===================================================== -->
+
+<script>
+
+    const html = document.documentElement;
+
+
+    /* ================================================= */
+    /* THEME */
+    /* ================================================= */
+
+    const themeToggleDesktop =
+        document.getElementById("themeToggleDesktop");
+
+    const themeToggleMobile =
+        document.getElementById("themeToggleMobile");
+
+    const themeIconDesktop =
+        document.getElementById("themeIconDesktop");
+
+    const themeIconMobile =
+        document.getElementById("themeIconMobile");
+
+
+    function applyTheme(theme) {
+
+        if (theme === "dark") {
+
+            html.classList.add("dark");
+
+            if (themeIconDesktop) {
+                themeIconDesktop.textContent = "light_mode";
+            }
+
+            if (themeIconMobile) {
+                themeIconMobile.textContent = "light_mode";
+            }
+
+        } else {
+
+            html.classList.remove("dark");
+
+            if (themeIconDesktop) {
+                themeIconDesktop.textContent = "dark_mode";
+            }
+
+            if (themeIconMobile) {
+                themeIconMobile.textContent = "dark_mode";
+            }
+
+        }
+
+    }
+
+
+    const savedTheme =
+        localStorage.getItem("almatouch-theme");
+
+
+    if (savedTheme) {
+
+        applyTheme(savedTheme);
+
+    } else {
+
+        applyTheme(
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+                ? "dark"
+                : "light"
+        );
+
+    }
+
+
+    function toggleTheme() {
+
+        const nextTheme =
+            html.classList.contains("dark")
+                ? "light"
+                : "dark";
+
+        localStorage.setItem(
+            "almatouch-theme",
+            nextTheme
+        );
+
+        applyTheme(nextTheme);
+
+    }
+
+
+    if (themeToggleDesktop) {
+
+        themeToggleDesktop.addEventListener(
+            "click",
+            toggleTheme
+        );
+
+    }
+
+
+    if (themeToggleMobile) {
+
+        themeToggleMobile.addEventListener(
+            "click",
+            toggleTheme
+        );
+
+    }
+
+
+
+    /* ================================================= */
+    /* MOBILE MENU */
+    /* ================================================= */
+
+    const mobileMenuToggle =
+        document.getElementById("mobileMenuToggle");
+
+    const mobileMenu =
+        document.getElementById("mobileMenu");
+
+    const mobileMenuIcon =
+        document.getElementById("mobileMenuIcon");
+
+
+    if (
+        mobileMenuToggle &&
+        mobileMenu &&
+        mobileMenuIcon
+    ) {
+
+        mobileMenuToggle.addEventListener(
+            "click",
+            () => {
+
+                const isOpen =
+                    !mobileMenu.classList.contains("hidden");
+
+
+                if (isOpen) {
+
+                    mobileMenu.classList.add("hidden");
+
+                    mobileMenuIcon.textContent = "menu";
+
+                    mobileMenuToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    mobileMenuToggle.setAttribute(
+                        "aria-label",
+                        "Open menu"
+                    );
+
+                } else {
+
+                    mobileMenu.classList.remove("hidden");
+
+                    mobileMenuIcon.textContent = "close";
+
+                    mobileMenuToggle.setAttribute(
+                        "aria-expanded",
+                        "true"
+                    );
+
+                    mobileMenuToggle.setAttribute(
+                        "aria-label",
+                        "Close menu"
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* Close menu after clicking a section */
+
+        const mobileLinks =
+            mobileMenu.querySelectorAll("a");
+
+
+        mobileLinks.forEach(
+            (link) => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        mobileMenu.classList.add("hidden");
+
+                        mobileMenuIcon.textContent = "menu";
+
+                        mobileMenuToggle.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                        mobileMenuToggle.setAttribute(
+                            "aria-label",
+                            "Open menu"
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+
+    /* ================================================= */
+    /* DYNAMIC YEAR */
+    /* ================================================= */
+
+    const year =
+        document.getElementById("year");
+
+    if (year) {
+        year.textContent =
+            new Date().getFullYear();
+    }
+
+</script>
+
+</body>
+</html>

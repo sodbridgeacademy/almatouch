@@ -1,0 +1,94 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<main class="flex-grow w-full max-w-5xl mx-auto p-6 md:p-12">
+
+<!-- HEADER -->
+<div class="mb-10">
+
+    <div class="flex items-center gap-2 mb-3">
+        <span class="px-2.5 py-0.5 bg-primary-container/20 text-on-primary-container text-xs font-bold uppercase tracking-widest rounded-full">
+            Step 2 of 3
+        </span>
+
+        <div class="flex-grow h-1.5 bg-surface-container rounded-full overflow-hidden">
+            <div class="w-2/3 h-full bg-primary-container rounded-full"></div>
+        </div>
+    </div>
+
+    <h1 class="font-display text-display text-on-surface mb-2">
+        Structure your community
+    </h1>
+
+    <p class="text-body-md text-on-surface-variant">
+        Departments help you organize members and send targeted updates.
+    </p>
+</div>
+
+
+<!-- FORM -->
+<form method="POST" class="space-y-8">
+
+<!-- DEPARTMENT INPUT -->
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-sm">
+
+    <label class="block font-label-md text-on-surface mb-2">
+        Departments
+    </label>
+
+    <textarea
+        name="departments"
+        rows="3"
+        class="w-full p-3 border border-outline rounded-lg focus:ring-2 focus:ring-primary transition-all text-body-md"
+        placeholder="e.g. HR, Engineering, Support, Outreach">
+    </textarea>
+
+    <p class="text-caption text-on-surface-variant mt-2">
+        Separate each department with a comma.
+    </p>
+</div>
+
+
+<!-- EXISTING DEPARTMENTS PREVIEW -->
+{% if departments %}
+
+<div class="bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-sm">
+
+    <h3 class="font-headline-md text-on-surface mb-4">Current Departments</h3>
+
+    <div class="flex flex-wrap gap-2">
+
+        {% for dept in departments %}
+        <span class="px-3 py-1 bg-primary-container/20 text-on-primary-container rounded-full text-sm">
+            {{ dept.name }}
+        </span>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endif %}
+
+
+<!-- ACTION -->
+<div class="pt-4 flex justify-between items-center">
+
+    <a href="{{ url_for('org.org_onboarding_step_1') }}"
+       class="text-caption text-on-surface-variant underline">
+        Back
+    </a>
+
+    <button type="submit"
+        class="px-10 py-4 bg-primary text-on-primary font-headline-md rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 active:scale-95 transition-all">
+        Continue
+    </button>
+
+</div>
+
+</form>
+
+</main>
+
+{% endblock %}

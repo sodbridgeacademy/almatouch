@@ -1,0 +1,907 @@
+{% extends "user_base.html" %}
+
+{% block content %}
+
+<!-- DASHBOARD CANVAS -->
+<div class="p-xl max-w-[1400px] mx-auto space-y-xl">
+
+    <!-- ===================== -->
+    <!-- HERO -->
+    <!-- ===================== -->
+    <section class="flex flex-col lg:flex-row justify-between gap-xl">
+
+        <!-- WELCOME -->
+        <div class="space-y-md flex-1">
+
+            <div class="flex items-center gap-4">
+
+                <div class="w-16 h-16 rounded-3xl bg-primary-container flex items-center justify-center text-white shadow-lg">
+                    <span class="material-symbols-outlined text-3xl">
+                        favorite
+                    </span>
+                </div>
+
+                <div>
+                    <p class="text-caption text-primary uppercase tracking-[0.15em] font-bold mb-1">
+                        My Space
+                    </p>
+
+                    <h2 class="font-display text-display text-on-surface">
+                        Welcome back, {{ user.first_name }}
+                    </h2>
+
+                    <p class="font-body-lg text-body-lg text-secondary mt-1">
+                        Here’s what matters to you today.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- DEPARTMENT TAGS -->
+            {% if user.departments %}
+                <div class="flex flex-wrap gap-2 pt-2">
+
+                    {% for membership in user.departments %}
+
+                        <span class="px-3 py-1.5 rounded-full bg-secondary-container text-secondary text-xs font-bold uppercase tracking-wide">
+                            {{ membership.department.name }}
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+        </div>
+
+
+        <!-- PROFILE SNAPSHOT -->
+        <div class="bg-white border border-outline-variant/30 rounded-3xl shadow-[0_8px_30px_rgba(0,0,0,0.04)] p-5 w-full lg:w-[360px]">
+
+            <div class="flex items-center gap-4">
+
+                {% if user.profile_pic %}
+
+                    <img
+                        src="{{ url_for('static', filename=user.profile_pic) }}"
+                        alt="{{ user.first_name }}"
+                        class="w-14 h-14 rounded-2xl object-cover"
+                    >
+
+                {% else %}
+
+                    <div class="w-14 h-14 rounded-2xl bg-primary-container text-white flex items-center justify-center font-bold text-lg">
+                        {{ user.first_name[:1] }}{{ user.last_name[:1] if user.last_name else '' }}
+                    </div>
+
+                {% endif %}
+
+                <div class="flex-1">
+
+                    <h3 class="font-headline-sm text-on-surface">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </h3>
+
+                    <p class="text-sm text-secondary mt-1">
+                        {{ user.email }}
+                    </p>
+
+                    <div class="mt-2">
+                        <span class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-[10px] uppercase font-bold tracking-wide">
+                            {{ user.role|capitalize }}
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================== -->
+    <!-- PERSONAL STATS -->
+    <!-- ===================== -->
+    <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-lg">
+
+
+        <!-- UPCOMING REMEMBERS -->
+        <div class="bg-white rounded-3xl border border-outline-variant/30 p-6 shadow-sm">
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+                    <p class="text-caption text-secondary uppercase tracking-wide">
+                        Upcoming Remembers
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-on-surface mt-1">
+                        {{ upcoming_remembers|length }}
+                    </h3>
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-primary-fixed text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl">
+                        event
+                    </span>
+                </div>
+
+            </div>
+
+            <p class="text-sm text-secondary">
+                Important dates still ahead this year.
+            </p>
+
+        </div>
+
+
+        <!-- DEPARTMENTS -->
+        <div class="bg-white rounded-3xl border border-outline-variant/30 p-6 shadow-sm">
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+                    <p class="text-caption text-secondary uppercase tracking-wide">
+                        Departments
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-on-surface mt-1">
+                        {{ user.departments|length }}
+                    </h3>
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-secondary-container/40 text-secondary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl">
+                        groups
+                    </span>
+                </div>
+
+            </div>
+
+            <p class="text-sm text-secondary">
+                Department{% if user.departments|length != 1 %}s{% endif %} you’re connected to.
+            </p>
+
+        </div>
+
+
+        <!-- DAYS AT ORGANIZATION -->
+        <div class="bg-white rounded-3xl border border-outline-variant/30 p-6 shadow-sm">
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+                    <p class="text-caption text-secondary uppercase tracking-wide">
+                        Days at {{ org.name }}
+                    </p>
+
+                    {% if days_at_org is not none %}
+
+                        <h3 class="text-3xl font-bold text-on-surface mt-1">
+                            {{ days_at_org }}
+                        </h3>
+
+                    {% else %}
+
+                        <h3 class="text-3xl font-bold text-on-surface mt-1">
+                            —
+                        </h3>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-tertiary-fixed/30 text-tertiary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl">
+                        work_history
+                    </span>
+                </div>
+
+            </div>
+
+            {% if user.joined_date %}
+
+                <p class="text-sm text-secondary">
+                    Since {{ user.joined_date.strftime('%B %d, %Y') }}
+                </p>
+
+            {% else %}
+
+                <p class="text-sm text-secondary">
+                    Your journey with {{ org.name }}.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- BIRTHDAY -->
+        <div class="bg-white rounded-3xl border border-outline-variant/30 p-6 shadow-sm">
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+                    <p class="text-caption text-secondary uppercase tracking-wide">
+                        Birthday
+                    </p>
+
+                    {% if user.date_of_birth %}
+
+                        <h3 class="text-xl font-bold text-on-surface mt-2">
+                            {{ user.date_of_birth.strftime('%B %d') }}
+                        </h3>
+
+                    {% else %}
+
+                        <h3 class="text-lg font-bold text-on-surface mt-2">
+                            Not added
+                        </h3>
+
+                    {% endif %}
+                </div>
+
+                <div class="w-14 h-14 rounded-2xl bg-tertiary-fixed/30 text-tertiary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl">
+                        cake
+                    </span>
+                </div>
+
+            </div>
+
+            {% if user.date_of_birth %}
+
+                <p class="text-sm text-secondary">
+                    A date worth remembering.
+                </p>
+
+            {% else %}
+
+                <a
+                    href="{{ url_for('user.user_profile') }}"
+                    class="text-sm text-primary font-semibold hover:underline"
+                >
+                    Add your birthday
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
+    <!-- ===================== -->
+    <!-- MAIN DASHBOARD -->
+    <!-- ===================== -->
+    <div class="grid grid-cols-1 xl:grid-cols-12 gap-xl">
+
+        <!-- ===================== -->
+        <!-- LEFT -->
+        <!-- ===================== -->
+        <div class="xl:col-span-8 space-y-lg">
+
+
+            <!-- ===================== -->
+            <!-- UPCOMING REMEMBERS -->
+            <!-- ===================== -->
+            <section>
+
+                <div class="flex items-center justify-between mb-5">
+
+                    <div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">
+                            Upcoming Remembers
+                        </h3>
+
+                        <p class="text-body-sm text-secondary mt-1">
+                            Dates worth remembering for you and your organization.
+                        </p>
+                    </div>
+
+                    <a
+                        href="{{ url_for('user.user_remembers') }}"
+                        class="text-primary font-semibold text-sm hover:underline"
+                    >
+                        See all
+                    </a>
+
+                </div>
+
+
+                {% if upcoming_remembers %}
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+
+                        {% for remember in upcoming_remembers[:4] %}
+
+                            <div class="
+                                bg-white
+                                rounded-3xl
+                                border
+                                border-outline-variant/30
+                                p-5
+                                shadow-sm
+                                hover:shadow-md
+                                transition-all
+                            ">
+
+                                <div class="flex items-start justify-between gap-4">
+
+                                    <div class="
+                                        w-12
+                                        h-12
+                                        rounded-2xl
+                                        flex
+                                        items-center
+                                        justify-center
+                                        shrink-0
+
+                                        {% if remember.type == 'birthday' %}
+                                            bg-tertiary-fixed/30 text-tertiary
+                                        {% elif remember.type == 'work_anniversary' %}
+                                            bg-secondary-container/40 text-secondary
+                                        {% elif remember.source == 'organization' %}
+                                            bg-primary-fixed text-primary
+                                        {% else %}
+                                            bg-surface-container text-on-surface-variant
+                                        {% endif %}
+                                    ">
+
+                                        <span class="material-symbols-outlined">
+
+                                            {% if remember.type == 'birthday' %}
+                                                cake
+                                            {% elif remember.type == 'work_anniversary' %}
+                                                workspace_premium
+                                            {% elif remember.source == 'organization' %}
+                                                celebration
+                                            {% else %}
+                                                event
+                                            {% endif %}
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <span class="
+                                        px-2.5
+                                        py-1
+                                        rounded-full
+                                        text-[10px]
+                                        uppercase
+                                        tracking-wide
+                                        font-bold
+
+                                        {% if remember.source == 'personal' %}
+                                            bg-primary-fixed text-primary
+                                        {% elif remember.source == 'organization' %}
+                                            bg-secondary-container text-secondary
+                                        {% else %}
+                                            bg-surface-container text-on-surface-variant
+                                        {% endif %}
+                                    ">
+                                        {{ remember.source }}
+                                    </span>
+
+                                </div>
+
+
+                                <div class="mt-4">
+
+                                    <h4 class="font-bold text-lg text-on-surface">
+                                        {{ remember.name }}
+                                    </h4>
+
+                                    <div class="flex items-center gap-2 mt-2">
+
+                                        <span class="material-symbols-outlined text-secondary text-base">
+                                            event
+                                        </span>
+
+                                        <p class="text-sm text-secondary">
+                                            {{ remember.date.strftime('%A, %B %d') }}
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <!-- MORE REMEMBERS -->
+                    {% if upcoming_remembers|length > 4 %}
+
+                        <div class="mt-4 text-center">
+
+                            <a
+                                href="#"
+                                class="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:underline"
+                            >
+                                View {{ upcoming_remembers|length - 4 }} more
+
+                                <span class="material-symbols-outlined text-base">
+                                    arrow_forward
+                                </span>
+
+                            </a>
+
+                        </div>
+
+                    {% endif %}
+
+                {% else %}
+
+                    <div class="
+                        bg-white
+                        rounded-3xl
+                        border
+                        border-outline-variant/30
+                        p-8
+                        shadow-sm
+                        text-center
+                    ">
+
+                        <div class="w-14 h-14 rounded-2xl bg-surface-container mx-auto flex items-center justify-center text-secondary">
+
+                            <span class="material-symbols-outlined text-3xl">
+                                event_available
+                            </span>
+
+                        </div>
+
+                        <h4 class="font-bold text-on-surface mt-4">
+                            Nothing coming up
+                        </h4>
+
+                        <p class="text-sm text-secondary mt-1">
+                            We’ll let you know when there’s something worth remembering.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- ===================== -->
+            <!-- RRC -->
+            <!-- ===================== -->
+            <section>
+
+                <div class="mb-5">
+
+                    <h3 class="font-headline-md text-headline-md text-on-surface">
+                        Remember, Recognize, Care
+                    </h3>
+
+                    <p class="text-body-sm text-secondary mt-1">
+                        Stay connected with the people and moments that matter.
+                    </p>
+
+                </div>
+
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+
+
+                    <!-- REMEMBER -->
+                    <div class="
+                        bg-primary-fixed/40
+                        rounded-3xl
+                        border
+                        border-primary-fixed-dim/40
+                        p-6
+                        h-full
+                    ">
+
+                        <div class="w-12 h-12 rounded-2xl bg-primary text-white flex items-center justify-center mb-5">
+
+                            <span class="material-symbols-outlined">
+                                event
+                            </span>
+
+                        </div>
+
+                        <h4 class="font-bold text-lg text-on-primary-container">
+                            Remember
+                        </h4>
+
+                        <p class="text-sm text-on-primary-container/80 mt-2 leading-relaxed">
+                            Keep track of birthdays, anniversaries, celebrations and important dates.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="inline-flex items-center gap-2 mt-5 text-primary font-semibold text-sm"
+                        >
+                            View Remembers
+
+                            <span class="material-symbols-outlined text-base">
+                                arrow_forward
+                            </span>
+                        </a>
+
+                    </div>
+
+
+                    <!-- RECOGNIZE -->
+                    <div class="
+                        bg-secondary-container/40
+                        rounded-3xl
+                        border
+                        border-secondary-container
+                        p-6
+                        h-full
+                    ">
+
+                        <div class="w-12 h-12 rounded-2xl bg-secondary text-white flex items-center justify-center mb-5">
+
+                            <span class="material-symbols-outlined">
+                                celebration
+                            </span>
+
+                        </div>
+
+                        <h4 class="font-bold text-lg text-on-secondary-container">
+                            Recognize
+                        </h4>
+
+                        <p class="text-sm text-on-secondary-container/80 mt-2 leading-relaxed">
+                            Appreciate a colleague, celebrate an achievement, or simply say thank you.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="inline-flex items-center gap-2 mt-5 text-secondary font-semibold text-sm"
+                        >
+                            Recognize Someone
+
+                            <span class="material-symbols-outlined text-base">
+                                arrow_forward
+                            </span>
+
+                        </a>
+
+                    </div>
+
+
+                    <!-- CARE -->
+                    <div class="
+                        bg-tertiary-fixed/30
+                        rounded-3xl
+                        border
+                        border-tertiary-fixed-dim/40
+                        p-6
+                        h-full
+                    ">
+
+                        <div class="w-12 h-12 rounded-2xl bg-tertiary text-white flex items-center justify-center mb-5">
+
+                            <span class="material-symbols-outlined">
+                                volunteer_activism
+                            </span>
+
+                        </div>
+
+                        <h4 class="font-bold text-lg text-on-tertiary-container">
+                            Care
+                        </h4>
+
+                        <p class="text-sm text-on-tertiary-container/80 mt-2 leading-relaxed">
+                            Check in with yourself, reflect on your wellbeing, and access support when needed.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="inline-flex items-center gap-2 mt-5 text-tertiary font-semibold text-sm"
+                        >
+                            My Wellbeing
+
+                            <span class="material-symbols-outlined text-base">
+                                arrow_forward
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ===================== -->
+            <!-- RECENT ACTIVITY -->
+            <!-- ===================== -->
+            <section>
+
+                <div class="flex items-center justify-between mb-5">
+
+                    <div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface">
+                            Recent Activity
+                        </h3>
+
+                        <p class="text-body-sm text-secondary mt-1">
+                            Your latest moments and interactions.
+                        </p>
+                    </div>
+
+                    <button class="text-primary font-semibold text-sm hover:underline">
+                        View all
+                    </button>
+
+                </div>
+
+
+                <div class="
+                    bg-white
+                    rounded-3xl
+                    border
+                    border-outline-variant/30
+                    p-8
+                    shadow-sm
+                ">
+
+                    <div class="text-center py-8">
+
+                        <div class="w-14 h-14 rounded-2xl bg-surface-container mx-auto flex items-center justify-center text-secondary">
+
+                            <span class="material-symbols-outlined text-3xl">
+                                history
+                            </span>
+
+                        </div>
+
+                        <h4 class="font-bold text-on-surface mt-4">
+                            Your activity will appear here
+                        </h4>
+
+                        <p class="text-sm text-secondary mt-2 max-w-md mx-auto leading-relaxed">
+                            Recognition, celebrations, check-ins and other personal activity
+                            will show up here as you use AlmaTouch.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- ===================== -->
+        <!-- RIGHT SIDEBAR -->
+        <!-- ===================== -->
+        <aside class="xl:col-span-4 space-y-lg">
+
+
+            <!-- ===================== -->
+            <!-- MY IMPORTANT DATES -->
+            <!-- ===================== -->
+            <div class="bg-white rounded-3xl border border-outline-variant/30 p-6 shadow-sm">
+
+                <div class="flex items-center justify-between mb-5">
+
+                    <div>
+                        <h3 class="font-headline-sm text-on-surface">
+                            My Important Dates
+                        </h3>
+
+                        <p class="text-sm text-secondary mt-1">
+                            Dates connected to you.
+                        </p>
+                    </div>
+
+                    <span class="material-symbols-outlined text-primary">
+                        auto_awesome
+                    </span>
+
+                </div>
+
+
+                <!-- BIRTHDAY -->
+                <div class="flex items-center gap-3 p-4 rounded-2xl bg-surface-container-low mb-3">
+
+                    <div class="w-10 h-10 rounded-xl bg-tertiary-fixed/30 text-tertiary flex items-center justify-center">
+
+                        <span class="material-symbols-outlined">
+                            cake
+                        </span>
+
+                    </div>
+
+                    <div class="flex-1">
+
+                        <p class="font-semibold text-on-surface">
+                            Birthday
+                        </p>
+
+                        {% if user.date_of_birth %}
+
+                            <p class="text-sm text-secondary mt-1">
+                                {{ user.date_of_birth.strftime('%B %d') }}
+                            </p>
+
+                        {% else %}
+
+                            <a
+                                href="{{ url_for('user.user_profile') }}"
+                                class="text-sm text-primary font-semibold"
+                            >
+                                Add date
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- WORK ANNIVERSARY -->
+                <div class="flex items-center gap-3 p-4 rounded-2xl bg-surface-container-low">
+
+                    <div class="w-10 h-10 rounded-xl bg-secondary-container text-secondary flex items-center justify-center">
+
+                        <span class="material-symbols-outlined">
+                            work_history
+                        </span>
+
+                    </div>
+
+                    <div class="flex-1">
+
+                        <p class="font-semibold text-on-surface">
+                            Work Anniversary
+                        </p>
+
+                        {% if user.joined_date %}
+
+                            <p class="text-sm text-secondary mt-1">
+                                {{ user.joined_date.strftime('%B %d') }}
+                            </p>
+
+                        {% else %}
+
+                            <a
+                                href="{{ url_for('user.user_profile') }}"
+                                class="text-sm text-primary font-semibold"
+                            >
+                                Add date
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================== -->
+            <!-- ORGANIZATION -->
+            <!-- ===================== -->
+            <div class="bg-white rounded-3xl border border-outline-variant/30 p-6 shadow-sm">
+
+                <div class="flex items-center justify-between mb-5">
+
+                    <div>
+                        <h3 class="font-headline-sm text-on-surface">
+                            My Organization
+                        </h3>
+
+                        <p class="text-sm text-secondary mt-1">
+                            Your workplace space.
+                        </p>
+                    </div>
+
+                    <span class="material-symbols-outlined text-secondary">
+                        business
+                    </span>
+
+                </div>
+
+
+                <div class="flex items-center gap-4">
+
+                    {% if org.logo %}
+
+                        <img
+                            src="{{ url_for('static', filename=org.logo) }}"
+                            alt="{{ org.name }}"
+                            class="w-14 h-14 rounded-2xl object-cover"
+                        >
+
+                    {% else %}
+
+                        <div class="w-14 h-14 rounded-2xl bg-surface-container flex items-center justify-center text-secondary">
+
+                            <span class="material-symbols-outlined text-2xl">
+                                business
+                            </span>
+
+                        </div>
+
+                    {% endif %}
+
+
+                    <div>
+
+                        <h4 class="font-bold text-on-surface">
+                            {{ org.name }}
+                        </h4>
+
+                        {% if org.industry %}
+
+                            <p class="text-sm text-secondary mt-1">
+                                {{ org.industry }}
+                            </p>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ===================== -->
+            <!-- PROFILE -->
+            <!-- ===================== -->
+            <div class="rounded-3xl bg-surface-container-low border border-outline-variant/30 p-6">
+
+                <div class="flex items-start gap-4">
+
+                    <span class="material-symbols-outlined text-primary text-2xl">
+                        person
+                    </span>
+
+                    <div class="flex-1">
+
+                        <h4 class="font-bold text-on-surface">
+                            Your profile
+                        </h4>
+
+                        <p class="text-sm text-secondary mt-1 leading-relaxed">
+                            Keep your information and important dates up to date so AlmaTouch can remember what matters to you.
+                        </p>
+
+                        <a
+                            href="{{ url_for('user.user_profile') }}"
+                            class="inline-flex items-center gap-2 mt-4 text-primary font-semibold text-sm"
+                        >
+                            View profile
+
+                            <span class="material-symbols-outlined text-base">
+                                arrow_forward
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+{% endblock %}

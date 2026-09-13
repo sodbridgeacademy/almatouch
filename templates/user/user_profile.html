@@ -1,0 +1,674 @@
+{% extends "user_base.html" %}
+
+{% block content %}
+
+<div class="p-xl max-w-5xl mx-auto">
+
+    <!-- BACK -->
+    <div class="mb-4">
+
+        <a href="{{ url_for('user.user_dashboard') }}"
+           class="inline-flex items-center gap-2
+                  text-gray-500 hover:text-primary
+                  transition-colors">
+
+            <span class="material-symbols-outlined text-xl">
+                arrow_back
+            </span>
+
+            <span class="text-sm font-medium">
+                Back to Dashboard
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- HEADER -->
+    <div class="mb-6">
+
+        <h2 class="text-2xl font-bold text-gray-900">
+            My Profile
+        </h2>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Manage your personal information and preferences.
+        </p>
+
+    </div>
+
+
+    <!-- PROFILE CARD -->
+    <form method="POST" enctype="multipart/form-data">
+
+        <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
+
+            <!-- ========================= -->
+            <!-- PROFILE HEADER -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-b bg-gray-50">
+
+                <div class="flex items-center gap-4">
+
+                    <div class="w-16 h-16 rounded-2xl
+                                bg-primary/10
+                                flex items-center justify-center">
+
+                        <span class="text-xl font-bold text-primary">
+                            {{ user.first_name[:1] if user.first_name else "" }}{{ user.last_name[:1] if user.last_name else "" }}
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            {{ user.first_name }} {{ user.last_name }}
+                        </h3>
+
+                        <p class="text-sm text-gray-500">
+                            {{ user.email }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- PROFILE PICTURE -->
+            <div class="p-6 border-b">
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Profile Picture
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Add a photo so your profile can be easily recognized.
+                </p>
+
+                <div class="mt-5 flex flex-col sm:flex-row
+                            sm:items-center gap-5">
+
+                    <div class="w-24 h-24 rounded-full
+                                border bg-gray-50
+                                overflow-hidden
+                                flex items-center justify-center">
+
+                        {% if user.profile_pic %}
+
+                            <img
+                                src="{{ url_for('static', filename=user.profile_pic) }}"
+                                alt="{{ user.first_name }} {{ user.last_name }}"
+                                class="w-full h-full object-cover">
+
+                        {% else %}
+
+                            <span class="text-2xl font-bold text-primary">
+                                {{ user.first_name[:1] if user.first_name else "" }}{{ user.last_name[:1] if user.last_name else "" }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                    <div class="flex-1">
+
+                        <input
+                            type="file"
+                            name="profile_pic"
+                            accept=".png,.jpg,.jpeg,.webp"
+                            class="w-full border rounded-xl px-4 py-3
+                                   text-sm
+                                   focus:outline-none
+                                   focus:ring-2 focus:ring-primary">
+
+                        <p class="text-xs text-gray-400 mt-2">
+                            PNG, JPG, JPEG or WEBP. Maximum size: 2MB.
+                        </p>
+
+                        {% if user.profile_pic %}
+
+                            <label class="flex items-center gap-2 mt-4">
+
+                                <input
+                                    type="checkbox"
+                                    name="remove_profile_pic"
+                                    value="1"
+                                    class="w-4 h-4 rounded">
+
+                                <span class="text-sm text-gray-600">
+                                    Remove current profile picture
+                                </span>
+
+                            </label>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- PERSONAL INFORMATION -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-b">
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Personal Information
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Update your basic account information.
+                </p>
+
+            </div>
+
+
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- FIRST NAME -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        First Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="first_name"
+                        value="{{ user.first_name or '' }}"
+                        required
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- LAST NAME -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Last Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="last_name"
+                        value="{{ user.last_name or '' }}"
+                        required
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- EMAIL -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        value="{{ user.email }}"
+                        required
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- PHONE -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Phone
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        value="{{ user.phone or '' }}"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- DATE OF BIRTH -->
+                <div>
+                    <label
+                        for="date_of_birth"
+                        class="block text-sm font-semibold text-on-surface mb-2"
+                    >
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date_of_birth"
+                        name="date_of_birth"
+                        value="{% if user.date_of_birth %}{{ user.date_of_birth.strftime('%Y-%m-%d') }}{% endif %}"
+                        class="w-full rounded-2xl border border-outline-variant/50 bg-white px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    >
+                </div>
+
+
+                <!-- DATE JOINED -->
+                <div>
+                    <label
+                        for="date_joined"
+                        class="block text-sm font-semibold text-on-surface mb-2"
+                    >
+                        Date Joined
+                        <span class="text-secondary font-normal">
+                            (Optional)
+                        </span>
+                    </label>
+
+                    <input
+                        type="date"
+                        id="date_joined"
+                        name="date_joined"
+                        value="{% if user.joined_date %}{{ user.joined_date.strftime('%Y-%m-%d') }}{% endif %}"
+                        class="w-full rounded-2xl border border-outline-variant/50 bg-white px-4 py-3 text-on-surface focus:outline-none focus:ring-2 focus:ring-primary/20"
+                    >
+
+                    <p class="text-xs text-secondary mt-2">
+                        This helps AlmaTouch calculate your work anniversary and time with {{ org.name }}.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- PERSONALIZATION -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-t border-b">
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Personalization
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Help Alma Touch personalize your experience.
+                </p>
+
+            </div>
+
+
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- GENDER -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Gender
+                    </label>
+
+                    <select
+                        name="gender"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="">
+                            Prefer not to say
+                        </option>
+
+                        <option value="male"
+                            {% if settings.gender == "male" %}selected{% endif %}>
+                            Male
+                        </option>
+
+                        <option value="female"
+                            {% if settings.gender == "female" %}selected{% endif %}>
+                            Female
+                        </option>
+
+                        <option value="other"
+                            {% if settings.gender == "other" %}selected{% endif %}>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MARITAL STATUS -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Marital Status
+                    </label>
+
+                    <select
+                        name="marital_status"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="">
+                            Prefer not to say
+                        </option>
+
+                        <option value="single"
+                            {% if settings.marital_status == "single" %}selected{% endif %}>
+                            Single
+                        </option>
+
+                        <option value="married"
+                            {% if settings.marital_status == "married" %}selected{% endif %}>
+                            Married
+                        </option>
+
+                        <option value="other"
+                            {% if settings.marital_status == "other" %}selected{% endif %}>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- NATIONALITY -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Nationality
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nationality"
+                        value="{{ settings.nationality or '' }}"
+                        placeholder="e.g. Nigerian"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- STATE -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        State
+                    </label>
+
+                    <input
+                        type="text"
+                        name="state"
+                        value="{{ settings.state or '' }}"
+                        placeholder="e.g. Ondo"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- RELIGION -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Religion
+                    </label>
+
+                    <input
+                        type="text"
+                        name="religion"
+                        value="{{ settings.religion or '' }}"
+                        placeholder="Optional"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- TIMEZONE -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Timezone
+                    </label>
+
+                    <select
+                        name="timezone"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="Africa/Lagos"
+                            {% if settings.timezone == "Africa/Lagos" %}selected{% endif %}>
+                            Africa/Lagos (WAT)
+                        </option>
+
+                        <option value="Africa/Accra"
+                            {% if settings.timezone == "Africa/Accra" %}selected{% endif %}>
+                            Africa/Accra (GMT)
+                        </option>
+
+                        <option value="Europe/London"
+                            {% if settings.timezone == "Europe/London" %}selected{% endif %}>
+                            Europe/London
+                        </option>
+
+                        <option value="America/New_York"
+                            {% if settings.timezone == "America/New_York" %}selected{% endif %}>
+                            America/New_York
+                        </option>
+
+                        <option value="America/Los_Angeles"
+                            {% if settings.timezone == "America/Los_Angeles" %}selected{% endif %}>
+                            America/Los_Angeles
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- BIO -->
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm font-medium mb-2">
+                        Bio
+                    </label>
+
+                    <textarea
+                        name="bio"
+                        rows="3"
+                        placeholder="Tell us a little about yourself..."
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">{{ settings.bio or '' }}</textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- COMMUNICATION PREFERENCES -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-t border-b">
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Communication Preferences
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Choose how Alma Touch communicates with you.
+                </p>
+
+            </div>
+
+
+            <div class="p-6 space-y-6">
+
+                <!-- PREFERRED CHANNEL -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Preferred Channel
+                    </label>
+
+                    <select
+                        name="preferred_channel"
+                        class="w-full md:w-1/2 border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="email"
+                            {% if settings.preferred_channel == "email" %}selected{% endif %}>
+                            Email
+                        </option>
+
+                        <option value="push"
+                            {% if settings.preferred_channel == "push" %}selected{% endif %}>
+                            Push Notifications
+                        </option>
+
+                        <option value="sms"
+                            {% if settings.preferred_channel == "sms" %}selected{% endif %}>
+                            SMS
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- MESSAGE FREQUENCY -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Message Frequency
+                    </label>
+
+                    <select
+                        name="message_frequency"
+                        class="w-full md:w-1/2 border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="daily"
+                            {% if user.message_frequency == "daily" %}selected{% endif %}>
+                            Daily
+                        </option>
+
+                        <option value="weekly"
+                            {% if user.message_frequency == "weekly" %}selected{% endif %}>
+                            Weekly
+                        </option>
+
+                        <option value="monthly"
+                            {% if user.message_frequency == "monthly" %}selected{% endif %}>
+                            Monthly
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- NOTIFICATIONS -->
+                <label class="flex items-start gap-3">
+
+                    <input
+                        type="checkbox"
+                        name="receive_notifications"
+                        value="1"
+                        {% if user.receive_notifications %}checked{% endif %}
+                        class="w-4 h-4 mt-1 rounded">
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-900">
+                            Receive notifications
+                        </p>
+
+                        <p class="text-xs text-gray-500 mt-1">
+                            Allow Alma Touch to send you notifications
+                            about important dates, activities and messages.
+                        </p>
+
+                    </div>
+
+                </label>
+
+
+                <!-- FAITH MESSAGES -->
+                <label class="flex items-start gap-3">
+
+                    <input
+                        type="checkbox"
+                        name="receive_faith_messages"
+                        value="1"
+                        {% if settings.receive_faith_messages %}checked{% endif %}
+                        class="w-4 h-4 mt-1 rounded">
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-900">
+                            Receive faith-based messages
+                        </p>
+
+                        <p class="text-xs text-gray-500 mt-1">
+                            Allow Alma Touch to include faith-based messages
+                            where appropriate.
+                        </p>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- FOOTER -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-t flex justify-end">
+
+                <button
+                    type="submit"
+                    class="bg-primary text-white px-6 py-3
+                           rounded-xl font-medium
+                           hover:opacity-90 transition">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

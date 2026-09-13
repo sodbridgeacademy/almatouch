@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "on-secondary-container": "#6a6459",
+                  "surface-container-low": "#f5f3f3",
+                  "on-surface": "#1b1c1c",
+                  "on-secondary-fixed-variant": "#4c463c",
+                  "surface-container-highest": "#e4e2e2",
+                  "primary": "#45664f",
+                  "tertiary-container": "#9895ab",
+                  "outline-variant": "#c2c8c0",
+                  "on-tertiary-fixed": "#1b1a2b",
+                  "surface-tint": "#45664f",
+                  "background": "#fbf9f8",
+                  "surface-variant": "#e4e2e2",
+                  "surface-container-lowest": "#ffffff",
+                  "on-secondary-fixed": "#1f1b13",
+                  "inverse-surface": "#303031",
+                  "on-tertiary-container": "#2f2e40",
+                  "inverse-on-surface": "#f2f0f0",
+                  "outline": "#727972",
+                  "on-primary": "#ffffff",
+                  "on-error-container": "#93000a",
+                  "inverse-primary": "#abcfb3",
+                  "surface-container-high": "#e9e8e7",
+                  "surface-bright": "#fbf9f8",
+                  "error": "#ba1a1a",
+                  "on-tertiary-fixed-variant": "#464558",
+                  "surface-dim": "#dbdad9",
+                  "tertiary-fixed-dim": "#c8c4dc",
+                  "tertiary": "#5e5c71",
+                  "surface-container": "#efeded",
+                  "on-primary-fixed": "#00210f",
+                  "secondary-container": "#ebe1d3",
+                  "primary-container": "#7da086",
+                  "surface": "#fbf9f8",
+                  "on-surface-variant": "#424842",
+                  "on-tertiary": "#ffffff",
+                  "on-secondary": "#ffffff",
+                  "secondary": "#645e53",
+                  "on-error": "#ffffff",
+                  "secondary-fixed-dim": "#cec5b8",
+                  "on-primary-fixed-variant": "#2d4e38",
+                  "primary-fixed": "#c6ecce",
+                  "error-container": "#ffdad6",
+                  "on-primary-container": "#163623",
+                  "primary-fixed-dim": "#abcfb3",
+                  "on-background": "#1b1c1c",
+                  "tertiary-fixed": "#e4e0f8",
+                  "secondary-fixed": "#ebe1d3"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "xs": "0.25rem",
+                  "md": "1rem",
+                  "margin": "2rem",
+                  "xl": "2.5rem",
+                  "sm": "0.5rem",
+                  "lg": "1.5rem",
+                  "gutter": "1.5rem"
+          },
+          "fontFamily": {
+                  "body-md": ["Plus Jakarta Sans"],
+                  "headline-lg": ["Plus Jakarta Sans"],
+                  "caption": ["Plus Jakarta Sans"],
+                  "body-lg": ["Plus Jakarta Sans"],
+                  "headline-md": ["Plus Jakarta Sans"],
+                  "label-md": ["Plus Jakarta Sans"],
+                  "display": ["Plus Jakarta Sans"]
+          },
+          "fontSize": {
+                  "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                  "headline-lg": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                  "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                  "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                  "headline-md": ["22px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                  "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                  "display": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+    }
+    .modal-overlay {
+      background-color: rgba(27, 28, 28, 0.4);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="bg-background font-body-md text-on-surface antialiased overflow-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-4 h-screen w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 font-['Plus_Jakarta_Sans'] text-sm antialiased shadow-[4px_0_20px_rgba(0,0,0,0.02)] z-10">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-lg" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<h1 class="text-lg font-bold text-emerald-800 dark:text-emerald-100 tracking-tight">OrgManager</h1>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold rounded-lg active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="corporate_fare">corporate_fare</span>
+<span>Departments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Staff</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<div class="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors active:scale-[0.98] transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content & Top Bar Shell -->
+<main class="ml-64 min-h-screen relative">
+<header class="flex justify-between items-center w-full px-8 h-16 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md font-['Plus_Jakarta_Sans'] text-base border-b border-slate-100 dark:border-slate-800 shadow-sm fixed top-0 right-0 z-10 max-w-[calc(100%-16rem)]">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm" data-icon="search">search</span>
+<input class="w-full pl-10 pr-4 py-1.5 rounded-full border border-slate-100 bg-slate-50 text-sm focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" placeholder="Search departments..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-emerald-600 transition-colors focus:ring-2 focus:ring-emerald-500/20 outline-none">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center text-slate-400 hover:text-emerald-600 transition-colors focus:ring-2 focus:ring-emerald-500/20 outline-none">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border-2 border-emerald-50">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a female organization administrator with a friendly and serene expression. The setting is a bright, modern corporate office with soft, natural lighting and a minimalist background. The visual style follows the Guided Tranquility aesthetic with a palette of soft whites and emerald greens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClhjJwECVvnxtiX2myjv6KVn2rd7zmX_E4Rk4YBARigciJGzX_mEyio_VMmgjDw0TIlAyiRV0gMGCLq5oMV5XnMjCKi4gQq2LsXXKf3cHUH2BynlDSL6GE_c3xMCptsUM-uebs8RAJ2roksFV07RdTaas7YSxidQOioug3hZdFIRUpB7thC3g5BhYwjnpar_z3rHdjZSDKxQBqIVoWHLtx4-ZQl0dD6jKa7bs1qk067VX-9gSyUi7DUU3HZMC7VnZC1c2WPvUX_bw"/>
+</div>
+</div>
+</header>
+<!-- Dashboard Content Canvas -->
+<div class="pt-24 px-8 pb-12 max-w-6xl mx-auto space-y-xl">
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Department Management</h2>
+<p class="text-on-surface-variant font-body-md">Overview of organizational structure and resources.</p>
+</div>
+<button class="bg-primary text-on-primary px-lg py-2.5 rounded-xl font-label-md flex items-center gap-2 shadow-sm hover:opacity-90 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+          Add Department
+        </button>
+</div>
+<!-- Department Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+<!-- Card 1: Active -->
+<div class="bg-white p-lg rounded-xl border border-[#E0E0E0] shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4 hover:border-primary/30 transition-colors">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-lg bg-emerald-50 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="vital_signs">vital_signs</span>
+</div>
+<span class="bg-primary/10 text-primary px-3 py-1 rounded-full text-caption font-label-md">8 Staff</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">Operations</h3>
+<p class="text-on-surface-variant text-caption mt-1">Core logistics and workflow management.</p>
+</div>
+<div class="flex justify-between items-center pt-4">
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-sm font-medium">
+<span class="material-symbols-outlined text-base" data-icon="delete">delete</span>
+              Delete
+            </button>
+<button class="text-primary hover:underline text-sm font-medium">Manage</button>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-lg rounded-xl border border-[#E0E0E0] shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-lg bg-tertiary-fixed-dim/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" data-icon="stethoscope">stethoscope</span>
+</div>
+<span class="bg-tertiary/10 text-tertiary px-3 py-1 rounded-full text-caption font-label-md">14 Staff</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">Patient Care</h3>
+<p class="text-on-surface-variant text-caption mt-1">Direct health services and caregiver coordination.</p>
+</div>
+<div class="flex justify-between items-center pt-4">
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-sm font-medium">
+<span class="material-symbols-outlined text-base" data-icon="delete">delete</span>
+              Delete
+            </button>
+<button class="text-primary hover:underline text-sm font-medium">Manage</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-lg rounded-xl border border-[#E0E0E0] shadow-[0_4px_20px_rgba(0,0,0,0.02)] space-y-4">
+<div class="flex justify-between items-start">
+<div class="w-12 h-12 rounded-lg bg-secondary-container/30 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined" data-icon="volunteer_activism">volunteer_activism</span>
+</div>
+<span class="bg-secondary/10 text-secondary px-3 py-1 rounded-full text-caption font-label-md">5 Staff</span>
+</div>
+<div>
+<h3 class="font-headline-md text-headline-md">Social Services</h3>
+<p class="text-on-surface-variant text-caption mt-1">Community outreach and emotional support.</p>
+</div>
+<div class="flex justify-between items-center pt-4">
+<button class="text-on-surface-variant hover:text-error transition-colors flex items-center gap-1 text-sm font-medium">
+<span class="material-symbols-outlined text-base" data-icon="delete">delete</span>
+              Delete
+            </button>
+<button class="text-primary hover:underline text-sm font-medium">Manage</button>
+</div>
+</div>
+</div>
+<!-- Resource Utilization Placeholder -->
+<div class="bg-surface-container-lowest border border-[#E0E0E0] rounded-xl p-xl flex gap-lg items-center">
+<div class="flex-1">
+<h4 class="font-headline-md text-headline-md mb-2">Resource Utilization</h4>
+<p class="text-on-surface-variant font-body-md mb-lg">Monitor staff allocation across all departments in real-time.</p>
+<div class="w-full bg-surface-container h-4 rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary-container to-primary-container rounded-full" style="width: 65%;"></div>
+</div>
+<div class="mt-4 flex gap-4">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<span class="text-caption">Allocated (65%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 rounded-full bg-surface-container"></div>
+<span class="text-caption">Available (35%)</span>
+</div>
+</div>
+</div>
+<div class="hidden lg:block w-1/3">
+<img class="rounded-lg shadow-sm border border-slate-100" data-alt="A clean, minimalist data visualization dashboard showing organic shapes and soft green progress curves on a warm, sandy background. The aesthetic is modern and serene, emphasizing clarity and guided tranquility with sophisticated, low-contrast UI elements that suggest a calm administrative experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIcNBc4sm9Ui1YxfU04S0f9yH2oDztZioPil6OYs-e-xW6yFT0VaOz1Qucl50s8OEdhKdhr9-8Z75cFjZuqa3MqfL79bzUMe4Qh7ScHKga6gk74PWMcpDQEBZArm9UhW3gATXp963RrcTo7LK-C2z84RbYHz__k61mrPdubDXIl814iylTwLlHMRInYFJ0bAwZ8LiS9PvIlM5YQ5ys0fYysyHuJYLYnrQnLB3IZISn5fWatk10vU1M3LhrlIc5KStm0fTuLggIDtM"/>
+</div>
+</div>
+</div>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 modal-overlay flex items-center justify-center p-gutter">
+<!-- Delete Confirmation Modal -->
+<div class="bg-white w-full max-w-md rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-[#E0E0E0] overflow-hidden transform scale-100 opacity-100 transition-all">
+<div class="p-xl space-y-lg">
+<div class="flex flex-col items-center text-center space-y-4">
+<!-- Warning Icon Container -->
+<div class="w-16 h-16 bg-error-container/30 text-error flex items-center justify-center rounded-full">
+<span class="material-symbols-outlined text-4xl" data-icon="warning">warning</span>
+</div>
+<div class="space-y-2">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Delete Department?</h2>
+<p class="text-on-surface-variant font-body-md px-4">
+                Are you sure you want to delete the <span class="font-semibold text-on-surface">Operations</span> department? This action cannot be undone.
+              </p>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col sm:flex-row gap-3 pt-4">
+<button class="flex-1 py-3 px-6 rounded-xl border border-outline text-on-surface font-label-md hover:bg-surface-container transition-colors active:scale-[0.98]">
+              Cancel
+            </button>
+<button class="flex-1 py-3 px-6 rounded-xl bg-error text-on-error font-label-md shadow-[0_4px_12px_rgba(186,26,26,0.2)] hover:opacity-90 transition-all active:scale-[0.98]">
+              Delete
+            </button>
+</div>
+</div>
+<!-- Subtle progress-style footer line -->
+<div class="h-1.5 w-full bg-surface-container">
+<div class="h-full bg-error w-1/4 opacity-20"></div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

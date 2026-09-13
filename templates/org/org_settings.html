@@ -1,0 +1,595 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-xl max-w-5xl mx-auto">
+
+    <!-- BACK -->
+    <div class="mb-4">
+
+        <a href="{{ url_for('org.org_dashboard') }}"
+           class="inline-flex items-center gap-2
+                  text-gray-500 hover:text-primary
+                  transition-colors">
+
+            <span class="material-symbols-outlined text-xl">
+                arrow_back
+            </span>
+
+            <span class="text-sm font-medium">
+                Back to Dashboard
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- HEADER -->
+    <div class="mb-6">
+
+        <h2 class="text-2xl font-bold text-gray-900">
+            Organization Settings
+        </h2>
+
+        <p class="text-sm text-gray-500 mt-1">
+            Manage your organization's profile and preferences.
+        </p>
+
+    </div>
+
+
+    <!-- SETTINGS CARD -->
+    <!-- SETTINGS CARD -->
+    <form method="POST" enctype="multipart/form-data">
+
+        <div class="bg-white rounded-2xl border shadow-sm overflow-hidden">
+
+            <!-- ========================= -->
+            <!-- ORGANIZATION PROFILE -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-b">
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Organization Profile
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Update your organization's basic information.
+                </p>
+
+            </div>
+
+
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- ========================= -->
+                <!-- ORGANIZATION LOGO -->
+                <!-- ========================= -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm font-medium mb-2">
+                        Organization Logo
+                    </label>
+
+                    <div class="border rounded-2xl p-5">
+
+                        <div class="flex flex-col sm:flex-row
+                                    sm:items-center gap-5">
+
+                            <!-- CURRENT LOGO -->
+                            <div class="w-24 h-24 rounded-2xl
+                                        border bg-gray-50
+                                        flex items-center justify-center
+                                        overflow-hidden shrink-0">
+
+                                {% if org.logo %}
+
+                                    <img
+                                        src="{{ url_for('static', filename=org.logo) }}"
+                                        alt="{{ org.name }} logo"
+                                        class="w-full h-full object-contain p-2">
+
+                                {% else %}
+
+                                    <span class="material-symbols-outlined
+                                                 text-gray-300 text-4xl">
+                                        image
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!-- LOGO ACTIONS -->
+                            <div class="flex-1">
+
+                                <p class="text-sm font-medium text-gray-900">
+                                    {% if org.logo %}
+                                        Change your organization logo
+                                    {% else %}
+                                        Add your organization logo
+                                    {% endif %}
+                                </p>
+
+                                <p class="text-xs text-gray-500 mt-1">
+                                    Your logo may appear on organization
+                                    communications and other Alma Touch surfaces.
+                                </p>
+
+                                <input
+                                    type="file"
+                                    name="logo"
+                                    accept=".png,.jpg,.jpeg,.webp"
+                                    class="mt-4 w-full border rounded-xl
+                                           px-4 py-3 text-sm
+                                           focus:outline-none
+                                           focus:ring-2 focus:ring-primary">
+
+                                <p class="text-xs text-gray-400 mt-2">
+                                    PNG, JPG, JPEG or WEBP. Maximum size: 2MB.
+                                </p>
+
+                                {% if org.logo %}
+
+                                    <label class="flex items-center gap-2 mt-4">
+
+                                        <input
+                                            type="checkbox"
+                                            name="remove_logo"
+                                            value="1"
+                                            class="w-4 h-4 rounded">
+
+                                        <span class="text-sm text-gray-600">
+                                            Remove current logo
+                                        </span>
+
+                                    </label>
+
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- ORGANIZATION NAME -->
+                <!-- ========================= -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm font-medium mb-2">
+                        Organization Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        value="{{ org.name }}"
+                        required
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- ORGANIZATION TYPE -->
+                <!-- ========================= -->
+
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Organization Type
+                    </label>
+
+                    <select
+                        name="org_type"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="">
+                            Select organization type
+                        </option>
+
+                        <option value="company"
+                            {% if org.org_type == "company" %}selected{% endif %}>
+                            Company
+                        </option>
+
+                        <option value="ngo"
+                            {% if org.org_type == "ngo" %}selected{% endif %}>
+                            NGO
+                        </option>
+
+                        <option value="school"
+                            {% if org.org_type == "school" %}selected{% endif %}>
+                            School
+                        </option>
+
+                        <option value="hospital"
+                            {% if org.org_type == "hospital" %}selected{% endif %}>
+                            Hospital
+                        </option>
+
+                        <option value="government"
+                            {% if org.org_type == "government" %}selected{% endif %}>
+                            Government
+                        </option>
+
+                        <option value="other"
+                            {% if org.org_type == "other" %}selected{% endif %}>
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- INDUSTRY -->
+                <!-- ========================= -->
+
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Industry
+                    </label>
+
+                    <input
+                        type="text"
+                        name="industry"
+                        value="{{ org.industry or '' }}"
+                        placeholder="e.g. Technology"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- LOCATION -->
+                <!-- ========================= -->
+
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        name="location"
+                        value="{{ org.location or '' }}"
+                        placeholder="e.g. Lagos, Nigeria"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- COUNTRY -->
+                <!-- ========================= -->
+
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Country
+                    </label>
+
+                    <input
+                        type="text"
+                        value="{{ org.country or '' }}"
+                        disabled
+                        class="w-full border rounded-xl px-4 py-3
+                               bg-gray-50 text-gray-500">
+
+                    <p class="text-xs text-gray-400 mt-1">
+                        Country is used for calendar and national date information.
+                    </p>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- SLOGAN -->
+                <!-- ========================= -->
+
+                <div class="md:col-span-2">
+
+                    <label class="block text-sm font-medium mb-2">
+                        Slogan / Bio
+                    </label>
+
+                    <textarea
+                        name="slogan"
+                        rows="3"
+                        placeholder="Tell us a little about your organization..."
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">{{ org.slogan or '' }}</textarea>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- ORGANIZATION PREFERENCES -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-t border-b">
+
+                <h3 class="text-lg font-semibold text-gray-900">
+                    Organization Preferences
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Configure how Alma Touch works for your organization.
+                </p>
+
+            </div>
+
+
+            <div class="p-6 space-y-6">
+
+                <!-- COMMUNICATION TYPE -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Communication Type
+                    </label>
+
+                    <select
+                        name="comm_type"
+                        class="w-full md:w-1/2 border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="email"
+                            {% if settings.comm_type == "email" %}selected{% endif %}>
+                            Email
+                        </option>
+
+                        <option value="internal"
+                            {% if settings.comm_type == "internal" %}selected{% endif %}>
+                            In-app
+                        </option>
+
+                        <option value="both"
+                            {% if settings.comm_type == "both" %}selected{% endif %}>
+                            Email + In-app
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TIMEZONE -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Timezone
+                    </label>
+
+                    <select
+                        name="timezone"
+                        class="w-full md:w-1/2 border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="Africa/Lagos"
+                            {% if settings.timezone == "Africa/Lagos" %}selected{% endif %}>
+                            Africa/Lagos (WAT)
+                        </option>
+
+                        <option value="Africa/Accra"
+                            {% if settings.timezone == "Africa/Accra" %}selected{% endif %}>
+                            Africa/Accra (GMT)
+                        </option>
+
+                        <option value="Europe/London"
+                            {% if settings.timezone == "Europe/London" %}selected{% endif %}>
+                            Europe/London
+                        </option>
+
+                        <option value="America/New_York"
+                            {% if settings.timezone == "America/New_York" %}selected{% endif %}>
+                            America/New_York
+                        </option>
+
+                        <option value="America/Los_Angeles"
+                            {% if settings.timezone == "America/Los_Angeles" %}selected{% endif %}>
+                            America/Los_Angeles
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- DEFAULT VIEW -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Default Dashboard View
+                    </label>
+
+                    <select
+                        name="default_view"
+                        class="w-full md:w-1/2 border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="all"
+                            {% if settings.default_view == "all" %}selected{% endif %}>
+                            All
+                        </option>
+
+                        <option value="remembers"
+                            {% if settings.default_view == "remembers" %}selected{% endif %}>
+                            Remembers
+                        </option>
+
+                        <option value="events"
+                            {% if settings.default_view == "events" %}selected{% endif %}>
+                            Events
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- CHECK-IN FREQUENCY -->
+                <div>
+
+                    <label class="block text-sm font-medium mb-2">
+                        Check-in Frequency
+                    </label>
+
+                    <select
+                        name="checkin_frequency"
+                        class="w-full md:w-1/2 border rounded-xl px-4 py-3
+                               focus:outline-none
+                               focus:ring-2 focus:ring-primary">
+
+                        <option value="daily"
+                            {% if settings.checkin_frequency == "daily" %}selected{% endif %}>
+                            Daily
+                        </option>
+
+                        <option value="weekly"
+                            {% if settings.checkin_frequency == "weekly" %}selected{% endif %}>
+                            Weekly
+                        </option>
+
+                        <option value="monthly"
+                            {% if settings.checkin_frequency == "monthly" %}selected{% endif %}>
+                            Monthly
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- REMINDERS -->
+                <label class="flex items-start gap-3">
+
+                    <input
+                        type="checkbox"
+                        name="reminder_enabled"
+                        value="1"
+                        {% if settings.reminder_enabled %}checked{% endif %}
+                        class="w-4 h-4 mt-1 rounded">
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-900">
+                            Enable reminders
+                        </p>
+
+                        <p class="text-xs text-gray-500 mt-1">
+                            Allow Alma Touch to send reminders about upcoming
+                            dates and activities.
+                        </p>
+
+                    </div>
+
+                </label>
+
+
+                <!-- SELF JOIN -->
+                <label class="flex items-start gap-3">
+
+                    <input
+                        type="checkbox"
+                        name="allow_self_join"
+                        value="1"
+                        {% if settings.allow_self_join %}checked{% endif %}
+                        class="w-4 h-4 mt-1 rounded">
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-900">
+                            Allow self-join
+                        </p>
+
+                        <p class="text-xs text-gray-500 mt-1">
+                            Allow employees to join the organization without
+                            an invitation.
+                        </p>
+
+                    </div>
+
+                </label>
+
+
+                <!-- REQUIRE APPROVAL -->
+                <label class="flex items-start gap-3">
+
+                    <input
+                        type="checkbox"
+                        name="require_approval"
+                        value="1"
+                        {% if settings.require_approval %}checked{% endif %}
+                        class="w-4 h-4 mt-1 rounded">
+
+                    <div>
+
+                        <p class="text-sm font-medium text-gray-900">
+                            Require approval
+                        </p>
+
+                        <p class="text-xs text-gray-500 mt-1">
+                            Require an administrator to approve new members.
+                        </p>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- FOOTER -->
+            <!-- ========================= -->
+
+            <div class="p-6 border-t flex justify-end">
+
+                <button
+                    type="submit"
+                    class="bg-primary text-white px-6 py-3
+                           rounded-xl font-medium
+                           hover:opacity-90 transition">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

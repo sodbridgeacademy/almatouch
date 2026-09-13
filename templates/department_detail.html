@@ -1,0 +1,64 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-xl max-w-6xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold">{{ dept.name }}</h2>
+        <p class="text-gray-500">
+            {{ dept.description or "No description provided" }}
+        </p>
+    </div>
+
+    <!-- STATS -->
+    <div class="mb-6">
+        <p class="text-sm text-gray-600">
+            Total Members: <strong>{{ members|length }}</strong>
+        </p>
+    </div>
+
+    <!-- MEMBERS TABLE -->
+    <div class="bg-white rounded-xl border shadow">
+
+        <div class="p-4 border-b font-semibold">
+            Members
+        </div>
+
+        {% if members %}
+        <table class="w-full text-left">
+
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3">Full Name</th>
+                    <th class="px-6 py-3">Email</th>
+                    <th class="px-6 py-3">Joined</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for user in members %}
+                <tr>
+                    <td class="px-6 py-4">{{ user.first_name }} {{ user.last_name }}</td>
+                    <td class="px-6 py-4">{{ user.email }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        {{ user.created_at.strftime('%Y-%m-%d') }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+
+        {% else %}
+        <div class="p-8 text-center text-gray-500">
+            No members in this department yet
+        </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

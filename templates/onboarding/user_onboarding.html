@@ -1,0 +1,404 @@
+{% extends "user_base.html" %}
+
+{% block content %}
+
+<!-- Main Content Canvas -->
+<!-- Main Content Canvas -->
+
+<main class="flex-grow pt-24 pb-12 px-4 md:px-8">
+<div class="max-w-[800px] mx-auto">
+
+<!-- Progress -->
+
+<div class="mb-lg flex flex-col items-center">
+    <div class="w-full max-w-[400px] bg-surface-container-high h-1.5 rounded-full mb-sm overflow-hidden">
+        <div class="bg-primary h-full w-full rounded-full"></div>
+    </div>
+
+
+<span class="font-label-md text-label-md text-on-surface-variant">
+    Step 1 of 1
+</span>
+
+
+</div>
+
+<!-- Card -->
+
+<div class="bg-white rounded-2xl border border-outline-variant/30 shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
+
+<div class="p-xl md:p-xl">
+
+<!-- ========================= -->
+
+<!-- HEADER -->
+
+<!-- ========================= -->
+
+<div class="flex flex-col md:flex-row items-center gap-lg mb-xl">
+
+
+<div class="w-24 h-24 rounded-full bg-primary-fixed flex items-center justify-center shrink-0">
+    <span
+        class="material-symbols-outlined text-primary text-5xl"
+        style="font-variation-settings: 'FILL' 1;">
+        person_check
+    </span>
+</div>
+
+<div class="text-center md:text-left">
+
+    <h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">
+        Complete Your Profile
+    </h1>
+
+    <p class="font-body-md text-body-md text-on-surface-variant">
+        Just a few details to help us personalize your AlmaTouch experience.
+    </p>
+
+</div>
+
+
+</div>
+
+<!-- ========================= -->
+
+<!-- FORM -->
+
+<!-- ========================= -->
+
+<form method="POST" class="space-y-xl">
+
+<!-- ========================= -->
+
+<!-- PERSONAL INFORMATION -->
+
+<!-- ========================= -->
+
+<div class="space-y-md">
+
+
+<div>
+    <h3 class="font-headline-md text-headline-md text-on-surface">
+        About You
+    </h3>
+
+    <p class="font-caption text-caption text-on-surface-variant mt-xs">
+        These details help us provide a more relevant experience.
+    </p>
+</div>
+
+
+<!-- DATE OF BIRTH -->
+
+<div class="space-y-xs">
+
+    <label
+        class="font-label-md text-label-md text-on-surface block px-1"
+        for="dob">
+
+        Date of Birth
+        <span class="text-error">*</span>
+
+    </label>
+
+    <input
+        name="dob"
+        id="dob"
+        type="date"
+        required
+        class="w-full bg-surface-container-low border border-outline-variant
+               focus:border-primary focus:ring-1 focus:ring-primary
+               rounded-lg p-md font-body-md text-on-surface"/>
+
+    <p class="text-caption text-on-surface-variant px-1">
+        Used to personalize your experience and support age-appropriate engagement.
+    </p>
+
+</div>
+
+
+</div>
+
+<!-- ========================= -->
+
+<!-- ORGANIZATION -->
+
+<!-- ========================= -->
+
+<div class="space-y-md">
+
+<div>
+    <h3 class="font-headline-md text-headline-md text-on-surface">
+        Your Organization
+    </h3>
+
+    <p class="font-caption text-caption text-on-surface-variant mt-xs">
+        Tell us where you belong within the organization.
+    </p>
+</div>
+
+
+<!-- DEPARTMENT -->
+
+<div class="space-y-xs">
+
+    <label
+        class="font-label-md text-label-md text-on-surface block px-1">
+
+        Department / Group
+        {% if departments and departments|length > 0 %}
+            <span class="text-error">*</span>
+        {% endif %}
+
+    </label>
+
+
+    {% if departments and departments|length > 0 %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+            {% for dept in departments %}
+
+            <label
+                class="flex items-center gap-3 p-4
+                       border border-outline-variant rounded-xl
+                       hover:border-primary hover:bg-primary-fixed/10
+                       cursor-pointer transition-all">
+
+                <input
+                    type="radio"
+                    name="department_id"
+                    value="{{ dept.id }}"
+                    required
+                    class="w-4 h-4 text-primary focus:ring-primary"/>
+
+                <span class="font-body-md text-on-surface">
+                    {{ dept.name }}
+                </span>
+
+            </label>
+
+            {% endfor %}
+
+        </div>
+
+        <p class="text-caption text-on-surface-variant px-1">
+            Select the department or group you currently belong to.
+        </p>
+
+    {% else %}
+
+        <div class="p-md bg-surface-container-low rounded-lg
+                    border border-outline-variant">
+
+            <div class="flex items-start gap-sm">
+
+                <span class="material-symbols-outlined text-primary">
+                    info
+                </span>
+
+                <div>
+
+                    <p class="text-body-md text-on-surface-variant">
+                        Your organization has not created any departments yet.
+                    </p>
+
+                    <p class="text-caption text-on-surface-variant mt-1">
+                        You can continue and your administrator can assign
+                        you to a group later.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+</div>
+
+<!-- ========================= -->
+
+<!-- COMMUNICATION CONSENT -->
+
+<!-- ========================= -->
+
+<div class="space-y-md">
+
+
+<div>
+    <h3 class="font-headline-md text-headline-md text-on-surface">
+        Personalized Experience
+    </h3>
+
+    <p class="font-caption text-caption text-on-surface-variant mt-xs">
+        AlmaTouch can use your preferences to provide relevant
+        check-ins and organizational communications.
+    </p>
+</div>
+
+
+<!-- CONSENT -->
+
+<label
+    class="flex items-start gap-3 p-md
+           bg-primary-fixed/10
+           border border-primary/20
+           rounded-xl cursor-pointer">
+
+    <input
+        type="checkbox"
+        name="consent_given"
+        value="1"
+        required
+        class="mt-1 w-4 h-4 text-primary
+               focus:ring-primary"/>
+
+    <span class="text-body-md text-on-surface-variant">
+
+        I agree to receive personalized check-ins, wellness messages,
+        and relevant updates from my organization through AlmaTouch.
+
+    </span>
+
+</label>
+
+<p class="text-caption text-on-surface-variant px-1">
+    You can manage your communication preferences later from Settings.
+</p>
+
+
+</div>
+
+<!-- ========================= -->
+
+<!-- PRIVACY NOTE -->
+
+<!-- ========================= -->
+
+<div class="flex items-start gap-md p-lg
+            bg-secondary-fixed/20 rounded-2xl">
+
+<span class="material-symbols-outlined text-secondary">
+    shield
+</span>
+
+<div>
+
+    <h4 class="font-label-md text-secondary mb-xs">
+        Your Information
+    </h4>
+
+    <p class="font-caption text-on-surface-variant">
+        Your profile information is used to personalize your AlmaTouch
+        experience within your organization. You can manage available
+        profile and communication preferences from your Settings.
+    </p>
+
+</div>
+
+</div>
+
+<!-- ========================= -->
+
+<!-- ACTIONS -->
+
+<!-- ========================= -->
+
+<div class="pt-xl border-t border-surface-container-high">
+
+<button
+    type="submit"
+    class="w-full bg-primary text-white
+           font-headline-md py-md px-xl
+           rounded-full shadow-lg
+           hover:bg-primary-container
+           active:scale-[0.98]
+           transition-all
+           flex items-center justify-center gap-sm">
+
+    Complete Profile
+
+    <span class="material-symbols-outlined">
+        arrow_forward
+    </span>
+
+</button>
+
+<p class="text-caption text-center text-on-surface-variant mt-md">
+    You can update your profile and preferences later from Settings.
+</p>
+
+
+</div>
+
+</form>
+
+</div>
+</div>
+
+<!-- ========================= -->
+
+<!-- TRUST / VALUE SECTION -->
+
+<!-- ========================= -->
+
+<div class="mt-xl grid grid-cols-1 md:grid-cols-2 gap-lg">
+
+
+<div class="bg-primary-fixed/20 p-lg rounded-2xl flex items-start gap-md">
+
+    <span class="material-symbols-outlined text-primary">
+        lock
+    </span>
+
+    <div>
+
+        <h4 class="font-label-md text-primary mb-xs">
+            Privacy First
+        </h4>
+
+        <p class="font-caption text-on-surface-variant">
+            Your personal information is handled securely and used
+            to support your experience.
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="bg-secondary-fixed/20 p-lg rounded-2xl flex items-start gap-md">
+
+    <span class="material-symbols-outlined text-secondary">
+        auto_awesome
+    </span>
+
+    <div>
+
+        <h4 class="font-label-md text-secondary mb-xs">
+            Personalized Experience
+        </h4>
+
+        <p class="font-caption text-on-surface-variant">
+            Your profile helps AlmaTouch deliver more relevant
+            interactions and organizational engagement.
+        </p>
+
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+</main>
+
+
+{% endblock %}

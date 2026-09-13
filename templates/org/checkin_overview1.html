@@ -1,0 +1,84 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl font-bold mb-8">Team Check-in Responses</h2>
+
+    {% if checkins %}
+        {% for date_key, users in checkins.items() %}
+            <div class="mb-10">
+                <h3 class="text-xl font-semibold mb-4 text-gray-700">
+                    {{ users[list(users.keys())[0]].display_date }}
+                </h3>
+
+                {% for user_key, data in users.items() %}
+                    <div class="mb-6 bg-white border rounded-3xl overflow-hidden">
+                        <div class="px-6 py-4 bg-gray-50 border-b flex justify-between items-center">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center font-medium">
+                                    {{ data.user.first_name[0] }}
+                                </div>
+                                <div>
+                                    <p class="font-semibold">{{ data.user.first_name }} {{ data.user.last_name }}</p>
+                                    <p class="text-xs text-gray-500">{{ data.time }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-6 space-y-6">
+                            {% for q_text, answer in data.answers.items() %}
+                                <div class="flex flex-col md:flex-row gap-6">
+                                    <div class="md:w-5/12 font-medium text-gray-700">
+                                        {{ q_text }}
+                                    </div>
+                                    <div class="md:w-7/12">
+                                        {% if "How was your" in q_text or "How are you" in q_text %}
+                                            <div class="inline-flex items-center gap-3 px-6 py-4 bg-gray-100 rounded-2xl">
+                                                {% if answer == '1' %}😫{% elif answer == '2' %}😔{% elif answer == '3' %}😐{% elif answer == '4' %}🙂{% elif answer == '5' %}✨{% else %}❓{% endif %}
+                                                <span class="font-medium">
+                                                    {% if answer == '1' %}Struggling{% elif answer == '2' %}Low{% elif answer == '3' %}Okay{% elif answer == '4' %}Good{% elif answer == '5' %}Great{% else %}{{ answer }}{% endif %}
+                                                </span>
+                                            </div>
+                                        {% elif answer in ['yes', 'no'] %}
+                                            <span class="px-6 py-4 rounded-2xl font-medium
+                                                {% if answer == 'yes' %}bg-emerald-100 text-emerald-700{% else %}bg-gray-200 text-gray-600{% endif %}">
+                                                {{ answer|capitalize }}
+                                            </span>
+                                        {% elif ',' in answer or '_' in answer %}
+                                            <div class="flex flex-wrap gap-2">
+                                                {% for item in answer.split(',') %}
+                                                    <span class="bg-blue-100 text-blue-700 px-4 py-2 rounded-2xl text-sm">
+                                                        {{ item.replace('_', ' ')|title }}
+                                                    </span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            <p class="bg-gray-50 p-5 rounded-2xl">{{ answer if answer else 'No response' }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+
+        <!-- Pagination -->
+        {% if pagination and pagination.pages > 1 %}
+        <div class="flex justify-center gap-4 mt-12">
+            {% if pagination.has_prev %}
+                <a href="{{ url_for('org.org_checkin_responses', page=pagination.prev_num) }}" class="px-6 py-3 border rounded-2xl hover:bg-gray-100">← Previous</a>
+            {% endif %}
+            <span class="py-3 px-4">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+            {% if pagination.has_next %}
+                <a href="{{ url_for('org.org_checkin_responses', page=pagination.next_num) }}" class="px-6 py-3 border rounded-2xl hover:bg-gray-100">Next →</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+    {% else %}
+        <p class="text-center text-gray-500 py-20">No responses yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

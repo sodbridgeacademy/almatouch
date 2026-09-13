@@ -1,0 +1,1654 @@
+{% extends "user_base.html" %}
+
+{% block title %}My Remembers | AlmaTouch{% endblock %}
+
+{% block content %}
+
+<div class="space-y-6">
+
+<!-- =========================
+     BACK
+========================== -->
+
+<div>
+    <a href="{{ url_for('user.user_dashboard') }}"
+       class="inline-flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-900 transition">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-4 h-4"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 19l-7-7 7-7"/>
+
+        </svg>
+
+        Back to Dashboard
+
+    </a>
+</div>
+
+
+<!-- =========================
+     HEADER
+========================== -->
+
+<div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+
+    <div>
+
+        <h1 class="text-2xl font-bold text-gray-900">
+            My Remembers
+        </h1>
+
+        <p class="mt-1 text-sm text-gray-500">
+            Important dates AlmaTouch is remembering for you.
+        </p>
+
+    </div>
+
+
+    <button type="button"
+            id="openAddRemember"
+            class="inline-flex items-center justify-center gap-2 rounded-xl
+                   px-4 py-2.5 text-sm font-semibold text-white
+                   transition hover:opacity-90"
+            style="background-color: #45664f;">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             class="w-4 h-4"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke="currentColor">
+
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"/>
+
+        </svg>
+
+        Add Remember
+
+    </button>
+
+</div>
+
+
+<!-- =========================
+     SOURCE CARDS
+========================== -->
+
+<div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+
+
+    <!-- MY REMEMBERS -->
+
+    <a href="{{ url_for('user.user_remembers', source='personal') }}"
+       class="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm
+              transition hover:border-gray-300 hover:shadow-md">
+
+        <div class="flex items-start justify-between">
+
+            <div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    My Remembers
+                </p>
+
+                <p class="mt-2 text-3xl font-bold text-gray-900">
+                    {{ personal_count }}
+                </p>
+
+                <p class="mt-1 text-xs text-gray-500">
+                    Personal dates and reminders
+                </p>
+
+            </div>
+
+
+            <div class="rounded-lg p-2.5"
+                 style="background-color: rgba(69, 102, 79, 0.10);">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-5 w-5"
+                     style="color: #45664f;"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 7V3m8 4V3m-9 8h10m-7 8h6a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2h2"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </a>
+
+
+    <!-- ORGANIZATION REMEMBERS -->
+
+    <a href="{{ url_for('user.user_remembers', source='organization') }}"
+       class="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm
+              transition hover:border-gray-300 hover:shadow-md">
+
+        <div class="flex items-start justify-between">
+
+            <div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    Organization Remembers
+                </p>
+
+                <p class="mt-2 text-3xl font-bold text-gray-900">
+                    {{ organization_count }}
+                </p>
+
+                <p class="mt-1 text-xs text-gray-500">
+                    Dates managed by {{ org.name }}
+                </p>
+
+            </div>
+
+
+            <div class="rounded-lg bg-gray-100 p-2.5">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-5 w-5 text-gray-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0H5m14 0h2M9 7h6m-6 4h6m-6 4h6"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </a>
+
+
+    <!-- SHARED / NATIONAL -->
+
+    <a href="{{ url_for('user.user_remembers', source='shared') }}"
+       class="group rounded-xl border border-gray-200 bg-white p-5 shadow-sm
+              transition hover:border-gray-300 hover:shadow-md">
+
+        <div class="flex items-start justify-between">
+
+            <div>
+
+                <p class="text-sm font-medium text-gray-500">
+                    Shared / National
+                </p>
+
+                <p class="mt-2 text-3xl font-bold text-gray-900">
+                    {{ shared_count }}
+                </p>
+
+                <p class="mt-1 text-xs text-gray-500">
+                    Public and national dates
+                </p>
+
+            </div>
+
+
+            <div class="rounded-lg bg-gray-100 p-2.5">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-5 w-5 text-gray-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M3 12h18M12 3v18M5.64 5.64a9 9 0 1012.72 12.72A9 9 0 005.64 5.64z"/>
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </a>
+
+</div>
+
+
+<!-- =========================
+     ALL REMEMBERS TOTAL
+========================== -->
+
+<div class="flex flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
+
+    <div>
+
+        <h2 class="text-lg font-semibold text-gray-900">
+            All Remembers
+        </h2>
+
+        <p class="text-sm text-gray-500">
+            {{ total_count }} total Remembers
+        </p>
+
+    </div>
+
+
+    {% if total_items %}
+
+        <p class="text-xs text-gray-400">
+
+            Showing
+            {{ ((page - 1) * per_page) + 1 }}
+            to
+            {{ [page * per_page, total_items] | min }}
+            of
+            {{ total_items }}
+
+        </p>
+
+    {% endif %}
+
+</div>
+
+
+<!-- =========================
+     FILTERS
+========================== -->
+
+<form method="GET"
+      class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+
+
+        <!-- SOURCE -->
+
+        <div>
+
+            <label for="source"
+                   class="block text-xs font-medium text-gray-600">
+
+                Source
+
+            </label>
+
+            <select id="source"
+                    name="source"
+                    class="mt-1.5 block w-full rounded-lg border border-gray-300
+                           bg-white px-3 py-2.5 text-sm outline-none
+                           focus:border-gray-500 focus:ring-1 focus:ring-gray-500">
+
+                <option value="all"
+                        {% if source_filter == "all" %}selected{% endif %}>
+                    All Sources
+                </option>
+
+                <option value="personal"
+                        {% if source_filter == "personal" %}selected{% endif %}>
+                    My Remembers
+                </option>
+
+                <option value="organization"
+                        {% if source_filter == "organization" %}selected{% endif %}>
+                    Organization
+                </option>
+
+                <option value="shared"
+                        {% if source_filter == "shared" %}selected{% endif %}>
+                    Shared / National
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- TYPE -->
+
+        <div>
+
+            <label for="type"
+                   class="block text-xs font-medium text-gray-600">
+
+                Type
+
+            </label>
+
+            <select id="type"
+                    name="type"
+                    class="mt-1.5 block w-full rounded-lg border border-gray-300
+                           bg-white px-3 py-2.5 text-sm outline-none
+                           focus:border-gray-500 focus:ring-1 focus:ring-gray-500">
+
+                <option value="all"
+                        {% if type_filter == "all" %}selected{% endif %}>
+                    All Types
+                </option>
+
+
+                {% for remember_type in type_options %}
+
+                    <option value="{{ remember_type }}"
+                            {% if type_filter == remember_type %}selected{% endif %}>
+
+                        {{ remember_type|replace('_', ' ')|title }}
+
+                    </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+
+        <!-- APPLY / CLEAR -->
+
+        <div class="flex items-end gap-2">
+
+            <button type="submit"
+                    class="inline-flex items-center justify-center rounded-xl
+                           px-4 py-2.5 text-sm font-semibold text-white
+                           transition hover:opacity-90"
+                    style="background-color: #45664f;">
+
+                Apply Filters
+
+            </button>
+
+
+            {% if source_filter != "all" or type_filter != "all" %}
+
+                <a href="{{ url_for('user.user_remembers') }}"
+                   class="inline-flex items-center justify-center rounded-xl
+                          border border-gray-200 px-4 py-2.5
+                          text-sm font-medium text-gray-700
+                          hover:bg-gray-100 transition">
+
+                    Clear
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</form>
+
+
+<!-- =========================
+     REMEMBERS LIST
+========================== -->
+
+<div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+
+    {% if remembers %}
+
+        <div class="divide-y divide-gray-100">
+
+            {% for remember in remembers %}
+
+                <div class="px-6 py-5 hover:bg-gray-50 transition">
+
+                    <div class="flex flex-col gap-4 sm:flex-row
+                                sm:items-center sm:justify-between">
+
+
+                        <!-- DATE + DETAILS -->
+
+                        <div class="flex items-start gap-4">
+
+                            <div class="flex h-12 w-12 shrink-0 flex-col
+                                        items-center justify-center rounded-lg bg-gray-100">
+
+                                <span class="text-xs font-medium uppercase text-gray-500">
+
+                                    {{ remember.date.strftime('%b') }}
+
+                                </span>
+
+                                <span class="text-lg font-bold text-gray-900">
+
+                                    {{ remember.date.strftime('%d') }}
+
+                                </span>
+
+                            </div>
+
+
+                            <div class="min-w-0">
+
+                                <h3 class="text-sm font-semibold text-gray-900">
+
+                                    {{ remember.name }}
+
+                                </h3>
+
+
+                                <p class="mt-1 text-xs text-gray-500">
+
+                                    {{ remember.date.strftime('%A, %B %d, %Y') }}
+
+                                </p>
+
+
+                                <div class="mt-2 flex flex-wrap gap-2">
+
+
+                                    <!-- SOURCE -->
+
+                                    {% if remember.source == "personal" %}
+
+                                        <span class="inline-flex items-center rounded-full
+                                                     px-2.5 py-1 text-xs font-medium"
+                                              style="background-color: rgba(69, 102, 79, 0.10); color: #45664f;">
+
+                                            Personal
+
+                                        </span>
+
+
+                                    {% elif remember.source == "organization" %}
+
+                                        <span class="inline-flex items-center rounded-full
+                                                     bg-gray-100 px-2.5 py-1 text-xs
+                                                     font-medium text-gray-700">
+
+                                            Organization
+
+                                        </span>
+
+
+                                    {% elif remember.source == "shared" %}
+
+                                        <span class="inline-flex items-center rounded-full
+                                                     bg-blue-50 px-2.5 py-1 text-xs
+                                                     font-medium text-blue-700">
+
+                                            Shared
+
+                                        </span>
+
+                                    {% endif %}
+
+
+                                    <!-- TYPE -->
+
+                                    <span class="inline-flex items-center rounded-full
+                                                 bg-gray-100 px-2.5 py-1 text-xs
+                                                 font-medium text-gray-600">
+
+                                        {{ remember.type|replace('_', ' ')|title }}
+
+                                    </span>
+
+
+                                    <!-- KIND -->
+
+                                    {% if remember.kind == "system" %}
+
+                                        <span class="inline-flex items-center rounded-full
+                                                     bg-gray-50 px-2.5 py-1 text-xs
+                                                     font-medium text-gray-500">
+
+                                            Managed in Profile
+
+                                        </span>
+
+
+                                    {% elif remember.kind == "user" %}
+
+                                        <span class="inline-flex items-center rounded-full
+                                                     bg-gray-50 px-2.5 py-1 text-xs
+                                                     font-medium text-gray-500">
+
+                                            My Remember
+
+                                        </span>
+
+
+                                    {% elif remember.kind == "organization" %}
+
+                                        <span class="inline-flex items-center rounded-full
+                                                     bg-gray-50 px-2.5 py-1 text-xs
+                                                     font-medium text-gray-500">
+
+                                            Managed by Organization
+
+                                        </span>
+
+
+                                    {% elif remember.kind == "shared" %}
+
+                                        <span class="inline-flex items-center rounded-full
+                                                     bg-gray-50 px-2.5 py-1 text-xs
+                                                     font-medium text-gray-500">
+
+                                            Shared
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ACTIONS -->
+
+                        <div class="flex shrink-0 items-center gap-2">
+
+                            {% if remember.source == "personal"
+                                  and remember.kind == "user" %}
+
+                                <!-- EDIT -->
+
+                                <button type="button"
+                                        onclick='openEditRemember(
+                                            {{ remember.remember_id }},
+                                            {{ remember.name|tojson }},
+                                            {{ remember.original_date|tojson }},
+                                            {{ remember.type|tojson }},
+                                            {{ "true" if remember.is_public else "false" }},
+                                            {{ "true" if remember.is_recurring else "false" }}
+                                        )'
+                                        class="rounded-xl border border-gray-200
+                                               px-3 py-2 text-xs font-medium
+                                               text-gray-700 hover:bg-gray-100 transition">
+
+                                    Edit
+
+                                </button>
+
+
+                                <!-- DELETE -->
+
+                                <button type="button"
+                                        onclick='openDeleteRemember(
+                                            {{ remember.remember_id }},
+                                            {{ remember.name|tojson }}
+                                        )'
+                                        class="rounded-xl border border-red-200
+                                               px-3 py-2 text-xs font-medium
+                                               text-red-600 hover:bg-red-50 transition">
+
+                                    Delete
+
+                                </button>
+
+                            {% else %}
+
+                                <span class="rounded-xl bg-gray-50 px-3 py-2
+                                             text-xs font-medium text-gray-500">
+
+                                    {% if remember.kind == "system" %}
+
+                                        Managed in Profile
+
+                                    {% elif remember.source == "organization" %}
+
+                                        Read only
+
+                                    {% else %}
+
+                                        Shared
+
+                                    {% endif %}
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+        <!-- =========================
+             PAGINATION
+        ========================== -->
+
+        {% if total_pages > 1 %}
+
+            <div class="flex items-center justify-between
+                        border-t border-gray-200 px-6 py-4">
+
+
+                {% if has_prev %}
+
+                    <a href="{{ url_for(
+                        'user.user_remembers',
+                        page=prev_page,
+                        source=source_filter,
+                        type=type_filter
+                    ) }}"
+                       class="inline-flex items-center gap-2 rounded-xl
+                              border border-gray-200 px-3 py-2
+                              text-sm font-medium text-gray-700
+                              hover:bg-gray-100 transition">
+
+                        ← Previous
+
+                    </a>
+
+                {% else %}
+
+                    <span></span>
+
+                {% endif %}
+
+
+                <span class="text-sm text-gray-500">
+
+                    Page {{ page }} of {{ total_pages }}
+
+                </span>
+
+
+                {% if has_next %}
+
+                    <a href="{{ url_for(
+                        'user.user_remembers',
+                        page=next_page,
+                        source=source_filter,
+                        type=type_filter
+                    ) }}"
+                       class="inline-flex items-center gap-2 rounded-xl
+                              border border-gray-200 px-3 py-2
+                              text-sm font-medium text-gray-700
+                              hover:bg-gray-100 transition">
+
+                        Next →
+
+                    </a>
+
+                {% else %}
+
+                    <span></span>
+
+                {% endif %}
+
+            </div>
+
+        {% endif %}
+
+
+    {% else %}
+
+
+        <!-- =========================
+             EMPTY STATE
+        ========================== -->
+
+        <div class="px-6 py-16 text-center">
+
+            <div class="mx-auto flex h-14 w-14 items-center
+                        justify-center rounded-full bg-gray-100">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-7 w-7 text-gray-500"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M8 7V3m8 4V3m-9 8h10m-11 9h12"/>
+
+                </svg>
+
+            </div>
+
+
+            <h3 class="mt-4 text-sm font-semibold text-gray-900">
+
+                {% if source_filter != "all" or type_filter != "all" %}
+
+                    No matching Remembers
+
+                {% else %}
+
+                    No Remembers yet
+
+                {% endif %}
+
+            </h3>
+
+
+            <p class="mx-auto mt-2 max-w-sm text-sm text-gray-500">
+
+                {% if source_filter != "all" or type_filter != "all" %}
+
+                    Try changing your filters to see more Remembers.
+
+                {% else %}
+
+                    AlmaTouch does not have any upcoming Remembers
+                    to show right now.
+
+                {% endif %}
+
+            </p>
+
+
+            {% if source_filter == "all" and type_filter == "all" %}
+
+                <button type="button"
+                        id="openAddRememberEmpty"
+                        class="mt-5 inline-flex items-center gap-2 rounded-xl
+                               px-4 py-2.5 text-sm font-semibold text-white
+                               transition hover:opacity-90"
+                        style="background-color: #45664f;">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="w-4 h-4"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M12 4v16m8-8H4"/>
+
+                    </svg>
+
+                    Add Remember
+
+                </button>
+
+            {% endif %}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+</div>
+
+<!-- =========================
+     ADD REMEMBER MODAL
+========================== -->
+
+<div id="addRememberModal"
+     class="fixed inset-0 z-50 hidden overflow-y-auto">
+
+<div class="flex min-h-screen items-center justify-center px-4 py-8">
+
+    <div id="addRememberOverlay"
+         class="fixed inset-0 bg-black/40">
+    </div>
+
+
+    <div class="relative z-10 w-full max-w-lg
+                rounded-xl bg-white shadow-xl">
+
+        <div class="border-b border-gray-200 px-6 py-4">
+
+            <div class="flex items-center justify-between">
+
+                <div>
+
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Add Remember
+                    </h2>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Add a personal date for AlmaTouch to remember.
+                    </p>
+
+                </div>
+
+
+                <button type="button"
+                        id="closeAddRemember"
+                        class="rounded-xl p-2 text-gray-400
+                               hover:bg-gray-100 hover:text-gray-600">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-5 w-5"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"/>
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <form method="POST"
+              action="{{ url_for('user.add_user_remember') }}"
+              class="space-y-5 px-6 py-6">
+
+
+            <!-- NAME -->
+
+            <div>
+
+                <label for="remember_name"
+                       class="block text-sm font-medium text-gray-700">
+
+                    Name
+
+                </label>
+
+                <input type="text"
+                       id="remember_name"
+                       name="name"
+                       required
+                       placeholder="e.g. Wedding Anniversary"
+                       class="mt-1.5 block w-full rounded-lg
+                              border border-gray-300 px-3 py-2.5
+                              text-sm shadow-sm outline-none
+                              focus:border-gray-500
+                              focus:ring-1 focus:ring-gray-500">
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div>
+
+                <label for="remember_date"
+                       class="block text-sm font-medium text-gray-700">
+
+                    Date
+
+                </label>
+
+                <input type="date"
+                       id="remember_date"
+                       name="date"
+                       required
+                       class="mt-1.5 block w-full rounded-lg
+                              border border-gray-300 px-3 py-2.5
+                              text-sm shadow-sm outline-none
+                              focus:border-gray-500
+                              focus:ring-1 focus:ring-gray-500">
+
+            </div>
+
+
+            <!-- TYPE -->
+
+            <div>
+
+                <label for="remember_type"
+                       class="block text-sm font-medium text-gray-700">
+
+                    Type
+
+                </label>
+
+                <select id="remember_type"
+                        name="remember_type"
+                        class="mt-1.5 block w-full rounded-lg
+                               border border-gray-300 bg-white
+                               px-3 py-2.5 text-sm
+                               focus:border-gray-500
+                               focus:ring-1 focus:ring-gray-500">
+
+                    <option value="personal">
+                        Personal
+                    </option>
+
+                    <option value="anniversary">
+                        Anniversary
+                    </option>
+
+                    <option value="milestone">
+                        Milestone
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Make Public -->
+
+            <div class="space-y-2">
+
+                <div class="flex items-start gap-3">
+
+                    <input type="checkbox"
+                           id="is_public"
+                           name="is_public"
+                           class="mt-0.5 h-4 w-4 rounded border-gray-300
+                                  focus:ring-1"
+                           style="accent-color: #45664f;">
+
+                    <div>
+
+                        <label for="is_public"
+                               class="text-sm font-medium text-gray-700">
+
+                            Share with my organization
+
+                        </label>
+
+                        <p class="mt-1 text-xs text-gray-500">
+                            When enabled, your organization can see this Remember
+                            and may acknowledge or celebrate it with you.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECURRING -->
+
+            <div class="flex items-center gap-3">
+
+                <input type="checkbox"
+                       id="is_recurring"
+                       name="is_recurring"
+                       class="h-4 w-4 rounded border-gray-300
+                              focus:ring-1"
+                       style="accent-color: #45664f;">
+
+                <label for="is_recurring"
+                       class="text-sm text-gray-700">
+
+                    Repeat this reminder every year
+
+                </label>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="flex justify-end gap-3 pt-2">
+
+                <button type="button"
+                        id="cancelAddRemember"
+                        class="rounded-xl border border-gray-200
+                               px-4 py-2.5 text-sm font-medium
+                               text-gray-700 hover:bg-gray-100 transition">
+
+                    Cancel
+
+                </button>
+
+
+                <button type="submit"
+                        class="rounded-xl px-4 py-2.5 text-sm
+                               font-semibold text-white
+                               transition hover:opacity-90"
+                        style="background-color: #45664f;">
+
+                    Save Remember
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- =========================
+     EDIT REMEMBER MODAL
+========================== -->
+
+<div id="editRememberModal"
+     class="fixed inset-0 z-50 hidden overflow-y-auto">
+
+<div class="flex min-h-screen items-center justify-center px-4 py-8">
+
+    <div id="editRememberOverlay"
+         class="fixed inset-0 bg-black/40">
+    </div>
+
+
+    <div class="relative z-10 w-full max-w-lg
+                rounded-xl bg-white shadow-xl">
+
+        <div class="border-b border-gray-200 px-6 py-4">
+
+            <div class="flex items-center justify-between">
+
+                <div>
+
+                    <h2 class="text-lg font-semibold text-gray-900">
+                        Edit Remember
+                    </h2>
+
+                    <p class="mt-1 text-sm text-gray-500">
+                        Update this personal Remember.
+                    </p>
+
+                </div>
+
+
+                <button type="button"
+                        onclick="closeEditRemember()"
+                        class="rounded-xl p-2 text-gray-400
+                               hover:bg-gray-100 hover:text-gray-600">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="h-5 w-5"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"/>
+
+                    </svg>
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <form id="editRememberForm"
+              method="POST"
+              name="is_public" 
+              class="space-y-5 px-6 py-6">
+
+
+            <!-- NAME -->
+
+            <div>
+
+                <label for="edit_name"
+                       class="block text-sm font-medium text-gray-700">
+
+                    Name
+
+                </label>
+
+                <input type="text"
+                       id="edit_name"
+                       name="name"
+                       required
+                       class="mt-1.5 block w-full rounded-lg
+                              border border-gray-300 px-3 py-2.5
+                              text-sm focus:border-gray-500
+                              focus:ring-1 focus:ring-gray-500">
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <div>
+
+                <label for="edit_date"
+                       class="block text-sm font-medium text-gray-700">
+
+                    Date
+
+                </label>
+
+                <input type="date"
+                       id="edit_date"
+                       name="date"
+                       required
+                       class="mt-1.5 block w-full rounded-lg
+                              border border-gray-300 px-3 py-2.5
+                              text-sm focus:border-gray-500
+                              focus:ring-1 focus:ring-gray-500">
+
+            </div>
+
+
+            <!-- TYPE -->
+
+            <div>
+
+                <label for="edit_type"
+                       class="block text-sm font-medium text-gray-700">
+
+                    Type
+
+                </label>
+
+                <select id="edit_type"
+                        name="remember_type"
+                        class="mt-1.5 block w-full rounded-lg
+                               border border-gray-300 bg-white
+                               px-3 py-2.5 text-sm
+                               focus:border-gray-500
+                               focus:ring-1 focus:ring-gray-500">
+
+                    <option value="personal">
+                        Personal
+                    </option>
+
+                    <option value="anniversary">
+                        Anniversary
+                    </option>
+
+                    <option value="milestone">
+                        Milestone
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- Make Public -->
+
+            <div class="space-y-2">
+
+                <div class="flex items-start gap-3">
+
+                    <input type="checkbox"
+                           id="edit_is_public"
+                           name="is_public"
+                           class="mt-0.5 h-4 w-4 rounded border-gray-300
+                                  focus:ring-1"
+                           style="accent-color: #45664f;">
+
+                    <div>
+
+                        <label for="edit_is_public"
+                               class="text-sm font-medium text-gray-700">
+
+                            Share with my organization
+
+                        </label>
+
+                        <p class="mt-1 text-xs text-gray-500">
+                            Your organization can see this Remember when enabled.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECURRING -->
+
+            <div class="flex items-center gap-3">
+
+                <input type="checkbox"
+                       id="edit_is_recurring"
+                       name="is_recurring"
+                       class="h-4 w-4 rounded border-gray-300
+                              focus:ring-1"
+                       style="accent-color: #45664f;">
+
+                <label for="edit_is_recurring"
+                       class="text-sm text-gray-700">
+
+                    Repeat this reminder every year
+
+                </label>
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="flex justify-end gap-3 pt-2">
+
+                <button type="button"
+                        onclick="closeEditRemember()"
+                        class="rounded-xl border border-gray-200
+                               px-4 py-2.5 text-sm font-medium
+                               text-gray-700 hover:bg-gray-100">
+
+                    Cancel
+
+                </button>
+
+
+                <button type="submit"
+                        class="rounded-xl px-4 py-2.5 text-sm
+                               font-semibold text-white
+                               transition hover:opacity-90"
+                        style="background-color: #45664f;">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<!-- =========================
+     DELETE REMEMBER MODAL
+========================== -->
+
+<div id="deleteRememberModal"
+     class="fixed inset-0 z-50 hidden overflow-y-auto">
+
+
+<div class="flex min-h-screen items-center justify-center px-4 py-8">
+
+    <div id="deleteRememberOverlay"
+         class="fixed inset-0 bg-black/40">
+    </div>
+
+
+    <div class="relative z-10 w-full max-w-md
+                rounded-xl bg-white shadow-xl">
+
+        <div class="px-6 py-6">
+
+            <div class="flex h-12 w-12 items-center justify-center
+                        rounded-full bg-red-50">
+
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-6 w-6 text-red-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M12 9v4m0 4h.01M10.29 3.86l-7.25 12.55A2 2 0 004.77 19h14.46a2 2 0 001.73-2.59L13.71 3.86a2 2 0 00-3.42 0z"/>
+
+                </svg>
+
+            </div>
+
+
+            <h2 class="mt-4 text-lg font-semibold text-gray-900">
+
+                Remove Remember?
+
+            </h2>
+
+
+            <p class="mt-2 text-sm text-gray-500">
+
+                Are you sure you want to remove
+                <strong id="deleteRememberName"></strong>?
+
+            </p>
+
+
+            <form id="deleteRememberForm"
+                  method="POST"
+                  class="mt-6 flex justify-end gap-3">
+
+                <button type="button"
+                        onclick="closeDeleteRemember()"
+                        class="rounded-xl border border-gray-200
+                               px-4 py-2.5 text-sm font-medium
+                               text-gray-700 hover:bg-gray-100">
+
+                    Cancel
+
+                </button>
+
+
+                <button type="submit"
+                        class="rounded-xl bg-red-600 px-4 py-2.5
+                               text-sm font-semibold text-white
+                               hover:bg-red-700">
+
+                    Remove
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+<!-- =========================
+     MODAL JS
+========================== -->
+
+
+<!-- =========================
+     MODAL JS
+========================== -->
+
+<script>
+
+    // =========================
+    // ADD REMEMBER
+    // =========================
+
+    const addRememberModal =
+        document.getElementById("addRememberModal");
+
+    const openAddRemember =
+        document.getElementById("openAddRemember");
+
+    const openAddRememberEmpty =
+        document.getElementById("openAddRememberEmpty");
+
+    const closeAddRemember =
+        document.getElementById("closeAddRemember");
+
+    const cancelAddRemember =
+        document.getElementById("cancelAddRemember");
+
+    const addRememberOverlay =
+        document.getElementById("addRememberOverlay");
+
+
+    function showAddRememberModal() {
+
+        if (!addRememberModal) {
+            return;
+        }
+
+        addRememberModal.classList.remove("hidden");
+
+        document.body.classList.add("overflow-hidden");
+    }
+
+
+    function hideAddRememberModal() {
+
+        if (!addRememberModal) {
+            return;
+        }
+
+        addRememberModal.classList.add("hidden");
+
+        document.body.classList.remove("overflow-hidden");
+    }
+
+
+    if (openAddRemember) {
+
+        openAddRemember.addEventListener(
+            "click",
+            showAddRememberModal
+        );
+
+    }
+
+
+    if (openAddRememberEmpty) {
+
+        openAddRememberEmpty.addEventListener(
+            "click",
+            showAddRememberModal
+        );
+
+    }
+
+
+    if (closeAddRemember) {
+
+        closeAddRemember.addEventListener(
+            "click",
+            hideAddRememberModal
+        );
+
+    }
+
+
+    if (cancelAddRemember) {
+
+        cancelAddRemember.addEventListener(
+            "click",
+            hideAddRememberModal
+        );
+
+    }
+
+
+    if (addRememberOverlay) {
+
+        addRememberOverlay.addEventListener(
+            "click",
+            hideAddRememberModal
+        );
+
+    }
+
+
+    // =========================
+    // EDIT REMEMBER
+    // =========================
+
+    const editRememberModal =
+        document.getElementById("editRememberModal");
+
+    const editRememberForm =
+        document.getElementById("editRememberForm");
+
+    const editName =
+        document.getElementById("edit_name");
+
+    const editDate =
+        document.getElementById("edit_date");
+
+    const editType =
+        document.getElementById("edit_type");
+
+    const editPublic =
+        document.getElementById("edit_is_public");
+
+    const editRecurring =
+        document.getElementById("edit_is_recurring");
+
+
+    function openEditRemember(
+        rememberId,
+        name,
+        originalDate,
+        type,
+        isPublic,
+        isRecurring
+    ) {
+
+        if (
+            !editRememberModal ||
+            !editRememberForm ||
+            !editName ||
+            !editDate ||
+            !editType ||
+            !editPublic ||
+            !editRecurring
+        ) {
+            return;
+        }
+
+        editName.value = name;
+        editDate.value = originalDate;
+        editType.value = type;
+
+        editPublic.checked = isPublic;
+        editRecurring.checked = isRecurring;
+
+        editRememberForm.action =
+            `/user/remembers/${rememberId}/edit`;
+
+        editRememberModal.classList.remove("hidden");
+
+        document.body.classList.add("overflow-hidden");
+    }
+
+
+    function closeEditRemember() {
+
+        if (!editRememberModal) {
+            return;
+        }
+
+        editRememberModal.classList.add("hidden");
+
+        document.body.classList.remove("overflow-hidden");
+    }
+
+
+    const editRememberOverlay =
+        document.getElementById("editRememberOverlay");
+
+
+    if (editRememberOverlay) {
+
+        editRememberOverlay.addEventListener(
+            "click",
+            closeEditRemember
+        );
+
+    }
+
+
+    // =========================
+    // DELETE REMEMBER
+    // =========================
+
+    const deleteRememberModal =
+        document.getElementById("deleteRememberModal");
+
+    const deleteRememberForm =
+        document.getElementById("deleteRememberForm");
+
+    const deleteRememberName =
+        document.getElementById("deleteRememberName");
+
+
+    function openDeleteRemember(
+        rememberId,
+        name
+    ) {
+
+        if (
+            !deleteRememberModal ||
+            !deleteRememberForm ||
+            !deleteRememberName
+        ) {
+            return;
+        }
+
+        deleteRememberName.textContent = name;
+
+        deleteRememberForm.action =
+            `/user/remembers/${rememberId}/delete`;
+
+        deleteRememberModal.classList.remove("hidden");
+
+        document.body.classList.add("overflow-hidden");
+    }
+
+
+    function closeDeleteRemember() {
+
+        if (!deleteRememberModal) {
+            return;
+        }
+
+        deleteRememberModal.classList.add("hidden");
+
+        document.body.classList.remove("overflow-hidden");
+    }
+
+
+    const deleteRememberOverlay =
+        document.getElementById("deleteRememberOverlay");
+
+
+    if (deleteRememberOverlay) {
+
+        deleteRememberOverlay.addEventListener(
+            "click",
+            closeDeleteRemember
+        );
+
+    }
+
+
+    // =========================
+    // ESCAPE KEY
+    // =========================
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (event.key === "Escape") {
+
+                hideAddRememberModal();
+                closeEditRemember();
+                closeDeleteRemember();
+
+            }
+
+        }
+    );
+
+</script>
+
+
+{% endblock %}

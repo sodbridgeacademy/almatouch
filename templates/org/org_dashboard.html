@@ -1,0 +1,730 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<!-- Canvas Body -->
+<div class="p-8 max-w-[1400px] mx-auto">
+
+<!-- Welcome Header -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-6">
+
+    <div>
+        <h2 class="font-display text-headline-lg text-primary">
+            Welcome back, {{ user.first_name }}
+        </h2>
+
+        <p class="font-body-md text-slate-500 mt-1">
+            Everything is calm and moving smoothly today.
+        </p>
+    </div>
+
+    <div class="flex gap-3">
+
+        <a href="{{ url_for('org.generate_invite') }}">
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-2xl text-label-md font-semibold text-slate-600 hover:bg-slate-50 transition-all active:scale-95 shadow-sm">
+                <span class="material-symbols-outlined text-lg">link</span>
+                Generate Invite Link
+            </button>
+        </a>
+
+        <a href="{{ url_for('org.create_event') }}">
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-2xl text-label-md font-semibold hover:shadow-lg transition-all active:scale-95">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Create Event
+            </button>
+        </a>
+
+        <form method="POST"
+              action="{{ url_for('dept.create_department') }}"
+              class="flex gap-2">
+
+            <input
+                type="text"
+                name="name"
+                placeholder="Department name"
+                class="px-3 py-2 border rounded-lg"
+                required>
+
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-2xl">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Create Department
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+
+    <!-- Total Members -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+
+        <div class="flex items-center justify-between mb-4">
+
+            <span class="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+                <span class="material-symbols-outlined">group</span>
+            </span>
+
+            <span class="text-caption text-emerald-500 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
+                +4%
+            </span>
+
+        </div>
+
+        <p class="text-slate-500 text-caption font-medium mb-1">
+            Total Members
+        </p>
+
+        <h3 class="text-headline-lg font-display text-on-surface">
+
+            {{ member_count }}
+
+            <hr>
+
+            <span class="text-caption text-on-surface-variant">
+
+                <b>Invite Code:</b>
+
+                {% if invite %}
+                    {{ invite.invite_code }}
+                {% else %}
+                    No invite code
+                {% endif %}
+
+            </span>
+
+        </h3>
+
+    </div>
+
+
+    <!-- Upcoming Remembers -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+
+        <div class="flex items-center justify-between mb-4">
+
+            <span class="p-2 bg-primary-fixed text-primary rounded-xl">
+                <span class="material-symbols-outlined">
+                    event
+                </span>
+            </span>
+
+        </div>
+
+        <p class="text-slate-500 text-caption font-medium mb-1">
+            Remembers Ahead
+        </p>
+
+        <h3 class="text-headline-lg font-display text-on-surface">
+            {{ remember_count }}
+        </h3>
+
+        <p class="text-caption text-on-surface-variant mt-1">
+            Important dates, milestones and celebrations to remember.
+        </p>
+
+    </div>
+
+
+    <!-- Total Responses -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+
+        <div class="flex items-center justify-between mb-4">
+
+            <span class="p-2 bg-orange-50 text-orange-600 rounded-xl">
+                <span class="material-symbols-outlined">
+                    edit_notifications
+                </span>
+            </span>
+
+            <span class="text-caption text-orange-500 font-bold bg-orange-50 px-2 py-0.5 rounded-full">
+                New
+            </span>
+
+        </div>
+
+        <p class="text-slate-500 text-caption font-medium mb-1">
+            Total Responses
+        </p>
+
+        <h3 class="text-headline-lg font-display text-on-surface">
+            {{ total_responses }}
+        </h3>
+
+    </div>
+
+
+    <!-- Responses Today -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+
+        <div class="flex items-center justify-between mb-4">
+
+            <span class="p-2 bg-orange-50 text-orange-600 rounded-xl">
+                <span class="material-symbols-outlined">
+                    edit_notifications
+                </span>
+            </span>
+
+            <span class="text-caption text-orange-500 font-bold bg-orange-50 px-2 py-0.5 rounded-full">
+                New
+            </span>
+
+        </div>
+
+        <p class="text-slate-500 text-caption font-medium mb-1">
+            Responses Today
+        </p>
+
+        <h3 class="text-headline-lg font-display text-on-surface">
+            {{ today_responses }}
+        </h3>
+
+    </div>
+
+
+    <!-- Total Events -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+
+        <div class="flex items-center justify-between mb-4">
+
+            <span class="p-2 bg-tertiary-fixed text-tertiary rounded-xl">
+                <span class="material-symbols-outlined">
+                    calendar_today
+                </span>
+            </span>
+
+        </div>
+
+        <p class="text-slate-500 text-caption font-medium mb-1">
+            Total Event(s)
+        </p>
+
+        <h3 class="text-headline-lg font-display text-on-surface">
+            {{ tot_event }}
+        </h3>
+
+    </div>
+
+
+    <!-- Active Events -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+
+        <div class="flex items-center justify-between mb-4">
+
+            <span class="p-2 bg-tertiary-fixed text-tertiary rounded-xl">
+                <span class="material-symbols-outlined">
+                    calendar_today
+                </span>
+            </span>
+
+        </div>
+
+        <p class="text-slate-500 text-caption font-medium mb-1">
+            Active Events
+        </p>
+
+        <h6 class="text-headline-md font-display text-on-surface">
+
+            {% if event %}
+                {{ event.name }}
+            {% else %}
+                No active event
+            {% endif %}
+
+        </h6>
+
+    </div>
+
+</div>
+
+
+<!-- Secondary Layout: Chart and Recent Activity -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+
+    <!-- Chart Section -->
+    <div class="lg:col-span-2 bg-white p-12 rounded-2xl border shadow-sm w-full">
+
+        <div class="mb-4">
+
+            <h4 class="font-semibold text-lg">
+                Engagement Overview
+            </h4>
+
+            <p class="text-sm text-gray-500">
+                Last 7 days responses
+            </p>
+
+        </div>
+
+        <div class="relative w-full h-[300px]">
+
+            <canvas id="engagementChart"></canvas>
+
+        </div>
+
+    </div>
+
+
+    <!-- Recent Activity -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+
+        <h4 class="font-bold text-slate-800 mb-6">
+            Recent Member Activity
+        </h4>
+
+        <div class="space-y-4">
+
+            {% if recent_activity %}
+
+                {% for item in recent_activity %}
+
+                <div class="flex gap-4">
+
+                    <!-- Profile -->
+                    <div class="w-10 h-10 rounded-full bg-emerald-100
+                                flex-shrink-0 overflow-hidden
+                                flex items-center justify-center">
+
+                        {% if item.profile_image %}
+
+                            <img
+                                src="{{ item.profile_image }}"
+                                class="w-full h-full object-cover">
+
+                        {% else %}
+
+                            <span class="text-emerald-700 font-bold text-sm">
+                                {{ item.user_name[0] }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- Content -->
+                    <div>
+
+                        <p class="text-sm text-slate-800">
+
+                            <span class="font-bold">
+                                {{ item.user_name }}
+                            </span>
+
+                            {{ item.activity }}
+
+                        </p>
+
+                        <p class="text-[11px] text-slate-400 uppercase tracking-wide">
+
+                            {{ item.time_ago }}
+                            •
+                            {{ item.event_name }}
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="text-sm text-gray-400">
+                    No recent activity yet.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+        <a href="{{ url_for('org.org_checkin_overview') }}"
+           class="block w-full mt-8 py-3 text-sm font-semibold
+                  text-emerald-700 hover:text-emerald-800
+                  border-t border-slate-100 text-center">
+
+            View All Activity
+
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     REMEMBER / COMING UP
+===================================================== -->
+
+<!-- =====================================================
+     REMEMBER / COMING UP
+===================================================== -->
+
+<!-- =====================================================
+     BOTTOM SECTION: REMEMBER
+===================================================== -->
+
+<div class="mt-8">
+
+    <!-- Section Header -->
+    <div class="flex items-center justify-between mb-6">
+
+        <div>
+            <h4 class="font-headline-md text-on-surface">
+                Coming Up
+            </h4>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Important dates worth remembering.
+            </p>
+        </div>
+
+        <a href="{{ url_for('org.org_remembers') }}"
+           class="text-sm font-semibold text-primary hover:underline">
+            See all →
+        </a>
+        <!-- <a href="#"
+           class="text-caption font-bold text-emerald-700 hover:text-emerald-800">
+            View All
+        </a>
+ -->
+    </div>
+
+
+    {% if upcoming_remembers %}
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+            {% for remember in upcoming_remembers[:3] %}
+
+            <div class="bg-white rounded-2xl overflow-hidden
+                        border border-slate-100 shadow-sm
+                        group hover:shadow-md transition-shadow">
+
+                <div class="p-6">
+
+                    <!-- =========================
+                         TOP
+                    ========================= -->
+
+                    <div class="flex items-start justify-between">
+
+                        <!-- Date -->
+                        <div class="w-16 h-16 rounded-2xl
+                                    bg-emerald-50
+                                    flex flex-col items-center
+                                    justify-center">
+
+                            <span class="text-[11px] uppercase
+                                         tracking-wider font-bold
+                                         text-emerald-600">
+
+                                {{ remember["date"].strftime("%b") }}
+
+                            </span>
+
+                            <span class="text-2xl font-display
+                                         font-bold text-emerald-800">
+
+                                {{ remember["date"].strftime("%d") }}
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- Icon -->
+                        <div class="w-10 h-10 rounded-xl
+                                    bg-slate-50
+                                    flex items-center justify-center">
+
+                            {% if remember["type"] == "organization_anniversary" %}
+
+                                <span class="material-symbols-outlined text-emerald-600">
+                                    celebration
+                                </span>
+
+                            {% elif remember["type"] == "founders_day" %}
+
+                                <span class="material-symbols-outlined text-emerald-600">
+                                    flag
+                                </span>
+
+                            {% elif remember["type"] == "national" %}
+
+                                <span class="material-symbols-outlined text-emerald-600">
+                                    flag
+                                </span>
+
+                            {% else %}
+
+                                <span class="material-symbols-outlined text-emerald-600">
+                                    calendar_month
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =========================
+                         DETAILS
+                    ========================= -->
+
+                    <div class="mt-5">
+
+                        <!-- Category -->
+
+                        <p class="text-[11px] uppercase
+                                  tracking-wider text-slate-400
+                                  font-bold">
+
+                            {% if remember["type"] == "organization_anniversary" %}
+
+                                ORGANIZATION
+
+                            {% elif remember["type"] == "founders_day" %}
+
+                                ORGANIZATION
+
+                            {% elif remember["type"] == "national" %}
+
+                                NATIONAL
+
+                            {% else %}
+
+                                {{ remember["type"]
+                                   |replace("_", " ")
+                                   |upper }}
+
+                            {% endif %}
+
+                        </p>
+
+
+                        <!-- Name -->
+
+                        <h5 class="text-lg font-bold
+                                   text-on-surface mt-1">
+
+                            {{ remember["name"] }}
+
+                        </h5>
+
+
+                        <!-- Full Date -->
+
+                        <p class="text-sm text-slate-500 mt-2">
+
+                            {{ remember["date"].strftime("%A, %B %d, %Y") }}
+
+                        </p>
+
+                    </div>
+
+
+                    <!-- =========================
+                         FOOTER
+                    ========================= -->
+
+                    <div class="mt-5 pt-4 border-t
+                                border-slate-100
+                                flex items-center
+                                justify-between">
+
+                        <span class="text-xs text-slate-400">
+
+                            {% if remember["source"] == "organization" %}
+
+                                Organization date
+
+                            {% elif remember["source"] == "default" %}
+
+                                National date
+
+                            {% else %}
+
+                                Date to remember
+
+                            {% endif %}
+
+                        </span>
+
+
+                        <span class="material-symbols-outlined
+                                     text-slate-300
+                                     group-hover:text-emerald-500
+                                     transition-colors">
+
+                            arrow_forward
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+        <!-- =========================
+             EMPTY STATE
+        ========================= -->
+
+        <div class="bg-white rounded-2xl
+                    border border-slate-100
+                    shadow-sm p-10 text-center">
+
+            <div class="w-14 h-14 mx-auto rounded-2xl
+                        bg-emerald-50
+                        flex items-center justify-center">
+
+                <span class="material-symbols-outlined
+                             text-emerald-600 text-2xl">
+
+                    event_note
+
+                </span>
+
+            </div>
+
+
+            <h5 class="font-bold text-slate-800 mt-4">
+
+                Nothing coming up yet
+
+            </h5>
+
+
+            <p class="text-sm text-slate-500 mt-1">
+
+                Important organization dates will appear here.
+
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+
+
+
+</div>
+
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+<script>
+
+const ctx = document.getElementById('engagementChart');
+
+const labels = {{ trend_labels | tojson }};
+const values = {{ trend_values | tojson }};
+
+
+new Chart(ctx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: labels,
+
+        datasets: [{
+
+            label: 'Responses',
+
+            data: values,
+
+            backgroundColor: '#064e3b',
+
+            borderRadius: 10,
+
+            barThickness: 40,
+
+            maxBarThickness: 60
+
+        }]
+
+    },
+
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+                display: false
+            }
+
+        },
+
+        scales: {
+
+            x: {
+
+                grid: {
+                    display: false
+                },
+
+                ticks: {
+
+                    font: {
+                        size: 12
+                    }
+
+                }
+
+            },
+
+
+            y: {
+
+                beginAtZero: true,
+
+                grid: {
+                    color: '#f3f4f6'
+                },
+
+                ticks: {
+
+                    font: {
+                        size: 12
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

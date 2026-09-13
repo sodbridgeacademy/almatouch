@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- ========================= -->
+    <!-- SEO / META -->
+    <!-- ========================= -->
+
+    <title>
+        {% block title %}AlmaTouch Dashboard{% endblock %}
+    </title>
+
+    <meta
+        name="description"
+        content="AlmaTouch is an employee wellbeing and engagement platform that helps organizations remember, recognize, and care for their people."
+    >
+
+    <meta
+        name="keywords"
+        content="AlmaTouch, employee wellbeing, employee engagement, workplace wellbeing, employee experience, organizational wellbeing, employee recognition, workplace communication, people management, Sodbridge"
+    >
+
+    <meta
+        name="author"
+        content="Sodbridge Ltd"
+    >
+
+
+    <!-- ========================= -->
+    <!-- TAILWIND -->
+    <!-- ========================= -->
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+
+    <!-- ========================= -->
+    <!-- FONTS -->
+    <!-- ========================= -->
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:wght@100..700&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- ========================= -->
+    <!-- TAILWIND CONFIG -->
+    <!-- ========================= -->
+
+    <script id="tailwind-config">
+
+        tailwind.config = {
+
+            darkMode: "class",
+
+            theme: {
+
+                extend: {
+
+                    colors: {
+
+                        "on-tertiary-fixed": "#1b1a2b",
+                        "error-container": "#ffdad6",
+                        "surface-variant": "#e4e2e2",
+
+                        "secondary": "#645e53",
+
+                        "on-secondary-fixed-variant": "#4c463c",
+
+                        "on-primary-container": "#163623",
+
+                        "inverse-primary": "#abcfb3",
+
+                        "on-tertiary-fixed-variant": "#464558",
+
+                        "on-error-container": "#93000a",
+
+                        "on-tertiary": "#ffffff",
+
+                        "secondary-container": "#ebe1d3",
+
+                        "on-error": "#ffffff",
+
+                        "inverse-on-surface": "#f2f0f0",
+
+                        "tertiary": "#5e5c71",
+
+                        "on-secondary-container": "#6a6459",
+
+                        "on-secondary-fixed": "#1f1b13",
+
+                        "surface-container-lowest": "#ffffff",
+
+                        "on-surface": "#1b1c1c",
+
+                        "error": "#ba1a1a",
+
+                        "on-primary": "#ffffff",
+
+                        "primary-fixed": "#c6ecce",
+
+                        "on-primary-fixed": "#00210f",
+
+                        "outline": "#727972",
+
+                        "inverse-surface": "#303031",
+
+                        "background": "#fbf9f8",
+
+                        "tertiary-container": "#9895ab",
+
+                        "on-background": "#1b1c1c",
+
+                        "surface-container": "#efeded",
+
+                        "on-tertiary-container": "#2f2e40",
+
+                        "surface-container-low": "#f5f3f3",
+
+                        "surface-container-high": "#e9e8e7",
+
+                        "surface-tint": "#45664f",
+
+                        "surface": "#fbf9f8",
+
+                        "secondary-fixed-dim": "#cec5b8",
+
+                        "surface-container-highest": "#e4e2e2",
+
+                        "on-secondary": "#ffffff",
+
+                        "tertiary-fixed": "#e4e0f8",
+
+                        "surface-bright": "#fbf9f8",
+
+                        "on-primary-fixed-variant": "#2d4e38",
+
+                        "tertiary-fixed-dim": "#c8c4dc",
+
+                        "primary-container": "#7da086",
+
+                        "primary-fixed-dim": "#abcfb3",
+
+                        "primary": "#45664f",
+
+                        "on-surface-variant": "#424842",
+
+                        "surface-dim": "#dbdad9",
+
+                        "secondary-fixed": "#ebe1d3",
+
+                        "outline-variant": "#c2c8c0"
+                    },
+
+
+                    borderRadius: {
+
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+
+                    },
+
+
+                    spacing: {
+
+                        "xl": "2.5rem",
+                        "md": "1rem",
+                        "sm": "0.5rem",
+                        "xs": "0.25rem",
+                        "margin": "2rem",
+                        "lg": "1.5rem",
+                        "gutter": "1.5rem"
+
+                    },
+
+
+                    fontFamily: {
+
+                        "caption": ["Plus Jakarta Sans"],
+                        "body-md": ["Plus Jakarta Sans"],
+                        "label-md": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Plus Jakarta Sans"],
+                        "headline-md": ["Plus Jakarta Sans"],
+                        "display": ["Plus Jakarta Sans"]
+
+                    },
+
+
+                    fontSize: {
+
+                        "caption": [
+                            "12px",
+                            {
+                                "lineHeight": "1.4",
+                                "fontWeight": "400"
+                            }
+                        ],
+
+                        "body-md": [
+                            "16px",
+                            {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                            }
+                        ],
+
+                        "label-md": [
+                            "14px",
+                            {
+                                "lineHeight": "1.4",
+                                "letterSpacing": "0.01em",
+                                "fontWeight": "500"
+                            }
+                        ],
+
+                        "headline-lg": [
+                            "28px",
+                            {
+                                "lineHeight": "1.3",
+                                "fontWeight": "600"
+                            }
+                        ],
+
+                        "body-lg": [
+                            "18px",
+                            {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                            }
+                        ],
+
+                        "headline-md": [
+                            "22px",
+                            {
+                                "lineHeight": "1.4",
+                                "fontWeight": "500"
+                            }
+                        ],
+
+                        "display": [
+                            "40px",
+                            {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "600"
+                            }
+                        ]
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    </script>
+
+
+    <!-- ========================= -->
+    <!-- CUSTOM STYLES -->
+    <!-- ========================= -->
+
+    <style>
+
+        .material-symbols-outlined {
+
+            font-variation-settings:
+                'FILL' 0,
+                'wght' 300,
+                'GRAD' 0,
+                'opsz' 24;
+
+            vertical-align: middle;
+
+        }
+
+        .bento-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            grid-auto-rows:
+                minmax(180px, auto);
+
+            gap: 1.5rem;
+
+        }
+
+        .glass-card {
+
+            background:
+                rgba(255, 255, 255, 0.7);
+
+            backdrop-filter:
+                blur(12px);
+
+            border:
+                1px solid rgba(224, 224, 224, 0.5);
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="bg-background font-body-md text-on-surface antialiased">
+
+
+    <!-- ========================= -->
+    <!-- MOBILE MENU BUTTON -->
+    <!-- ========================= -->
+
+    <button
+        id="menuToggle"
+        type="button"
+        aria-label="Open navigation"
+        class="md:hidden fixed top-4 left-4 z-50
+               bg-white p-2.5 rounded-xl shadow-md
+               text-on-surface"
+    >
+
+        <span class="material-symbols-outlined">
+            menu
+        </span>
+
+    </button>
+
+
+    <!-- ========================= -->
+    <!-- MOBILE BACKDROP -->
+    <!-- ========================= -->
+
+    <div
+        id="backdrop"
+        class="fixed inset-0 bg-black/30 hidden md:hidden z-30"
+    ></div>
+
+
+    <!-- ========================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================= -->
+
+    <aside
+        id="sidebar"
+        class="h-screen w-64 fixed left-0 top-0
+               bg-white border-r border-outline-variant/40
+               shadow-sm z-40
+               flex flex-col
+               overflow-y-auto
+               transition-transform duration-300
+               md:translate-x-0
+               -translate-x-full"
+    >
+
+        <!-- ========================= -->
+        <!-- ORGANIZATION BRANDING -->
+        <!-- ========================= -->
+
+        <div class="px-6 py-6">
+
+            <div class="flex items-center gap-3">
+
+                {% if org and org.logo %}
+
+                    <img
+                        src="{{ url_for('static', filename=org.logo) }}"
+                        alt="{{ org.name }}"
+                        class="w-11 h-11 rounded-xl object-cover"
+                    >
+
+                {% else %}
+
+                    <div
+                        class="w-11 h-11 rounded-xl
+                               bg-primary-container
+                               flex items-center justify-center
+                               text-white"
+                    >
+                        <span class="material-symbols-outlined">
+                            business
+                        </span>
+                    </div>
+
+                {% endif %}
+
+
+                <div class="min-w-0">
+
+                    <h1 class="text-base font-bold text-on-surface truncate">
+                        {{ org.name if org else "Organization" }}
+                    </h1>
+
+                    <p class="text-[10px] uppercase tracking-wide text-secondary">
+                        Member Space
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- NAVIGATION -->
+        <!-- ========================= -->
+
+        <nav class="flex-1 px-4 pb-6">
+
+
+            <!-- ========================= -->
+            <!-- HOME -->
+            <!-- ========================= -->
+
+            <div class="mb-5">
+
+                <p class="px-4 mb-2 text-[10px] font-semibold
+                          uppercase tracking-widest text-secondary">
+                    Home
+                </p>
+
+
+                <a
+                    href="{{ url_for('user.user_dashboard') }}"
+                    class="
+                        flex items-center gap-3
+                        px-4 py-3
+                        rounded-xl
+                        bg-primary-fixed
+                        text-primary
+                        font-semibold
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        dashboard
+                    </span>
+
+                    <span class="font-label-md">
+                        Dashboard
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- REMEMBER -->
+            <!-- ========================= -->
+
+            <div class="mb-5">
+
+                <p class="px-4 mb-2 text-[10px] font-semibold
+                          uppercase tracking-widest text-secondary">
+                    Remember
+                </p>
+
+
+                <a
+                    href="{{ url_for('user.user_remembers') }}"
+                    class="
+                        flex items-center gap-3
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        event_note
+                    </span>
+
+                    <span class="font-label-md">
+                        My Remembers
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- RECOGNIZE -->
+            <!-- ========================= -->
+
+            <div class="mb-5">
+
+                <p class="px-4 mb-2 text-[10px] font-semibold
+                          uppercase tracking-widest text-secondary">
+                    Recognize
+                </p>
+
+
+                <a
+                    href="#"
+                    class="
+                        flex items-center gap-3
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        volunteer_activism
+                    </span>
+
+                    <span class="font-label-md">
+                        Recognize
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- CARE -->
+            <!-- ========================= -->
+
+            <div class="mb-5">
+
+                <p class="px-4 mb-2 text-[10px] font-semibold
+                          uppercase tracking-widest text-secondary">
+                    Care
+                </p>
+
+
+                <a
+                    href="{{ url_for('user.user_checkin') }}"
+                    class="
+                        flex items-center gap-3
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        favorite
+                    </span>
+
+                    <span class="font-label-md">
+                        Check-ins
+                    </span>
+
+                </a>
+
+
+                <a
+                    href="{{ url_for('user.checkin_history') }}"
+                    class="
+                        flex items-center gap-3 mt-1
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        history
+                    </span>
+
+                    <span class="font-label-md">
+                        My Responses
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- WORKSPACE -->
+            <!-- ========================= -->
+
+            <div class="mb-5">
+
+                <p class="px-4 mb-2 text-[10px] font-semibold
+                          uppercase tracking-widest text-secondary">
+                    Workspace
+                </p>
+
+
+                <!-- MY DEPARTMENTS -->
+
+                <a
+                    href="#"
+                    class="
+                        flex items-center gap-3
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        apartment
+                    </span>
+
+                    <span class="font-label-md">
+                        My Departments
+                    </span>
+
+                </a>
+
+
+                <!-- EVENTS -->
+
+                <a
+                    href="#"
+                    class="
+                        flex items-center gap-3 mt-1
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        event
+                    </span>
+
+                    <span class="font-label-md">
+                        Events
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- DIVIDER -->
+            <!-- ========================= -->
+
+            <div class="border-t border-outline-variant/30 my-5"></div>
+
+
+            <!-- ========================= -->
+            <!-- SETTINGS -->
+            <!-- ========================= -->
+
+            <div class="mb-4">
+
+                <p class="px-4 mb-2 text-[10px] font-semibold
+                          uppercase tracking-widest text-secondary">
+                    Account
+                </p>
+
+
+                <!-- PROFILE -->
+
+                <a
+                    href="{{ url_for('user.user_profile') }}"
+                    class="
+                        flex items-center gap-3
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+
+                    <span class="font-label-md">
+                        Profile
+                    </span>
+
+                </a>
+
+
+                <!-- SETTINGS -->
+
+                <a
+                    href="#"
+                    class="
+                        flex items-center gap-3 mt-1
+                        px-4 py-3
+                        rounded-xl
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-primary
+                        transition-colors
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+
+                    <span class="font-label-md">
+                        Settings
+                    </span>
+
+                </a>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- LOGOUT -->
+            <!-- ========================= -->
+
+            <a
+                href="/logout"
+                class="
+                    flex items-center gap-3
+                    px-4 py-3
+                    rounded-xl
+                    text-red-500
+                    hover:bg-red-50
+                    transition-colors
+                "
+            >
+
+                <span class="material-symbols-outlined">
+                    logout
+                </span>
+
+                <span class="font-label-md">
+                    Logout
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- ========================= -->
+        <!-- HELP CENTER -->
+        <!-- ========================= -->
+
+        <div class="px-4 pb-5">
+
+            <div class="p-4 bg-secondary-container/50 rounded-2xl">
+
+                <p class="text-caption text-on-secondary-container
+                          font-medium mb-2">
+                    Help Center
+                </p>
+
+                <p class="text-[11px] text-on-secondary-container/70
+                          mb-3 leading-relaxed">
+
+                    If something is affecting your wellbeing or productivity,
+                    your organization may be able to support you.
+
+                </p>
+
+                <button
+                    type="button"
+                    class="
+                        w-full
+                        py-2
+                        bg-white
+                        text-primary
+                        text-caption
+                        font-bold
+                        rounded-xl
+                        shadow-sm
+                        hover:shadow-md
+                        transition-shadow
+                    "
+                >
+                    Contact Support
+                </button>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- ========================= -->
+    <!-- MAIN -->
+    <!-- ========================= -->
+
+    <main class="md:ml-64 min-h-screen flex flex-col">
+
+
+        <!-- ========================= -->
+        <!-- TOPBAR -->
+        <!-- ========================= -->
+
+        <header
+            class="
+                sticky top-0 z-30
+                bg-white/95
+                backdrop-blur
+                border-b
+                border-outline-variant/40
+                flex items-center
+                px-4 md:px-6
+                h-16
+            "
+        >
+
+            <!-- ORGANIZATION NAME -->
+
+            <div class="flex items-center">
+
+                {% if org and org.logo %}
+
+                    <img
+                        src="{{ url_for('static', filename=org.logo) }}"
+                        alt="{{ org.name }}"
+                        class="w-8 h-8 rounded-lg object-cover mr-3"
+                    >
+
+                {% endif %}
+
+                <span class="text-lg font-semibold text-on-surface">
+                    {{ org.name if org else "AlmaTouch" }}
+                </span>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="flex items-center gap-4 ml-auto">
+
+
+                <!-- NOTIFICATIONS -->
+
+                
+                <a
+                    href="{{ url_for('user.user_notifications') }}"
+                    aria-label="Notifications"
+                    class="
+                        relative
+                        w-10 h-10
+                        rounded-xl
+                        flex items-center justify-center
+                        text-secondary
+                        hover:bg-surface-container-low
+                        hover:text-on-surface
+                        transition
+                    "
+                >
+
+                    <span class="material-symbols-outlined">
+                        notifications
+                    </span>
+
+                    {% if unread_notification_count > 0 %}
+                        <span
+                            class="
+                                absolute
+                                -top-0.5
+                                -right-0.5
+                                min-w-5
+                                h-5
+                                px-1
+                                rounded-full
+                                flex
+                                items-center
+                                justify-center
+                                text-[10px]
+                                font-bold
+                                text-white
+                            "
+                            style="background-color: #45664f;"
+                        >
+                            {{ unread_notification_count }}
+                        </span>
+                    {% endif %}
+
+                </a>
+
+                <!-- PROFILE -->
+
+                <div class="relative">
+
+                    <button
+                        type="button"
+                        id="profileBtn"
+                        class="
+                            flex items-center gap-3
+                            cursor-pointer
+                            rounded-xl
+                            px-2 py-1.5
+                            hover:bg-surface-container-low
+                            transition
+                        "
+                    >
+
+                        {% if user and user.profile_pic %}
+
+                            <img
+                                src="{{ url_for('static', filename=user.profile_pic) }}"
+                                alt="{{ user.first_name }} {{ user.last_name }}"
+                                class="w-10 h-10 rounded-full object-cover"
+                            >
+
+                        {% else %}
+
+                            <div
+                                class="
+                                    w-10 h-10
+                                    rounded-full
+                                    bg-primary-fixed
+                                    flex items-center justify-center
+                                "
+                            >
+
+                                <span class="text-sm font-bold text-primary">
+
+                                    {{ user.first_name[:1] if user and user.first_name else "" }}{{ user.last_name[:1] if user and user.last_name else "" }}
+
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        {% if user %}
+
+                            <div class="hidden md:block text-left">
+
+                                <p class="text-sm font-semibold text-on-surface">
+                                    {{ user.first_name }} {{ user.last_name }}
+                                </p>
+
+                                <p class="text-xs text-secondary capitalize">
+                                    {{ user.role }}
+                                </p>
+
+                            </div>
+
+                        {% endif %}
+
+
+                        <span class="material-symbols-outlined text-secondary text-lg">
+                            expand_more
+                        </span>
+
+                    </button>
+
+
+                    <!-- PROFILE MENU -->
+
+                    <div
+                        id="profileMenu"
+                        class="
+                            hidden
+                            absolute right-0 mt-2
+                            w-56
+                            bg-white
+                            border border-outline-variant/40
+                            shadow-lg
+                            rounded-2xl
+                            p-2
+                            z-50
+                        "
+                    >
+
+                        <a
+                            href="{{ url_for('user.user_profile') }}"
+                            class="
+                                flex items-center gap-3
+                                px-4 py-3
+                                rounded-xl
+                                text-on-surface
+                                hover:bg-surface-container-low
+                            "
+                        >
+
+                            <span class="material-symbols-outlined text-secondary">
+                                account_circle
+                            </span>
+
+                            <span class="text-sm">
+                                Profile
+                            </span>
+
+                        </a>
+
+
+                        <div class="border-t border-outline-variant/30 my-1"></div>
+
+
+                        <a
+                            href="/logout"
+                            class="
+                                flex items-center gap-3
+                                px-4 py-3
+                                rounded-xl
+                                text-red-500
+                                hover:bg-red-50
+                            "
+                        >
+
+                            <span class="material-symbols-outlined">
+                                logout
+                            </span>
+
+                            <span class="text-sm">
+                                Logout
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ========================= -->
+        <!-- FLASH MESSAGES -->
+        <!-- ========================= -->
+
+        <div class="px-4 md:px-6 pt-4">
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    <div
+                        id="flash-container"
+                        class="space-y-2"
+                    >
+
+                        {% for category, message in messages %}
+
+                            <div
+                                class="
+                                    flash-message
+                                    relative
+                                    p-4
+                                    rounded-2xl
+                                    flex
+                                    justify-between
+                                    items-center
+                                    border
+
+                                    {% if category == 'error' %}
+
+                                        bg-error-container
+                                        text-on-error-container
+                                        border-error/20
+
+                                    {% else %}
+
+                                        bg-primary-fixed
+                                        text-on-primary-fixed
+                                        border-primary-fixed-dim/40
+
+                                    {% endif %}
+                                "
+                            >
+
+                                <span>
+                                    {{ message }}
+                                </span>
+
+
+                                <button
+                                    type="button"
+                                    onclick="this.parentElement.remove()"
+                                    class="ml-4 text-lg font-bold hover:opacity-70"
+                                >
+                                    &times;
+                                </button>
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endif %}
+
+            {% endwith %}
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- PAGE CONTENT -->
+        <!-- ========================= -->
+
+        <div class="p-6 flex-1">
+
+            {% block content %}{% endblock %}
+
+        </div>
+
+
+        <!-- ========================= -->
+        <!-- FOOTER -->
+        <!-- ========================= -->
+
+        <footer
+            class="
+                text-center
+                py-4
+                text-xs
+                text-secondary
+                border-t
+                border-outline-variant/30
+            "
+        >
+
+            ©
+            <span id="year"></span>
+            AlmaTouch — Built by Sodbridge
+
+        </footer>
+
+    </main>
+
+
+    <!-- ========================= -->
+    <!-- SCRIPTS -->
+    <!-- ========================= -->
+
+    <script>
+
+        // =================================
+        // SIDEBAR
+        // =================================
+
+        const toggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const backdrop = document.getElementById('backdrop');
+
+        function openSidebar() {
+
+            sidebar.classList.remove('-translate-x-full');
+
+            backdrop.classList.remove('hidden');
+
+        }
+
+        function closeSidebar() {
+
+            sidebar.classList.add('-translate-x-full');
+
+            backdrop.classList.add('hidden');
+
+        }
+
+        if (toggle) {
+
+            toggle.addEventListener('click', () => {
+
+                if (
+                    sidebar.classList.contains(
+                        '-translate-x-full'
+                    )
+                ) {
+
+                    openSidebar();
+
+                } else {
+
+                    closeSidebar();
+
+                }
+
+            });
+
+        }
+
+        if (backdrop) {
+
+            backdrop.addEventListener(
+                'click',
+                closeSidebar
+            );
+
+        }
+
+
+        // =================================
+        // SETTINGS DROPDOWN
+        // =================================
+
+        const systemToggle =
+            document.getElementById('systemToggle');
+
+        const systemMenu =
+            document.getElementById('systemMenu');
+
+        const systemIcon =
+            document.getElementById('systemIcon');
+
+        if (
+            systemToggle &&
+            systemMenu &&
+            systemIcon
+        ) {
+
+            systemToggle.addEventListener(
+                'click',
+                () => {
+
+                    systemMenu.classList.toggle(
+                        'hidden'
+                    );
+
+                    systemIcon.innerText =
+                        systemMenu.classList.contains(
+                            'hidden'
+                        )
+                            ? 'expand_more'
+                            : 'expand_less';
+
+                }
+            );
+
+        }
+
+
+        // =================================
+        // PROFILE DROPDOWN
+        // =================================
+
+        const btn =
+            document.getElementById('profileBtn');
+
+        const menu =
+            document.getElementById('profileMenu');
+
+        if (btn && menu) {
+
+            btn.addEventListener(
+                'click',
+                (event) => {
+
+                    event.stopPropagation();
+
+                    menu.classList.toggle(
+                        'hidden'
+                    );
+
+                }
+            );
+
+
+            document.addEventListener(
+                'click',
+                (event) => {
+
+                    if (!btn.contains(event.target)) {
+
+                        menu.classList.add(
+                            'hidden'
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+
+        // =================================
+        // FLASH MESSAGES
+        // =================================
+
+        setTimeout(() => {
+
+            const messages =
+                document.querySelectorAll(
+                    '.flash-message'
+                );
+
+            messages.forEach(
+                (message) => {
+
+                    message.style.transition =
+                        'opacity 0.5s ease';
+
+                    message.style.opacity = '0';
+
+                    setTimeout(
+                        () => message.remove(),
+                        500
+                    );
+
+                }
+            );
+
+        }, 3500);
+
+
+        // =================================
+        // FOOTER YEAR
+        // =================================
+
+        const year =
+            document.getElementById('year');
+
+        if (year) {
+
+            year.innerText =
+                new Date().getFullYear();
+
+        }
+
+    </script>
+
+</body>
+
+</html>

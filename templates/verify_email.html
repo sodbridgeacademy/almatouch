@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Verify Email | AlmaTouch</title>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<script id="tailwind-config">
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                "on-tertiary-fixed-variant": "#464558",
+                "surface-bright": "#fbf9f8",
+                "error": "#ba1a1a",
+                "surface-container-high": "#e9e8e7",
+                "outline": "#727972",
+                "on-primary": "#ffffff",
+                "on-error-container": "#93000a",
+                "inverse-primary": "#abcfb3",
+                "on-tertiary-container": "#2f2e40",
+                "inverse-on-surface": "#f2f0f0",
+                "surface-container-lowest": "#ffffff",
+                "on-secondary-fixed": "#1f1b13",
+                "inverse-surface": "#303031",
+                "surface-variant": "#e4e2e2",
+                "background": "#fbf9f8",
+                "surface-tint": "#45664f",
+                "tertiary-container": "#9895ab",
+                "outline-variant": "#c2c8c0",
+                "on-tertiary-fixed": "#1b1a2b",
+                "surface-container-highest": "#e4e2e2",
+                "primary": "#45664f",
+                "on-secondary-fixed-variant": "#4c463c",
+                "surface-container-low": "#f5f3f3",
+                "on-secondary-container": "#6a6459",
+                "secondary-fixed": "#ebe1d3",
+                "on-background": "#1b1c1c",
+                "primary-fixed-dim": "#abcfb3",
+                "on-primary-container": "#163623",
+                "error-container": "#ffdad6",
+                "primary-fixed": "#c6ecce",
+                "on-primary-fixed-variant": "#2d4e38",
+                "secondary-fixed-dim": "#cec5b8",
+                "on-error": "#ffffff",
+                "secondary": "#645e53",
+                "on-tertiary": "#ffffff",
+                "on-secondary": "#ffffff",
+                "surface": "#fbf9f8",
+                "on-surface": "#1b1c1c",
+                "on-surface-variant": "#424842",
+                "secondary-container": "#ebe1d3",
+                "primary-container": "#7da086",
+                "surface-container": "#efeded",
+                "on-primary-fixed": "#00210f",
+                "tertiary-fixed-dim": "#c8c4dc",
+                "tertiary": "#5e5c71",
+                "surface-dim": "#dbdad9"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "lg": "1.5rem",
+                "gutter": "1.5rem",
+                "xl": "2.5rem",
+                "sm": "0.5rem",
+                "margin": "2rem",
+                "md": "1rem",
+                "xs": "0.25rem"
+            },
+            "fontFamily": {
+                "body-lg": ["Plus Jakarta Sans"],
+                "caption": ["Plus Jakarta Sans"],
+                "headline-lg": ["Plus Jakarta Sans"],
+                "body-md": ["Plus Jakarta Sans"],
+                "display": ["Plus Jakarta Sans"],
+                "label-md": ["Plus Jakarta Sans"],
+                "headline-md": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                "body-lg": ["18px", {
+                    "lineHeight": "1.6",
+                    "fontWeight": "400"
+                }],
+                "caption": ["12px", {
+                    "lineHeight": "1.4",
+                    "fontWeight": "400"
+                }],
+                "headline-lg": ["28px", {
+                    "lineHeight": "1.3",
+                    "fontWeight": "600"
+                }],
+                "body-md": ["16px", {
+                    "lineHeight": "1.6",
+                    "fontWeight": "400"
+                }],
+                "display": ["40px", {
+                    "lineHeight": "1.2",
+                    "letterSpacing": "-0.02em",
+                    "fontWeight": "600"
+                }],
+                "label-md": ["14px", {
+                    "lineHeight": "1.4",
+                    "letterSpacing": "0.01em",
+                    "fontWeight": "500"
+                }]
+            }
+        }
+    }
+}
+</script>
+
+<style>
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+}
+
+/* OTP input */
+.otp-input {
+    letter-spacing: 0.5em;
+}
+</style>
+
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+
+<!-- =========================
+     TOP APP BAR
+========================= -->
+
+<header class="fixed top-0 w-full z-50 bg-white/90 backdrop-blur-lg border-b border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.04)]">
+
+<div class="max-w-7xl mx-auto flex justify-between items-center px-8 py-4">
+
+    <div class="text-2xl font-bold tracking-tight text-emerald-800">
+        AlmaTouch
+    </div>
+
+    <a
+        href="{{ url_for('user.user_login') }}"
+        class="text-slate-500 hover:text-emerald-600 transition-colors font-label-md"
+    >
+        Sign In
+    </a>
+
+</div>
+
+</header>
+
+<!-- =========================
+     MAIN CONTENT
+========================= -->
+
+<main class="flex-grow flex items-center justify-center pt-24 pb-12 px-margin">
+
+
+<div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-xl items-center">
+
+    <!-- =========================
+         LEFT BRAND MESSAGE
+    ========================= -->
+    <div class="hidden lg:flex flex-col space-y-lg pr-xl">
+
+        <span class="bg-primary-container/20 text-primary px-4 py-1 rounded-full font-label-md w-fit">
+            One more step
+        </span>
+
+        <h1 class="font-display text-display text-on-surface leading-tight">
+            Let's make sure
+            <br/>
+            <span class="text-primary italic">it's really you.</span>
+        </h1>
+
+        <p class="font-body-lg text-body-lg text-on-surface-variant max-w-md">
+            We've sent a 6-digit verification code to your email.
+            Verify your address to continue setting up your AlmaTouch profile.
+        </p>
+
+        <div class="flex items-start gap-md pt-md">
+
+            <div class="flex items-center justify-center w-10 h-10 rounded-full bg-primary-container/20 text-primary shrink-0">
+                <span class="material-symbols-outlined">
+                    mark_email_read
+                </span>
+            </div>
+
+            <div>
+                <p class="font-label-md text-on-surface">
+                    Check your inbox
+                </p>
+
+                <p class="text-caption text-on-surface-variant mt-1">
+                    Don't see it? Check your spam or junk folder.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         VERIFICATION CARD
+    ========================= -->
+    <div class="flex justify-center lg:justify-end">
+
+        <div class="w-full max-w-md bg-surface-container-lowest border border-outline-variant/40 rounded-xl p-xl shadow-[0_20px_40px_rgba(0,0,0,0.04)]">
+
+            <!-- Header -->
+            <div class="text-center mb-xl">
+
+                <div class="inline-flex items-center justify-center w-14 h-14 bg-primary-container text-on-primary rounded-xl mb-md">
+
+                    <span class="material-symbols-outlined text-3xl">
+                        verified_user
+                    </span>
+
+                </div>
+
+                <h2 class="font-headline-lg text-headline-lg text-on-surface">
+                    Verify your email
+                </h2>
+
+                <p class="font-body-md text-body-md text-on-surface-variant mt-2">
+                    We've sent a verification code to
+                </p>
+
+                <p class="font-label-md text-primary mt-1 break-all">
+                    {{ user.email }}
+                </p>
+
+            </div>
+
+
+            <!-- Verification Form -->
+            <form class="space-y-lg" method="POST">
+
+                <!-- OTP -->
+                <div class="space-y-xs">
+
+                    <label
+                        class="font-label-md text-on-surface-variant block text-center"
+                        for="otp"
+                    >
+                        Enter your 6-digit code
+                    </label>
+
+                    <input
+                        class="otp-input w-full px-md py-lg bg-white border border-outline-variant rounded-lg text-center text-2xl font-semibold tracking-[0.5em] focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                        name="otp"
+                        id="otp"
+                        type="text"
+                        inputmode="numeric"
+                        autocomplete="one-time-code"
+                        maxlength="6"
+                        pattern="[0-9]{6}"
+                        placeholder="000000"
+                        required
+                    />
+
+                </div>
+
+
+                <!-- Expiry Notice -->
+                <div class="flex items-center justify-center gap-2 text-caption text-on-surface-variant">
+
+                    <span class="material-symbols-outlined text-sm">
+                        schedule
+                    </span>
+
+                    <span>
+                        Your code expires in 10 minutes.
+                    </span>
+
+                </div>
+
+
+                <!-- Verify Button -->
+                <button
+                    class="w-full bg-primary text-on-primary py-4 rounded-lg font-label-md mt-md active:scale-[0.98] transition-all shadow-[0_4px_12px_rgba(69,102,79,0.3)] flex items-center justify-center space-x-2 hover:opacity-95"
+                    type="submit"
+                >
+
+                    <span>Verify Email</span>
+
+                    <span class="material-symbols-outlined text-sm">
+                        arrow_forward
+                    </span>
+
+                </button>
+
+            </form>
+
+
+            <!-- Resend / Help -->
+            <div class="mt-xl pt-lg border-t border-outline-variant/30 text-center">
+
+                <p class="font-caption text-caption text-on-surface-variant">
+                    Didn't receive the code?
+                </p>
+
+                <!-- <a
+                    href="#"
+                    class="inline-block mt-2 text-primary font-semibold hover:underline text-label-md"
+                >
+                    Resend verification code
+                </a> -->
+
+                <form method="POST" action="{{ url_for('user.resend_verification') }}">
+                    <button
+                        type="submit"
+                        class="text-primary font-semibold hover:underline text-label-md"
+                    >
+                        Resend verification code
+                    </button>
+                </form>
+
+
+                <p class="text-caption text-on-surface-variant mt-4">
+                    Make sure you entered the correct email address and check your spam folder.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</main>
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="w-full py-12 bg-[#F9F7F2] border-t border-slate-200">
+
+
+<div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+
+    <div class="flex flex-col items-center md:items-start gap-2">
+
+        <div class="text-lg font-bold text-emerald-900">
+            AlmaTouch
+        </div>
+
+        <p class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-emerald-800">
+            © 2026 AlmaTouch. Remember. Recognize. Care.
+        </p>
+
+    </div>
+
+    <div class="flex gap-8">
+
+        <a
+            class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-slate-400 hover:text-emerald-600 transition-opacity"
+            href="#"
+        >
+            Privacy Policy
+        </a>
+
+        <a
+            class="font-['Plus_Jakarta_Sans'] text-xs uppercase tracking-widest text-slate-400 hover:text-emerald-600 transition-opacity"
+            href="#"
+        >
+            Terms of Service
+        </a>
+
+    </div>
+
+</div>
+
+
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-6 max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold">Analytics Dashboard</h2>
+        <p class="text-gray-500">Deep insights from employee check-ins</p>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+
+        <div class="bg-white p-5 rounded-xl border">
+            <p class="text-sm text-gray-500">Average Mood Score</p>
+            <h3 class="text-2xl font-bold">{{ mood_avg }}</h3>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border">
+            <p class="text-sm text-gray-500">Total Mood Responses</p>
+            <h3 class="text-2xl font-bold">{{ mood_values|sum }}</h3>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border">
+            <p class="text-sm text-gray-500">Support Requests</p>
+            <h3 class="text-2xl font-bold">{{ support_values|sum }}</h3>
+        </div>
+
+    </div>
+
+    <!-- CHART ROW 1 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+        <!-- MOOD CHART -->
+        <div class="bg-white p-6 rounded-xl border">
+            <h3 class="font-semibold mb-4">Mood Distribution</h3>
+            <canvas id="moodChart"></canvas>
+        </div>
+
+        <!-- SUPPORT CHART -->
+        <div class="bg-white p-6 rounded-xl border">
+            <h3 class="font-semibold mb-4">Support Needs Breakdown</h3>
+            <canvas id="supportChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- ENGAGEMENT TREND -->
+    <div class="bg-white p-6 rounded-xl border">
+        <h3 class="font-semibold mb-4">Engagement Trend (7 Days)</h3>
+        <canvas id="trendChart"></canvas>
+    </div>
+
+</div>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // MOOD
+    new Chart(document.getElementById("moodChart"), {
+        type: 'bar',
+        data: {
+            labels: {{ mood_labels|tojson }},
+            datasets: [{
+                label: "Mood Score",
+                data: {{ mood_values|tojson }},
+                backgroundColor: "#10b981"
+            }]
+        }
+    });
+
+    // SUPPORT
+    new Chart(document.getElementById("supportChart"), {
+        type: 'pie',
+        data: {
+            labels: {{ support_labels|tojson }},
+            datasets: [{
+                data: {{ support_values|tojson }},
+                backgroundColor: ["#10b981","#f59e0b","#ef4444","#3b82f6","#8b5cf6","#6b7280"]
+            }]
+        }
+    });
+
+    // TREND
+    new Chart(document.getElementById("trendChart"), {
+        type: 'line',
+        data: {
+            labels: {{ trend_labels|tojson }},
+            datasets: [{
+                label: "Responses",
+                data: {{ trend_values|tojson }},
+                borderColor: "#10b981",
+                tension: 0.4
+            }]
+        }
+    });
+</script>
+
+{% endblock %}

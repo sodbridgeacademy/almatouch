@@ -1,0 +1,267 @@
+{% extends "user_base.html" %}
+
+{% block content %}
+
+<!-- Main Content Canvas -->
+<main class="flex-grow pt-24 pb-12 px-4 md:px-8">
+<div class="max-w-[800px] mx-auto">
+
+<!-- Progress -->
+<div class="mb-lg flex flex-col items-center">
+    <div class="w-full max-w-[400px] bg-surface-container-high h-1.5 rounded-full mb-sm overflow-hidden">
+        <div class="bg-primary h-full w-1/2 rounded-full"></div>
+    </div>
+    <span class="font-label-md text-label-md text-on-surface-variant">
+        Step 1 of 1
+    </span>
+</div>
+
+<!-- Card -->
+<div class="bg-white rounded-2xl border border-outline-variant/30 shadow-[0_4px_20px_rgba(0,0,0,0.04)] overflow-hidden">
+
+<div class="p-xl md:p-xl">
+
+<!-- Header -->
+<div class="flex flex-col md:flex-row items-center gap-lg mb-xl">
+    <div class="w-24 h-24 rounded-full bg-primary-fixed flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings: 'FILL' 1;">
+            groups
+        </span>
+    </div>
+
+    <div class="text-center md:text-left">
+        <h1 class="font-headline-lg text-headline-lg text-on-surface mb-xs">
+            Complete Your Profile
+        </h1>
+        <p class="font-body-md text-body-md text-on-surface-variant">
+            Help us personalize your experience and improve your well-being
+        </p>
+    </div>
+</div>
+
+<!-- FORM -->
+<form method="POST" class="space-y-xl">
+
+<!-- ===================== -->
+<!-- CORE PROFILE -->
+<!-- ===================== -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+
+    <!-- DOB -->
+    <div class="space-y-xs">
+        <label class="font-label-md text-label-md text-on-surface block px-1">
+            Date of Birth
+        </label>
+
+        <input name="dob"
+            type="date"
+            class="w-full bg-surface-container-low border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg p-md font-body-md text-on-surface"/>
+    </div>
+
+</div>
+
+<!-- ===================== -->
+<!-- DEPARTMENT (SMART UX) -->
+<!-- ===================== -->
+<div class="space-y-xs">
+
+    <label class="font-label-md text-label-md text-on-surface block px-1">
+        Department / Group
+    </label>
+
+    {% if departments and departments|length > 0 %}
+
+<div class="space-y-sm">
+
+    <label class="font-label-md text-label-md text-on-surface block px-1">
+        Departments
+    </label>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+
+        {% for dept in departments %}
+        <label class="flex items-center gap-3 p-3 border rounded-xl hover:border-primary cursor-pointer">
+
+            <input
+                type="checkbox"
+                name="department_ids"
+                value="{{ dept.id }}"
+                class="w-4 h-4">
+
+            <span>{{ dept.name }}</span>
+
+        </label>
+        {% endfor %}
+
+    </div>
+
+</div>
+
+    {% else %}
+
+        <!-- fallback UX -->
+        <div class="p-md bg-surface-container-low rounded-lg border border-outline-variant">
+            <p class="text-body-md text-on-surface-variant">
+                No departments available yet in your organization.
+            </p>
+
+            <p class="text-caption text-on-surface-variant mt-1">
+                You can continue now — your admin may assign you later.
+            </p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<!-- ===================== -->
+<!-- MESSAGE FREQUENCY -->
+<!-- ===================== -->
+<div class="space-y-md">
+
+    <div class="space-y-sm">
+    <label class="font-label-md text-label-md text-on-surface block px-1">
+        Message Preference
+    </label>
+
+    <select name="message_frequency"
+        class="w-full bg-surface-container-low border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg p-md">
+
+        <option value="weekly" selected>Weekly (Recommended)</option>
+        <option value="daily">Daily</option>
+        <option value="twice_weekly">Twice Weekly</option>
+        <option value="monthly">Monthly</option>
+
+    </select>
+</div>    
+</div>
+
+<!-- ===================== -->
+<!-- OPTIONAL SECTION -->
+<!-- ===================== -->
+<div class="pt-lg flex items-center gap-md">
+    <span class="font-label-md text-label-md text-on-surface-variant whitespace-nowrap">
+        Optional Information
+    </span>
+    <div class="h-px bg-outline-variant w-full"></div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter">
+
+    <div class="space-y-xs">
+        <label class="font-label-md text-label-md text-on-surface block px-1">
+            Gender
+        </label>
+
+        <select name="gender"
+            class="w-full bg-surface-container-low border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg p-md font-body-md text-on-surface">
+
+            <option>Prefer not to say</option>
+            <option>Female</option>
+            <option>Male</option>
+            <option>Non-binary</option>
+            <option>Other</option>
+
+        </select>
+    </div>
+
+    <div class="space-y-xs">
+        <label class="font-label-md text-label-md text-on-surface block px-1">
+            Marital Status
+        </label>
+
+        <select name="marital_status"
+            class="w-full bg-surface-container-low border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg p-md font-body-md text-on-surface">
+
+            <option>Select</option>
+            <option>Single</option>
+            <option>Married</option>
+            <option>Partnership</option>
+
+        </select>
+    </div>
+
+    <div class="space-y-xs">
+        <label class="font-label-md text-label-md text-on-surface block px-1">
+            Religion
+        </label>
+
+        <input name="religion"
+            class="w-full bg-surface-container-low border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg p-md font-body-md text-on-surface"
+            placeholder="Optional"/>
+    </div>
+
+    <div class="space-y-xs">
+        <label class="font-label-md text-label-md text-on-surface block px-1">
+            Nationality
+        </label>
+
+        <input name="nationality"
+            class="w-full bg-surface-container-low border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg p-md font-body-md text-on-surface"
+            placeholder="e.g. Nigerian"/>
+    </div>
+
+</div>
+
+<!-- ===================== -->
+<!-- CONSENT -->
+<!-- ===================== -->
+<div class="flex items-start gap-3 pt-md">
+    <input type="checkbox" name="consent_given" class="mt-1"/>
+
+    <p class="text-caption text-on-surface-variant">
+        I agree to receive personalized check-ins, wellness messages, and updates from my organization.
+    </p>
+</div>
+
+<!-- ===================== -->
+<!-- ACTIONS -->
+<!-- ===================== -->
+<div class="pt-xl border-t border-surface-container-high flex flex-col md:flex-row items-center justify-between gap-md">
+
+    <button type="button"
+        class="text-on-surface-variant font-label-md hover:text-primary transition-colors">
+        Skip for now
+    </button>
+
+    <button type="submit"
+        class="w-full md:w-auto bg-primary text-white font-headline-md py-md px-xl rounded-full shadow-lg hover:bg-primary-container active:scale-95 transition-all">
+        Save & Continue
+    </button>
+
+</div>
+
+</form>
+</div>
+</div>
+<!-- End form -->
+
+<!-- Trust Section -->
+<div class="mt-xl grid grid-cols-1 md:grid-cols-2 gap-lg">
+
+<div class="bg-primary-fixed/20 p-lg rounded-2xl flex items-start gap-md">
+    <span class="material-symbols-outlined text-primary">shield_person</span>
+    <div>
+        <h4 class="font-label-md text-primary mb-xs">Privacy Guaranteed</h4>
+        <p class="font-caption text-on-surface-variant">
+            Your data is encrypted and never shared without consent.
+        </p>
+    </div>
+</div>
+
+<div class="bg-secondary-fixed/20 p-lg rounded-2xl flex items-start gap-md">
+    <span class="material-symbols-outlined text-secondary">eco</span>
+    <div>
+        <h4 class="font-label-md text-secondary mb-xs">Personalized Care</h4>
+        <p class="font-caption text-on-surface-variant">
+            We tailor your experience based on your profile and preferences.
+        </p>
+    </div>
+</div>
+
+</div>
+
+</div>
+</main>
+
+{% endblock %}

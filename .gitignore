@@ -1,0 +1,12 @@
+# Virtual environment
+almaenv/
+
+# Environment variables
+.env
+
+# Others 
+*.db
+__pycache__/
+.venv/
+venv/
+instance/

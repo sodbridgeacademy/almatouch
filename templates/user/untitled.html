@@ -1,0 +1,888 @@
+<!-- Example dynamic bars -->
+<div class="h-64 flex items-end justify-between gap-2 px-2 border-b border-slate-100">
+
+    {% for val in trend_values %}
+        <div class="flex-1 bg-primary/20 rounded-t-lg 
+                    hover:bg-primary transition cursor-pointer relative group"
+             style="height: {{ (val / (trend_values|max if (trend_values|max) > 0 else 1)) * 100 }}%">
+
+            <div class="absolute -top-10 left-1/2 -translate-x-1/2 
+                        bg-on-surface text-white text-[10px] px-2 py-1 rounded
+                        opacity-0 group-hover:opacity-100 transition-opacity">
+                {{ val }}
+            </div>
+
+        </div>
+    {% endfor %}
+
+</div>
+
+<!-- Labels -->
+<div class="flex justify-between mt-4 px-2">
+    {% for label in trend_labels %}
+        <span class="text-[10px] font-bold text-slate-400">{{ label }}</span>
+    {% endfor %}
+</div>
+
+
+<!-- chart -->
+<div class="lg:col-span-2 bg-white p-8 rounded-2xl border border-slate-100 shadow-sm">
+    <div class="flex items-center justify-between mb-8">
+    <div>
+    <h4 class="font-headline-md text-on-surface">Engagement Overview</h4>
+    <p class="text-caption text-slate-400">Response trends over the last 7 days</p>
+    </div>
+    <select class="text-caption font-medium text-slate-500 bg-surface-container-low border-none rounded-lg px-3 py-1.5 focus:ring-0">
+    <option>Last 7 Days</option>
+    <option>Last 30 Days</option>
+    </select>
+    </div>
+    <!-- Simulated Chart -->
+    <div class="h-64 flex items-end justify-between gap-2 px-2 border-b border-slate-100">
+    <div class="flex-1 bg-primary/20 rounded-t-lg h-[40%] hover:bg-primary transition-colors cursor-pointer relative group">
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">112</div>
+    </div>
+    <div class="flex-1 bg-primary/20 rounded-t-lg h-[60%] hover:bg-primary transition-colors cursor-pointer relative group">
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">145</div>
+    </div>
+    <div class="flex-1 bg-primary/20 rounded-t-lg h-[45%] hover:bg-primary transition-colors cursor-pointer relative group">
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">128</div>
+    </div>
+    <div class="flex-1 bg-primary/20 rounded-t-lg h-[85%] hover:bg-primary transition-colors cursor-pointer relative group">
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">189</div>
+    </div>
+    <div class="flex-1 bg-primary/20 rounded-t-lg h-[30%] hover:bg-primary transition-colors cursor-pointer relative group">
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">92</div>
+    </div>
+    <div class="flex-1 bg-primary/20 rounded-t-lg h-[75%] hover:bg-primary transition-colors cursor-pointer relative group">
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">168</div>
+    </div>
+    <div class="flex-1 bg-primary-container rounded-t-lg h-[70%] hover:bg-primary transition-colors cursor-pointer relative group">
+    <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">156</div>
+    </div>
+    </div>
+    <div class="flex justify-between mt-4 px-2">
+    <span class="text-[10px] font-bold text-slate-400">MON</span>
+    <span class="text-[10px] font-bold text-slate-400">TUE</span>
+    <span class="text-[10px] font-bold text-slate-400">WED</span>
+    <span class="text-[10px] font-bold text-slate-400">THU</span>
+    <span class="text-[10px] font-bold text-slate-400">FRI</span>
+    <span class="text-[10px] font-bold text-slate-400">SAT</span>
+    <span class="text-[10px] font-bold text-emerald-600">TODAY</span>
+    </div>
+</div>
+
+
+<!-- org checkin overview -->
+{{ users.values() | first | attr('display_date') }}
+
+<script>
+function handleSupportChange() {
+    // Find the support question (Q3)
+    const supportBlock = document.querySelector('.question-block[data-question-key="support_check"]');
+    if (!supportBlock) return;
+
+    const yesRadio = supportBlock.querySelector('input[value="yes"]');
+    const noRadio = supportBlock.querySelector('input[value="no"]');
+
+    // Find Q4
+    const q4Block = document.querySelector('.question-block[data-question-key="support_details"]');
+    if (!q4Block) return;
+
+    const q4Input = q4Block.querySelector('textarea');
+
+    if (yesRadio && yesRadio.checked) {
+        q4Block.style.display = 'block';
+        // q4Input.focus(); // optional
+    } else if (noRadio && noRadio.checked) {
+        q4Block.style.display = 'none';
+        if (q4Input) {
+            q4Input.value = '';   // Clear input
+        }
+    }
+}
+
+// Use event delegation - much more reliable
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+
+    // Attach listener to the whole form
+    form.addEventListener('change', function(e) {
+        if (e.target.type === 'radio') {
+            handleSupportChange();
+        }
+    });
+
+    // Initial check when page loads
+    setTimeout(handleSupportChange, 100);
+
+    // Also handle if user comes back with browser back button
+    window.addEventListener('pageshow', handleSupportChange);
+});
+</script>
+
+
+
+<form method="POST" action="{{ url_for('user.submit_checkin') }}">
+
+    <input type="hidden" name="event_id" value="{{ event.id }}">
+
+    {% for q in questions %}
+
+        <div class="mb-6 p-4 border rounded-xl bg-white question-block"
+             data-question-id="{{ q.id }}"
+             data-question-key="{{ q.question_key or '' }}"
+             data-depends-on="{{ q.depends_on_question_id or '' }}"
+             data-depends-value="{{ q.depends_on_value or '' }}"
+             {% if q.depends_on_question_id %}style="display:none;"{% endif %}>
+
+            <!-- QUESTION -->
+            <p class="font-semibold mb-3">
+                {{ q.question_text }}
+            </p>
+
+            <!-- ========================= -->
+            <!-- MOOD TYPE -->
+            <!-- ========================= -->
+            {% if q.question_type == "mood" %}
+
+                <div class="flex gap-3 flex-wrap">
+
+                    {% for val, emoji, label in [
+                        (1,'😢','Very Down'),
+                        (2,'😔','Down'),
+                        (3,'😐','Okay'),
+                        (4,'🙂','Good'),
+                        (5,'✨','Great')
+                    ] %}
+
+                    <label class="cursor-pointer text-center">
+                        <input type="radio"
+                               name="q_{{ q.id }}"
+                               value="{{ val }}"
+                               class="hidden peer"
+                               onchange="handleCheckinChange(this)">
+                        <span class="block px-3 py-2 rounded-lg bg-gray-100 peer-checked:bg-emerald-600 peer-checked:text-white transition">
+                            {{ emoji }}
+                            <div class="text-[11px] mt-1">{{ label }}</div>
+                        </span>
+                    </label>
+
+                    {% endfor %}
+
+                </div>
+
+            <!-- TEXT -->
+            {% elif q.question_type == "text" %}
+
+                <textarea
+                    name="q_{{ q.id }}"
+                    class="w-full border p-3 rounded-xl mt-2"
+                    rows="3"
+                    maxlength="200"
+                    placeholder="Type your answer...max 200 characeters"></textarea>
+
+            <!-- SUPPORT -->
+            {% elif q.question_type == "support" %}
+
+                <div class="flex gap-3">
+
+                    <label class="cursor-pointer">
+                        <input type="radio"
+                               name="q_{{ q.id }}"
+                               value="yes"
+                               class="hidden peer"
+                               onchange="handleCheckinChange(this)">
+                        <span class="px-4 py-2 rounded-lg bg-gray-100 peer-checked:bg-emerald-600 peer-checked:text-white">
+                            Yes
+                        </span>
+                    </label>
+
+                    <label class="cursor-pointer">
+                        <input type="radio"
+                               name="q_{{ q.id }}"
+                               value="no"
+                               class="hidden peer"
+                               onchange="handleCheckinChange(this)">
+                        <span class="px-4 py-2 rounded-lg bg-gray-100 peer-checked:bg-emerald-600 peer-checked:text-white">
+                            No
+                        </span>
+                    </label>
+
+                </div>
+            <!-- SUPPORT DETAILS -->
+            {% elif q.question_type == "support_details" %}
+
+                <textarea
+                    name="q_{{ q.id }}"
+                    class="w-full border p-3 rounded-xl mt-2 dependent-input"
+                    rows="3"
+                    maxlength="200"
+                    placeholder="Tell us the support you need..."></textarea>
+
+
+
+            {% endif %}
+
+        </div>
+
+    {% endfor %}
+
+    <button type="submit"
+            class="w-full md:w-auto bg-emerald-600 text-white px-5 py-3 rounded-xl font-semibold hover:bg-emerald-700 transition">
+        Submit Check-in
+    </button>
+
+</form>
+
+
+
+
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- SEO -->
+    <title>{% block title %}AlmaTouch Dashboard{% endblock %}</title>
+    <meta name="description" content="AlmaTouch - Care community management platform for organizations to manage members, events, and engagement."/>
+    <meta name="author" content="Sodbridge Ltd"/>
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+    <!-- Tailwind Config (UNCHANGED - preserved as requested) -->
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-fixed": "#1b1a2b",
+                    "error-container": "#ffdad6",
+                    "surface-variant": "#e4e2e2",
+                    "secondary": "#645e53",
+                    "on-secondary-fixed-variant": "#4c463c",
+                    "on-primary-container": "#163623",
+                    "inverse-primary": "#abcfb3",
+                    "on-tertiary-fixed-variant": "#464558",
+                    "on-error-container": "#93000a",
+                    "on-tertiary": "#ffffff",
+                    "secondary-container": "#ebe1d3",
+                    "on-error": "#ffffff",
+                    "inverse-on-surface": "#f2f0f0",
+                    "tertiary": "#5e5c71",
+                    "on-secondary-container": "#6a6459",
+                    "on-secondary-fixed": "#1f1b13",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface": "#1b1c1c",
+                    "error": "#ba1a1a",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#c6ecce",
+                    "on-primary-fixed": "#00210f",
+                    "outline": "#727972",
+                    "inverse-surface": "#303031",
+                    "background": "#fbf9f8",
+                    "tertiary-container": "#9895ab",
+                    "on-background": "#1b1c1c",
+                    "surface-container": "#efeded",
+                    "on-tertiary-container": "#2f2e40",
+                    "surface-container-low": "#f5f3f3",
+                    "surface-container-high": "#e9e8e7",
+                    "surface-tint": "#45664f",
+                    "surface": "#fbf9f8",
+                    "secondary-fixed-dim": "#cec5b8",
+                    "surface-container-highest": "#e4e2e2",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#e4e0f8",
+                    "surface-bright": "#fbf9f8",
+                    "on-primary-fixed-variant": "#2d4e38",
+                    "tertiary-fixed-dim": "#c8c4dc",
+                    "primary-container": "#7da086",
+                    "primary-fixed-dim": "#abcfb3",
+                    "primary": "#45664f",
+                    "on-surface-variant": "#424842",
+                    "surface-dim": "#dbdad9",
+                    "secondary-fixed": "#ebe1d3",
+                    "outline-variant": "#c2c8c0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "2xl": "1rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "2.5rem",
+                    "md": "1rem",
+                    "sm": "0.5rem",
+                    "xs": "0.25rem",
+                    "margin": "2rem",
+                    "lg": "1.5rem",
+                    "gutter": "1.5rem"
+            },
+            "fontFamily": {
+                    "caption": ["Plus Jakarta Sans"],
+                    "body-md": ["Plus Jakarta Sans"],
+                    "label-md": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Plus Jakarta Sans"],
+                    "headline-md": ["Plus Jakarta Sans"],
+                    "display": ["Plus Jakarta Sans"]
+            },
+            "fontSize": {
+                    "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.01em", "fontWeight": "500"}],
+                    "headline-lg": ["28px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-md": ["22px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                    "display": ["40px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+
+    <!-- Your original styles (PRESERVED) -->
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: minmax(180px, auto);
+            gap: 1.5rem;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(224, 224, 224, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-slate-800 overflow-x-hidden">
+
+
+<!-- ========================= -->
+<!-- MOBILE TOPBAR -->
+<!-- ========================= -->
+<header class="md:hidden fixed top-0 left-0 right-0 h-16 bg-white border-b z-50 flex items-center justify-between px-4">
+
+    <!-- ALWAYS VISIBLE TOGGLE -->
+    <button id="menuToggle"
+            class="p-2 rounded-lg hover:bg-slate-100 z-50">
+
+        <span class="material-symbols-outlined">
+            menu
+        </span>
+
+    </button>
+
+    <!-- Logo -->
+    <div class="flex items-center gap-2">
+
+        <div class="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-white">spa</span>
+        </div>
+
+        <h1 class="font-bold text-emerald-800">AlmaTouch</h1>
+
+    </div>
+
+    <!-- Avatar -->
+    <img src="https://i.pravatar.cc/40" class="w-9 h-9 rounded-full"/>
+
+</header>
+
+
+<!-- ========================= -->
+<!-- MOBILE BACKDROP -->
+<!-- ========================= -->
+<div id="backdrop"
+     class="fixed inset-0 bg-black/40 z-40 hidden md:hidden">
+</div>
+
+
+
+<!-- ========================= -->
+<!-- SIDEBAR -->
+<!-- ========================= -->
+<aside id="sidebar"
+       class="fixed top-0 left-0 z-50 h-screen w-64 bg-white border-r border-slate-200 shadow-lg
+              transform -translate-x-full md:translate-x-0
+              transition-transform duration-300 flex flex-col overflow-y-auto">
+
+    <!-- Logo -->
+    <div class="px-6 py-6 flex items-center gap-3 border-b">
+
+        <div class="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center">
+
+            <span class="material-symbols-outlined text-white">
+                spa
+            </span>
+
+        </div>
+
+        <div>
+
+            <h1 class="text-xl font-bold text-emerald-800">
+                AlmaTouch
+            </h1>
+
+            <p class="text-[10px] uppercase tracking-wider text-slate-400">
+                Member Space
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- NAV -->
+    <nav class="flex-1 px-4 py-6 space-y-2">
+
+        <!-- Dashboard -->
+        <a href="{{ url_for('user.user_dashboard') }}"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-50 text-emerald-700 font-semibold">
+
+            <span class="material-symbols-outlined">
+                dashboard
+            </span>
+
+            Dashboard
+
+        </a>
+
+
+        <!-- Check-in -->
+        <a href="#"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+
+            <span class="material-symbols-outlined">
+                fact_check
+            </span>
+
+            Daily Check-in
+
+        </a>
+
+
+        <!-- Responses -->
+        <a href="#"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+
+            <span class="material-symbols-outlined">
+                history
+            </span>
+
+            My Responses
+
+        </a>
+
+
+        <!-- Messages -->
+        <a href="#"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+
+            <span class="material-symbols-outlined">
+                mail
+            </span>
+
+            Messages
+
+        </a>
+
+
+        <!-- Departments -->
+        <a href="#"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+
+            <span class="material-symbols-outlined">
+                apartment
+            </span>
+
+            My Departments
+
+        </a>
+
+
+        <!-- Wellbeing -->
+        <a href="#"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+
+            <span class="material-symbols-outlined">
+                favorite
+            </span>
+
+            Wellbeing
+
+        </a>
+
+
+
+        <!-- SETTINGS -->
+        <div class="mt-4">
+
+            <button id="settingsToggle"
+                    class="w-full flex items-center justify-between px-4 py-3 rounded-xl text-slate-600 hover:bg-slate-100 transition">
+
+                <div class="flex items-center gap-3">
+
+                    <span class="material-symbols-outlined">
+                        settings
+                    </span>
+
+                    Settings
+
+                </div>
+
+                <span class="material-symbols-outlined text-sm"
+                      id="settingsIcon">
+
+                    expand_more
+
+                </span>
+
+            </button>
+
+
+            <!-- Dropdown -->
+            <div id="settingsMenu"
+                 class="hidden ml-8 mt-2 space-y-1">
+
+                <a href="#"
+                   class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-slate-100">
+
+                    <span class="material-symbols-outlined text-[18px]">
+                        person
+                    </span>
+
+                    Profile
+
+                </a>
+
+
+                <a href="#"
+                   class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-slate-100">
+
+                    <span class="material-symbols-outlined text-[18px]">
+                        notifications
+                    </span>
+
+                    Notifications
+
+                </a>
+
+
+                <a href="#"
+                   class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm hover:bg-slate-100">
+
+                    <span class="material-symbols-outlined text-[18px]">
+                        shield
+                    </span>
+
+                    Privacy
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <hr class="my-4">
+
+
+        <!-- Logout -->
+        <a href="{{ url_for('user.logout') }}"
+           class="flex items-center gap-3 px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition">
+
+            <span class="material-symbols-outlined">
+                logout
+            </span>
+
+            Logout
+
+        </a>
+
+    </nav>
+
+
+
+    <!-- HELP -->
+    <div class="p-4 mt-auto">
+
+        <div class="bg-emerald-50 rounded-2xl p-4">
+
+            <p class="font-semibold text-sm text-emerald-800 mb-2">
+                Need Support?
+            </p>
+
+            <p class="text-xs text-slate-500 leading-relaxed mb-4">
+                Your organization may be able to support you if something is affecting your wellbeing.
+            </p>
+
+            <button class="w-full py-2 rounded-xl bg-white shadow-sm text-sm font-semibold text-emerald-700 hover:shadow-md transition">
+
+                Contact Support
+
+            </button>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- ========================= -->
+<!-- MAIN -->
+<!-- ========================= -->
+<main class="md:ml-64 min-h-screen flex flex-col">
+
+    <!-- DESKTOP TOPBAR -->
+    <header class="hidden md:flex sticky top-0 z-30 h-16 bg-white border-b items-center px-6">
+
+        <!-- Search -->
+        <input type="text"
+               placeholder="Search..."
+               class="px-4 py-2 rounded-full bg-slate-100 w-full max-w-sm border-0 focus:ring-2 focus:ring-emerald-200"/>
+
+
+        <!-- Right -->
+        <div class="ml-auto flex items-center gap-5">
+
+            <button>
+                <span class="material-symbols-outlined">
+                    notifications
+                </span>
+            </button>
+
+
+            <!-- Profile -->
+            <div class="relative">
+
+                <button id="profileBtn">
+
+                    <img src="https://i.pravatar.cc/40"
+                         class="w-10 h-10 rounded-full"/>
+
+                </button>
+
+
+                <!-- Dropdown -->
+                <div id="profileMenu"
+                     class="hidden absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border p-2 z-50">
+
+                    <a href="#"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-100">
+
+                        <span class="material-symbols-outlined">
+                            account_circle
+                        </span>
+
+                        Profile
+
+                    </a>
+
+
+                    <a href="#"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-slate-100">
+
+                        <span class="material-symbols-outlined">
+                            settings
+                        </span>
+
+                        Settings
+
+                    </a>
+
+
+                    <a href="{{ url_for('user.logout') }}"
+                       class="flex items-center gap-2 px-4 py-2 rounded-lg text-red-500 hover:bg-red-50">
+
+                        <span class="material-symbols-outlined">
+                            logout
+                        </span>
+
+                        Logout
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- PAGE CONTENT -->
+    <div class="flex-1 p-4 md:p-6 pt-20 md:pt-6">
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+
+
+
+    <!-- FLOATING BUTTON -->
+    <button class="fixed bottom-6 right-6 w-14 h-14 rounded-full bg-emerald-600 text-white shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition z-40">
+
+        <span class="material-symbols-outlined">
+            chat_bubble
+        </span>
+
+    </button>
+
+
+
+    <!-- FOOTER -->
+    <footer class="border-t py-4 text-center text-sm text-slate-500 bg-white">
+
+        © <span id="year"></span> AlmaTouch — Built by Sodbridge
+
+    </footer>
+
+</main>
+
+
+
+<!-- ========================= -->
+<!-- SCRIPTS -->
+<!-- ========================= -->
+<script>
+
+    // =========================
+    // MOBILE SIDEBAR
+    // =========================
+    const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+const backdrop = document.getElementById('backdrop');
+
+function openSidebar() {
+    sidebar.classList.remove('-translate-x-full');
+    backdrop.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+}
+
+function closeSidebar() {
+    sidebar.classList.add('-translate-x-full');
+    backdrop.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+}
+
+menuToggle.addEventListener('click', () => {
+
+    const isClosed = sidebar.classList.contains('-translate-x-full');
+
+    if (isClosed) {
+        openSidebar();
+    } else {
+        closeSidebar();
+    }
+
+});
+
+// click outside closes
+backdrop.addEventListener('click', closeSidebar);
+
+// 🔥 NEW: close sidebar when a nav link is clicked (important UX fix)
+document.querySelectorAll('#sidebar a').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth < 768) {
+            closeSidebar();
+        }
+    });
+});
+
+
+    // =========================
+    // SETTINGS DROPDOWN
+    // =========================
+    const settingsToggle = document.getElementById('settingsToggle');
+    const settingsMenu = document.getElementById('settingsMenu');
+    const settingsIcon = document.getElementById('settingsIcon');
+
+    settingsToggle.addEventListener('click', () => {
+
+        settingsMenu.classList.toggle('hidden');
+
+        if (settingsMenu.classList.contains('hidden')) {
+            settingsIcon.innerText = 'expand_more';
+        } else {
+            settingsIcon.innerText = 'expand_less';
+        }
+
+    });
+
+
+
+    // =========================
+    // PROFILE DROPDOWN
+    // =========================
+    const profileBtn = document.getElementById('profileBtn');
+    const profileMenu = document.getElementById('profileMenu');
+
+    profileBtn.addEventListener('click', () => {
+
+        profileMenu.classList.toggle('hidden');
+
+    });
+
+    document.addEventListener('click', (e) => {
+
+        if (
+            !profileBtn.contains(e.target) &&
+            !profileMenu.contains(e.target)
+        ) {
+            profileMenu.classList.add('hidden');
+        }
+
+    });
+
+
+    // =========================
+    // AUTO CLOSE FLASH
+    // =========================
+    setTimeout(() => {
+
+        const messages = document.querySelectorAll(".flash-message");
+
+        messages.forEach(msg => {
+
+            msg.style.transition = "opacity 0.5s ease";
+            msg.style.opacity = "0";
+
+            setTimeout(() => msg.remove(), 500);
+
+        });
+
+    }, 3000);
+
+
+
+    // =========================
+    // YEAR
+    // =========================
+    document.getElementById('year').innerText = new Date().getFullYear();
+
+</script>
+
+</body>
+</html>

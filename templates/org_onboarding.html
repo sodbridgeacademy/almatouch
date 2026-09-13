@@ -1,0 +1,159 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<main class="flex-grow w-full max-w-7xl mx-auto flex flex-col lg:flex-row p-6 md:p-12 gap-12 lg:gap-16">
+
+<!-- LEFT: FORM -->
+<section class="flex-1 max-w-2xl">
+
+<!-- HEADER -->
+<div class="mb-8">
+    <div class="flex items-center gap-2 mb-2">
+        <span class="px-2.5 py-0.5 bg-primary-container/20 text-on-primary-container text-xs font-bold uppercase tracking-widest rounded-full">
+            Setup
+        </span>
+
+        <div class="flex-grow h-1.5 bg-surface-container rounded-full overflow-hidden">
+            <div class="w-full h-full bg-primary-container rounded-full"></div>
+        </div>
+    </div>
+
+    <h1 class="font-display text-display text-on-surface mb-2">
+        Complete Your Organization Profile
+    </h1>
+
+    <p class="font-body-md text-on-surface-variant">
+        Help AlmaTouch understand your organization so we can personalize engagement and communication.
+    </p>
+</div>
+
+<form method="POST" class="space-y-xl">
+
+<!-- ===================== -->
+<!-- IDENTITY SECTION -->
+<!-- ===================== -->
+<div class="space-y-lg bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-sm">
+
+    <!-- BIO -->
+    <div>
+        <label class="block font-label-md text-on-surface mb-2">
+            Organization Bio / Slogan
+        </label>
+
+        <textarea
+            name="bio"
+            rows="3"
+            class="w-full p-3 border border-outline rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-body-md"
+            placeholder="e.g. A community focused on emotional wellness, support, and growth">
+        </textarea>
+
+        <p class="text-caption text-on-surface-variant mt-2">
+            This helps personalize how members perceive your organization.
+        </p>
+    </div>
+
+    <!-- ORG TYPE -->
+    <div>
+        <label class="block font-label-md text-on-surface mb-2">
+            Organization Type
+        </label>
+
+        <select name="org_type"
+            class="w-full p-3 border border-outline rounded-lg focus:ring-2 focus:ring-primary text-body-md">
+
+            <option>Company</option>
+            <option>NGO</option>
+            <option>Church / Faith Group</option>
+            <option>School / Education</option>
+            <option>Community Group</option>
+            <option>Wellness / Therapy Group</option>
+
+        </select>
+
+        <p class="text-caption text-on-surface-variant mt-2">
+            Used to tailor default workflows and templates.
+        </p>
+    </div>
+
+</div>
+
+
+<!-- ===================== -->
+<!-- STRUCTURE PREVIEW -->
+<!-- ===================== -->
+<div class="space-y-lg bg-surface-container-lowest p-8 rounded-2xl border border-outline-variant/30 shadow-sm">
+
+    <div class="flex items-center gap-3 mb-4">
+        <div class="w-10 h-10 rounded-lg bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+            <span class="material-symbols-outlined">group_work</span>
+        </div>
+
+        <div>
+            <h3 class="font-headline-md text-on-surface">Departments (Structure Preview)</h3>
+            <p class="text-caption text-on-surface-variant">
+                Add the main groups inside your organization. You can edit this later.
+            </p>
+        </div>
+    </div>
+
+    <textarea
+        name="departments_preview"
+        rows="3"
+        class="w-full p-3 border border-dashed border-outline rounded-lg focus:ring-2 focus:ring-primary transition-all text-body-md"
+        placeholder="e.g. Support, Engineering, HR, Outreach">
+    </textarea>
+
+    <p class="text-caption text-on-surface-variant">
+        These will be converted into real departments after setup.
+    </p>
+</div>
+
+
+<!-- SUBMIT -->
+<div class="pt-4">
+
+    <button type="submit"
+        class="w-full md:w-auto px-12 py-4 bg-primary text-on-primary font-headline-md rounded-xl shadow-lg shadow-primary/20 hover:bg-primary/90 active:scale-95 transition-all">
+        Save & Continue
+    </button>
+
+    <p class="mt-4 text-caption text-on-surface-variant">
+        By continuing, you agree to our
+        <a class="underline text-primary" href="#">Terms</a> and
+        <a class="underline text-primary" href="#">Privacy Policy</a>.
+    </p>
+</div>
+
+</form>
+</section>
+
+
+<!-- RIGHT: VISUAL -->
+<aside class="hidden lg:flex flex-1 flex-col gap-8">
+
+<div class="bg-secondary-fixed rounded-2xl p-8 relative overflow-hidden aspect-[4/3] flex flex-col justify-end group">
+
+    <div class="absolute inset-0 z-0">
+        <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb_-f5RlWOc6stl5jtKiri4STxsrkPhrk5yhAWsJum7gr8-Bg5Tqj72NqghFd-U0SehteIDpF7NZuCmi3h8w36mAATDRUaNrIyIXpubXrW5XFitMzQM2pRoYY9INB_tEz7sFRr_JB6iwlSZw6tSE3S4JyxpSMGLRcgv3TW4t4qOOVH_Wsa9rStjAvdboj1jf5SDPacHebpy8oJ6b0WmftyfIuQ9l2EukmPxhvCum2iiqVHA5txwGbBEZQbprSiRbmr5OQ3tN5PMpE"
+            class="w-full h-full object-cover mix-blend-soft-light opacity-40 transition-transform duration-500 group-hover:scale-105"
+        />
+    </div>
+
+    <div class="relative z-10">
+        <h4 class="font-headline-lg text-on-secondary-fixed mb-2">
+            Building better bonds.
+        </h4>
+        <p class="text-body-md text-on-secondary-fixed-variant">
+            AlmaTouch structures your organization for meaningful engagement and smarter communication.
+        </p>
+    </div>
+
+</div>
+
+</aside>
+
+</main>
+
+{% endblock %}

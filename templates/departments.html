@@ -1,0 +1,339 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-xl max-w-7xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-xl">
+        <div>
+            <h2 class="font-display text-display text-on-background mb-2">Departments</h2>
+            <p class="font-body-md text-secondary">
+                Organize your members into teams or groups.
+            </p>
+        </div>
+
+        <!-- OPEN MODAL -->
+        <a href="#add-dept-modal"
+           class="inline-flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-xl shadow hover:scale-[1.02] transition">
+            <span class="material-symbols-outlined">add_circle</span>
+            Add Department
+        </a>
+    </div>
+
+
+    <!-- STATS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-lg">
+
+        <div class="bg-white p-6 rounded-2xl border shadow-sm">
+            <p class="text-caption text-secondary">Total Departments</p>
+            <p class="text-headline-md font-bold">{{ departments|length }}</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border shadow-sm">
+            <p class="text-caption text-secondary">Active Dept Members</p>
+            <p class="text-headline-md font-bold">
+                {{ departments | sum(attribute='member_count') }}
+            </p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border shadow-sm">
+            <p class="text-caption text-secondary">Status</p>
+            <p class="text-headline-md font-bold text-green-600">Active</p>
+        </div>
+
+    </div>
+
+
+    <!-- TABLE -->
+    <div class="bg-white rounded-2xl border shadow overflow-hidden">
+
+        <div class="p-6 border-b flex justify-between">
+            <h3 class="font-semibold">Department List</h3>
+        </div>
+
+        <div class="overflow-x-auto">
+
+            {% if departments %}
+            <table class="w-full text-left">
+
+                <thead class="bg-slate-50">
+                    <tr>
+                        <th class="px-6 py-3">Name</th>
+                        <th class="px-6 py-3">Description</th>
+                        <th class="px-6 py-3">Members</th>
+                        <th class="px-6 py-3 text-right">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+
+                    {% for dept in departments %}
+                    <tr class="hover:bg-slate-50">
+
+                        <!-- NAME -->
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center font-bold">
+                                    {{ dept.name[:2]|upper }}
+                                </div>
+                                <div>
+                                    <p class="font-semibold">
+                                        <a href="{{ url_for('dept.department_detail', dept_id=dept.id) }}"
+                                           class="font-semibold text-primary hover:underline">
+                                            {{ dept.name }}
+                                        </a>
+                                    </p>
+                                    <p class="text-xs text-gray-400">ID: {{ dept.id }}</p>
+                                </div>
+                            </div>
+                        </td>
+
+
+
+                        <!-- DESCRIPTION -->
+                        <td class="px-6 py-4 text-sm text-gray-600">
+                            {{ dept.description or "No description yet" }}
+                        </td>
+
+                        <!-- MEMBERS -->
+                        <td class="px-6 py-4">
+                            {{ dept.member_count }}
+                        </td>
+
+                        <!-- ACTIONS -->
+                        <td class="px-6 py-4 text-right flex justify-end gap-2">
+                            <!-- EDIT -->
+                            <button onclick="openEditModal({{ dept.id }}, '{{ dept.name }}', '{{ dept.description or '' }}')"
+                                    class="p-2 text-gray-400 hover:text-blue-500">
+                                <span class="material-symbols-outlined">edit</span>
+                            </button>
+                            <!-- DELETE -->
+                            <button
+                                  onclick="openDeptDeleteModal('{{ dept.id }}', '{{ dept.name }}')"
+                                  class="p-2 text-gray-400 hover:text-red-500">
+
+                                  <span class="material-symbols-outlined">delete</span>
+
+                              </button>
+                        </td>
+
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <!-- EMPTY STATE -->
+            <div class="p-12 text-center">
+                <span class="material-symbols-outlined text-4xl text-gray-300 mb-4">groups</span>
+                <p class="text-lg font-semibold mb-2">No departments yet</p>
+                <p class="text-sm text-gray-500 mb-4">
+                    Create your first department to organize members.
+                </p>
+
+                <a href="#add-dept-modal"
+                   class="inline-block bg-primary text-white px-6 py-3 rounded-xl">
+                    Create Department
+                </a>
+            </div>
+
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+
+
+
+<!-- ===================== -->
+<!-- MODAL -->
+<!-- ===================== -->
+<!-- DEPT ADD MODAL -->
+<div id="add-dept-modal"
+     class="fixed inset-0 bg-black/40 flex items-center justify-center p-6 hidden target:flex">
+
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl">
+
+        <form method="POST" action="{{ url_for('dept.create_department') }}">
+
+            <!-- HEADER -->
+            <div class="p-6 border-b flex justify-between">
+                <h3 class="font-semibold">New Department</h3>
+                <a href="#" class="text-gray-400">✕</a>
+            </div>
+
+            <!-- BODY -->
+            <div class="p-6 space-y-4">
+
+                <div>
+                    <label class="block text-sm mb-1">Department Name</label>
+                    <input name="name" required
+                           class="w-full border rounded-lg p-3"
+                           placeholder="e.g. Engineering">
+                </div>
+
+                <div>
+                    <label class="block text-sm mb-1">Description</label>
+                    <textarea name="description"
+                              class="w-full border rounded-lg p-3"
+                              placeholder="Optional"></textarea>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="p-6 border-t flex justify-end gap-3">
+                <a href="#" class="px-4 py-2 text-gray-500">Cancel</a>
+
+                <button type="submit"
+                        class="bg-primary text-white px-6 py-2 rounded-lg">
+                    Create
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- DEPT EDIT MODEL -->
+<div id="edit-dept-modal"
+     class="fixed inset-0 bg-black/40 flex items-center justify-center p-6 hidden">
+
+    <div class="bg-white w-full max-w-lg rounded-2xl shadow-xl">
+
+        <form method="POST" id="editDeptForm">
+
+            <div class="p-6 border-b flex justify-between">
+                <h3 class="font-semibold">Edit Department</h3>
+                <button type="button" onclick="closeEditModal()">✕</button>
+            </div>
+
+            <div class="p-6 space-y-4">
+
+                <input type="hidden" id="editDeptId">
+
+                <div>
+                    <label class="block text-sm mb-1">Department Name</label>
+                    <input id="editDeptName" name="name"
+                           class="w-full border rounded-lg p-3" required>
+                </div>
+
+                <div>
+                    <label class="block text-sm mb-1">Description</label>
+                    <textarea id="editDeptDesc" name="description"
+                              class="w-full border rounded-lg p-3"></textarea>
+                </div>
+
+            </div>
+
+            <div class="p-6 border-t flex justify-end gap-3">
+                <button type="button" onclick="closeEditModal()">Cancel</button>
+                <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg">
+                    Update
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- DEPT DELETE MODAL -->
+<div id="dept-delete-modal"
+     class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-50 flex items-center justify-center p-6">
+
+    <div class="bg-white rounded-2xl w-full max-w-md shadow-xl overflow-hidden">
+
+        <form method="POST" id="deptDeleteForm">
+
+            <div class="p-6 border-b">
+
+                <h3 class="text-lg font-semibold">
+                    Delete Department
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    This action cannot be undone.
+                </p>
+
+            </div>
+
+            <div class="p-6">
+
+                <p class="text-gray-600">
+                    Are you sure you want to delete:
+                </p>
+
+                <p id="deptDeleteName"
+                   class="font-semibold mt-2"></p>
+
+            </div>
+
+            <div class="p-6 border-t flex justify-end gap-3">
+
+                <button type="button"
+                        onclick="closeDeptDeleteModal()"
+                        class="px-4 py-2 text-gray-500">
+
+                    Cancel
+
+                </button>
+
+                <button type="submit"
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+// Edit Modal
+function openEditModal(id, name, desc) {
+    document.getElementById("editDeptId").value = id;
+    document.getElementById("editDeptName").value = name;
+    document.getElementById("editDeptDesc").value = desc;
+
+    const form = document.getElementById("editDeptForm");
+    form.action =  `/org/departments/${id}/update`;
+
+    document.getElementById("edit-dept-modal").classList.remove("hidden");
+}
+
+function closeEditModal() {
+    document.getElementById("edit-dept-modal").classList.add("hidden");
+}
+
+// Confirm Delete
+function openDeptDeleteModal(id, name) {
+
+    document.getElementById("deptDeleteName").innerText = name;
+
+    document.getElementById("deptDeleteForm").action =
+        `/org/departments/${id}/delete`;
+
+    document
+        .getElementById("dept-delete-modal")
+        .classList.remove("hidden");
+}
+
+function closeDeptDeleteModal() {
+
+    document
+        .getElementById("dept-delete-modal")
+        .classList.add("hidden");
+}
+
+</script>
+
+{% endblock %}

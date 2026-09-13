@@ -1,0 +1,350 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<!-- Canvas Body -->
+<div class="p-8 max-w-[1400px] mx-auto">
+
+<!-- Welcome Header -->
+<div class="flex flex-col md:flex-row justify-between items-end mb-8 gap-6">
+    <div>
+        <h2 class="font-display text-headline-lg text-primary">Welcome back, {{ user.first_name }}</h2>
+        <p class="font-body-md text-slate-500 mt-1">Everything is calm and moving smoothly today.</p>
+    </div>
+
+    <div class="flex gap-3">
+        <a href="{{ url_for('org.generate_invite') }}">
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-2xl text-label-md font-semibold text-slate-600 hover:bg-slate-50 transition-all active:scale-95 shadow-sm">
+                <span class="material-symbols-outlined text-lg">link</span>
+                Generate Invite Link
+            </button>
+        </a>
+        <a href="{{ url_for('org.create_event') }}">
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-2xl text-label-md font-semibold hover:shadow-lg transition-all active:scale-95">
+                <span class="material-symbols-outlined text-lg">add</span>
+                    Create Event
+            </button>
+        </a>
+
+        <form method="POST" action="{{ url_for('dept.create_department') }}" class="flex gap-2">
+            <input 
+                type="text" 
+                name="name" 
+                placeholder="Department name"
+                class="px-3 py-2 border rounded-lg"
+                required>
+
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-2xl">
+                <span class="material-symbols-outlined text-lg">add</span>
+                Create Department
+            </button>
+        </form>
+       
+
+      <!--   <form method="POST" action="{{ url_for('dept.create_department') }}">
+            <button class="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-2xl text-label-md font-semibold hover:shadow-lg transition-all active:scale-95">
+                <span class="material-symbols-outlined text-lg">add</span>
+                    Create Department
+            </button>
+        </form>
+ -->
+    </div>
+</div>
+
+<!-- Dashboard Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+
+<!-- Stats Cards -->
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
+<span class="material-symbols-outlined">group</span>
+</span>
+<span class="text-caption text-emerald-500 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">+4%</span>
+</div>
+<p class="text-slate-500 text-caption font-medium mb-1">Total Members</p>
+<h3 class="text-headline-lg font-display text-on-surface">{{ member_count }}
+<hr> <span class="text-caption text-on-surface-variant">
+<b>Invite Code:</b> {% if invite.invite_code %}{{ invite.invite_code }}{% else %} No invite code {% endif %}
+</span>
+</h3>
+</div>
+
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="p-2 bg-blue-50 text-blue-600 rounded-xl">
+<span class="material-symbols-outlined">how_to_reg</span>
+</span>
+</div>
+<p class="text-slate-500 text-caption font-medium mb-1">Active Members</p>
+<h3 class="text-headline-lg font-display text-on-surface">{{ member_count }}</h3>
+</div>
+
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="p-2 bg-orange-50 text-orange-600 rounded-xl">
+<span class="material-symbols-outlined">edit_notifications</span>
+</span>
+<span class="text-caption text-orange-500 font-bold bg-orange-50 px-2 py-0.5 rounded-full">New</span>
+</div>
+<p class="text-slate-500 text-caption font-medium mb-1">Total Responses</p>
+<h3 class="text-headline-lg font-display text-on-surface">{{total_responses}}</h3>
+</div>
+
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="p-2 bg-orange-50 text-orange-600 rounded-xl">
+<span class="material-symbols-outlined">edit_notifications</span>
+</span>
+<span class="text-caption text-orange-500 font-bold bg-orange-50 px-2 py-0.5 rounded-full">New</span>
+</div>
+<p class="text-slate-500 text-caption font-medium mb-1">Responses Today</p>
+<h3 class="text-headline-lg font-display text-on-surface">{{today_responses}}</h3>
+</div>
+
+
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="p-2 bg-tertiary-fixed text-tertiary rounded-xl">
+<span class="material-symbols-outlined">calendar_today</span>
+</span>
+</div>
+<p class="text-slate-500 text-caption font-medium mb-1">Total Event(s)</p>
+<h3 class="text-headline-lg font-display text-on-surface">{{tot_event}}</h3>
+</div> 
+
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-md transition-shadow">
+<div class="flex items-center justify-between mb-4">
+<span class="p-2 bg-tertiary-fixed text-tertiary rounded-xl">
+<span class="material-symbols-outlined">calendar_today</span>
+</span>
+</div>
+<p class="text-slate-500 text-caption font-medium mb-1">Active Events</p>
+<h6 class="text-headline-md font-display text-on-surface">{{ event.name }}</h6>
+</div> 
+
+</div>
+
+<!-- Secondary Layout: Chart and Quick Links -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+<!-- Chart Section -->
+<div class="lg:col-span-2 bg-white p-12 rounded-2xl border shadow-sm w-full">
+
+    <div class="mb-4">
+        <h4 class="font-semibold text-lg">Engagement Overview</h4>
+        <p class="text-sm text-gray-500">Last 7 days responses</p>
+    </div>
+
+    <div class="relative w-full h-[300px]">
+        <canvas id="engagementChart"></canvas>
+    </div>
+
+</div>
+
+<!-- Recent Activity -->
+<!-- Recent Activity -->
+<div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm">
+
+    <h4 class="font-bold text-slate-800 mb-6">
+        Recent Member Activity
+    </h4>
+
+    <div class="space-y-4">
+
+        {% if recent_activity %}
+
+            {% for item in recent_activity %}
+
+            <div class="flex gap-4">
+
+                <!-- Profile -->
+                <div class="w-10 h-10 rounded-full bg-emerald-100
+                            flex-shrink-0 overflow-hidden
+                            flex items-center justify-center">
+
+                    {% if item.profile_image %}
+                        <img src="{{ item.profile_image }}"
+                             class="w-full h-full object-cover">
+                    {% else %}
+                        <span class="text-emerald-700 font-bold text-sm">
+                            {{ item.user_name[0] }}
+                        </span>
+                    {% endif %}
+
+                </div>
+
+                <!-- Content -->
+                <div>
+
+                    <p class="text-sm text-slate-800">
+
+                        <span class="font-bold">
+                            {{ item.user_name }}
+                        </span>
+
+                        {{ item.activity }}
+
+                    </p>
+
+                    <p class="text-[11px] text-slate-400 uppercase tracking-wide">
+
+                        {{ item.time_ago }}
+                        •
+                        {{ item.event_name }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="text-sm text-gray-400">
+                No recent activity yet.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+    <a href="{{ url_for('org.org_checkin_overview') }}"
+       class="block w-full mt-8 py-3 text-sm font-semibold
+              text-emerald-700 hover:text-emerald-800
+              border-t border-slate-100 text-center">
+
+        View All Activity
+
+    </a>
+
+</div>
+
+
+</div>
+<!-- Bottom Section: Upcoming Events -->
+<div class="mt-8">
+<div class="flex items-center justify-between mb-6">
+<h4 class="font-headline-md text-on-surface">Upcoming Remembers</h4>
+<button class="text-caption font-bold text-emerald-700">See Calendar</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Event Card 1 -->
+<div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm group hover:shadow-md transition-shadow">
+<div class="h-32 bg-slate-200 relative overflow-hidden">
+<img alt="Yoga session" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A serene indoor yoga studio with floor-to-ceiling windows overlooking a misty forest. The morning light is soft and diffused. In the foreground, several yoga mats are neatly arranged on a light wood floor, along with cork blocks and woven blankets. The aesthetic is extremely minimalist and peaceful." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPTxTS2t3ph7-jEdOd-FXYw5XE5C1l2TeFrGy9APYvseQibmLGQwlJ7TKOb-jK6ECRzDB5cpTJlEqhDVI4g_Yuk4THmRi_jp2kPzJlnNpjj4X0eAys0BBR9fdyHNdNU22qHw1KrXimPvKsORYys2IVsY0KUwYzFYhM-pEzWu84D6c8_T5g4935E8KcctOSBmwOilHM_Uc_-Lwp_rsR0aThRfJH2GtBJTLMhYciVhwxmwv3MJIbX3hBhzWie0yD6nfNAxzllpxUeDg"/>
+<div class="absolute top-3 left-3 px-2 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold text-emerald-800">MORNING</div>
+</div>
+<div class="p-5">
+<h5 class="text-label-md font-bold text-on-surface mb-1">Morning Mindfulness Yoga</h5>
+<p class="text-caption text-slate-500 mb-4">Tomorrow, 08:30 AM • Main Hall</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-300"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-400"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-500"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-emerald-100 flex items-center justify-center text-[8px] font-bold">+12</div>
+</div>
+<span class="material-symbols-outlined text-slate-300 hover:text-emerald-500 cursor-pointer">more_horiz</span>
+</div>
+</div>
+</div>
+<!-- Event Card 2 -->
+<div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm group hover:shadow-md transition-shadow">
+<div class="h-32 bg-slate-200 relative overflow-hidden">
+<img alt="Art Workshop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A close-up of a table in a bright art studio. There are watercolor palettes with soft pastel hues, high-quality brushes, and textured paper. A small ceramic vase with dried wildflowers sits to the side. The lighting is bright and cheerful, emphasizing creativity and a gentle, artistic environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdCZ1M6XgpjC8D-jnXna_KsLJF2IZejQic3bKrx1TRdns0qpyW4JpXOSQo319TW_A6aa-pxHVRDPqGhnbfUCWlVO1sH2Eo-ajxdi3Oq3oluB_wxaG8J-s0zq9gkd6oaMpEYQc1_OIVxNlwYCnvuGGTt1CD569b2Ycsvg5UatufcxLGoJ_ipElcPqzrwX4VI5t8jjPyCfRxtj3V72RASeBh96unNGGpwZb1unkihazTJ32wA9uWQD2aIoVnop840l33Hhn9mIUkb7Y"/>
+<div class="absolute top-3 left-3 px-2 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold text-tertiary">CREATIVE</div>
+</div>
+<div class="p-5">
+<h5 class="text-label-md font-bold text-on-surface mb-1">Watercolour Expressions</h5>
+<p class="text-caption text-slate-500 mb-4">Sep 14, 02:00 PM • Studio B</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-300"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-400"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-tertiary-fixed flex items-center justify-center text-[8px] font-bold">+8</div>
+</div>
+<span class="material-symbols-outlined text-slate-300 hover:text-emerald-500 cursor-pointer">more_horiz</span>
+</div>
+</div>
+</div>
+<!-- Event Card 3 -->
+<div class="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm group hover:shadow-md transition-shadow">
+<div class="h-32 bg-slate-200 relative overflow-hidden">
+<img alt="Nature Walk" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sun-dappled gravel path winding through a beautiful botanical garden. Tall trees create soft shadows on the ground, and vibrant flowering bushes line the edges. The feeling is one of fresh air, gentle exercise, and connection with nature in a safe, tranquil setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDK9ZYv_LBuSATm9Y3ATiE01Cuq8m-MPad9pFaxTodbvLLF8bh7RR4f5XmrPOWb2gLc-CyuEqEV3aMgJChg1Z1opbz3ywRnbPqd577CHlXDmPZvo6ssBD_K91vvW0-2qlyY9llLvUg69olyDn315ubtmUolzXTmrtx2er5L5WwMdwJvydd_L3jnwqnnGY_bfUSaXWUTJAEIir2_wkPy3Qg-BqxjqJpNypWm1iQYZAtupJ-bH-dlK3-oH-6dHrmsW7uUYFY-56DyafU"/>
+<div class="absolute top-3 left-3 px-2 py-1 bg-white/90 backdrop-blur rounded-lg text-[10px] font-bold text-secondary">OUTDOORS</div>
+</div>
+<div class="p-5">
+<h5 class="text-label-md font-bold text-on-surface mb-1">Gentle Garden Stroll</h5>
+<p class="text-caption text-slate-500 mb-4">Sep 15, 10:00 AM • North Gardens</p>
+<div class="flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-300"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-400"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-slate-500"></div>
+<div class="w-6 h-6 rounded-full border-2 border-white bg-secondary-fixed flex items-center justify-center text-[8px] font-bold">+24</div>
+</div>
+<span class="material-symbols-outlined text-slate-300 hover:text-emerald-500 cursor-pointer">more_horiz</span>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('engagementChart');
+
+const labels = {{ trend_labels | tojson }};
+const values = {{ trend_values | tojson }};
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Responses',
+            data: values,
+            backgroundColor: '#064e3b',
+            borderRadius: 10,
+            barThickness: 40,          // 👈 bigger bars
+            maxBarThickness: 60
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,   // 👈 IMPORTANT (this fixes “small chart” issue)
+
+        plugins: {
+            legend: { display: false }
+        },
+
+        scales: {
+            x: {
+                grid: { display: false },
+                ticks: {
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            y: {
+                beginAtZero: true,
+                grid: { color: '#f3f4f6' },
+                ticks: {
+                    font: {
+                        size: 12
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-8 max-w-6xl mx-auto">
+
+    <!-- HEADER -->
+    <div class="mb-6">
+        <h2 class="text-2xl font-bold">{{ event.name }}</h2>
+        <p class="text-gray-500">Event analytics & performance overview</p>
+    </div>
+
+    <!-- KPI ROW -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+
+        <div class="bg-white p-6 rounded-xl border">
+            <p class="text-sm text-gray-500">Total Responses</p>
+            <h3 class="text-2xl font-bold">{{ total_responses }}</h3>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border">
+            <p class="text-sm text-gray-500">Today's Responses</p>
+            <h3 class="text-2xl font-bold text-emerald-600">
+                {{ today_responses }}
+            </h3>
+        </div>
+
+    </div>
+
+    <!-- CHART GRID -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- MOOD CHART -->
+        <div class="bg-white p-6 rounded-xl border">
+
+            <h4 class="font-semibold mb-4">Mood Distribution</h4>
+
+            <canvas id="moodChart"></canvas>
+
+        </div>
+
+        <!-- SUPPORT CHART -->
+        <div class="bg-white p-6 rounded-xl border">
+
+            <h4 class="font-semibold mb-4">Support Needs (Q4)</h4>
+
+            <canvas id="supportChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- RECENT ACTIVITY -->
+    <div class="bg-white p-6 rounded-xl border mt-6">
+
+        <h4 class="font-semibold mb-4">Recent Responses</h4>
+
+        <div class="space-y-4">
+
+            {% for r in recent %}
+
+                <div class="flex justify-between text-sm">
+
+                    <div>
+                        <span class="font-medium">
+                            {{ r.user.full_name }}
+                        </span>
+                        answered
+                        <span class="text-gray-500">
+                            {{ r.question.question_text }}
+                        </span>
+                    </div>
+
+                    <div class="text-gray-400">
+                        {{ r.created_at.strftime("%H:%M") }}
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CHART JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const moodCtx = document.getElementById('moodChart');
+
+new Chart(moodCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ mood_labels|tojson }},
+        datasets: [{
+            label: 'Mood',
+            data: {{ mood_values|tojson }},
+            backgroundColor: '#10b981'
+        }]
+    }
+});
+
+const supportCtx = document.getElementById('supportChart');
+
+new Chart(supportCtx, {
+    type: 'doughnut',
+    data: {
+        labels: {{ support_labels|tojson }},
+        datasets: [{
+            data: {{ support_values|tojson }},
+            backgroundColor: [
+                '#10b981',
+                '#34d399',
+                '#6ee7b7',
+                '#a7f3d0',
+                '#059669'
+            ]
+        }]
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,267 @@
+{% extends "user_base.html" %}
+
+{% block title %}Notifications | AlmaTouch{% endblock %}
+
+{% block content %}
+
+<div class="space-y-6">
+
+    <!-- =========================
+         BACK
+    ========================== -->
+
+    <div>
+        <a href="{{ url_for('user.user_dashboard') }}"
+           class="inline-flex items-center gap-2 text-sm
+                  font-medium text-gray-500
+                  hover:text-gray-900 transition">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 class="w-4 h-4"
+                 fill="none"
+                 viewBox="0 0 24 24"
+                 stroke="currentColor">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 19l-7-7 7-7"/>
+
+            </svg>
+
+            Back to Dashboard
+
+        </a>
+    </div>
+
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <div class="flex flex-col gap-2
+                sm:flex-row sm:items-end sm:justify-between">
+
+        <div>
+
+            <h1 class="text-2xl font-bold text-gray-900">
+                Notifications
+            </h1>
+
+            <p class="mt-1 text-sm text-gray-500">
+                Important updates and things AlmaTouch wants you to notice.
+            </p>
+
+        </div>
+
+
+        {% if unread_count > 0 %}
+
+            <span
+                class="inline-flex w-fit items-center
+                       rounded-full px-3 py-1 text-xs
+                       font-semibold"
+                style="background-color: rgba(69, 102, 79, 0.10);
+                       color: #45664f;">
+
+                {{ unread_count }} unread
+
+            </span>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- =========================
+         NOTIFICATION LIST
+    ========================== -->
+
+    <div class="overflow-hidden rounded-xl
+                border border-gray-200 bg-white shadow-sm">
+
+        {% if notifications %}
+
+            <div class="divide-y divide-gray-100">
+
+                {% for notification in notifications %}
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'user.mark_user_notification_read',
+                        notification_id=notification.id
+                    ) }}"
+                >
+                    <button
+                        type="submit"
+                        class="
+                            block w-full text-left
+                            px-6 py-5
+                            transition hover:bg-gray-50
+                            {% if not notification.is_read %}
+                                bg-slate-50/70
+                            {% endif %}
+                        "
+                    >
+
+                        <div class="flex items-start gap-4">
+
+                            <!-- ICON -->
+
+                            <div
+                                class="
+                                    flex h-11 w-11 shrink-0
+                                    items-center justify-center
+                                    rounded-xl
+                                "
+                                style="
+                                    {% if notification.notification_type == 'remember' %}
+                                        background-color: rgba(69, 102, 79, 0.10);
+                                        color: #45664f;
+                                    {% elif notification.notification_type == 'care' %}
+                                        background-color: #fef2f2;
+                                        color: #dc2626;
+                                    {% elif notification.notification_type == 'recognition' %}
+                                        background-color: #fff7ed;
+                                        color: #ea580c;
+                                    {% elif notification.notification_type == 'event' %}
+                                        background-color: #eff6ff;
+                                        color: #2563eb;
+                                    {% elif notification.notification_type == 'announcement' %}
+                                        background-color: #f3e8ff;
+                                        color: #9333ea;
+                                    {% else %}
+                                        background-color: #f3f4f6;
+                                        color: #4b5563;
+                                    {% endif %}
+                                "
+                            >
+
+                                <span class="material-symbols-outlined">
+
+                                    {% if notification.notification_type == 'remember' %}
+                                        event_note
+                                    {% elif notification.notification_type == 'care' %}
+                                        favorite
+                                    {% elif notification.notification_type == 'recognition' %}
+                                        star
+                                    {% elif notification.notification_type == 'event' %}
+                                        event
+                                    {% elif notification.notification_type == 'announcement' %}
+                                        campaign
+                                    {% else %}
+                                        notifications
+                                    {% endif %}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- CONTENT -->
+
+                            <div class="min-w-0 flex-1">
+
+                                <div class="flex items-start justify-between gap-4">
+
+                                    <h2
+                                        class="
+                                            text-sm font-semibold
+                                            {% if notification.is_read %}
+                                                text-gray-700
+                                            {% else %}
+                                                text-gray-900
+                                            {% endif %}
+                                        "
+                                    >
+                                        {{ notification.title }}
+                                    </h2>
+
+                                    {% if not notification.is_read %}
+
+                                        <span
+                                            class="
+                                                mt-1 h-2.5 w-2.5
+                                                shrink-0 rounded-full
+                                            "
+                                            style="background-color: #45664f;"
+                                        ></span>
+
+                                    {% endif %}
+
+                                </div>
+
+                                <p class="mt-1 text-sm leading-relaxed text-gray-500">
+                                    {{ notification.message }}
+                                </p>
+
+                                {% if not notification.is_read %}
+                                    <p class="mt-2 text-xs font-medium text-primary">
+                                        Click to mark as read
+                                    </p>
+                                {% endif %}
+
+                                <p class="mt-2 text-xs text-gray-400">
+                                    {{ notification.created_at|localtime }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </button>
+
+                </form>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <!-- =========================
+                 EMPTY STATE
+            ========================== -->
+
+            <div class="px-6 py-16 text-center">
+
+                <div
+                    class="mx-auto flex h-14 w-14
+                           items-center justify-center
+                           rounded-full"
+                    style="
+                        background-color: rgba(69, 102, 79, 0.10);
+                        color: #45664f;
+                    "
+                >
+
+                    <span class="material-symbols-outlined text-2xl">
+                        notifications_none
+                    </span>
+
+                </div>
+
+
+                <h3 class="mt-4 text-sm font-semibold text-gray-900">
+                    You're all caught up
+                </h3>
+
+
+                <p class="mx-auto mt-2 max-w-sm
+                          text-sm text-gray-500">
+
+                    You don't have any notifications right now.
+
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

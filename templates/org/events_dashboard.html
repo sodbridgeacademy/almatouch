@@ -1,0 +1,297 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-8 max-w-6xl mx-auto">
+
+    <!-- HEADER -->
+    <!-- <div class="mb-8">
+        <h2 class="text-2xl font-bold">Events Dashboard</h2>
+        <p class="text-gray-500">Manage and monitor all organization events</p>
+    </div>
+ -->
+    <div class="flex items-center justify-between mb-4">
+
+    <div>
+        <h3 class="text-xl font-semibold">All Events</h3>
+        <p class="text-sm text-gray-500">Manage your organization events</p>
+    </div>
+
+    <a href="{{ url_for('org.create_event') }}"
+       class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition">
+        + Create Event
+    </a>
+
+</div>
+
+    <!-- KPI CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+
+        <div class="bg-white p-6 rounded-xl border">
+            <p class="text-sm text-gray-500">Total Events</p>
+            <h3 class="text-2xl font-bold">{{ total_events }}</h3>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border">
+            <p class="text-sm text-gray-500">Active Events</p>
+            <h3 class="text-2xl font-bold text-emerald-600">{{ active_events }}</h3>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl border">
+            <p class="text-sm text-gray-500">Inactive Events</p>
+            <h3 class="text-2xl font-bold text-gray-700">
+                {{ total_events - active_events }}
+            </h3>
+        </div>
+
+    </div>
+
+    <!-- EVENTS TABLE -->
+    <div class="bg-white rounded-xl border overflow-x-auto">
+
+        <div class="p-4 border-b">
+            <h3 class="font-semibold">All Events</h3>
+        </div>
+
+        <table class="min-w-[900px] w-full text-sm">
+
+            <thead class="bg-gray-50 text-left">
+                <tr>
+                    <th class="p-3">Event</th>
+                    <!-- <th class="p-3">Time Created</th> -->
+                    <th class="p-3">Type</th>
+                    <th class="p-3">Frequency</th>
+                    <th class="p-3">Status</th>
+                    <th class="p-3">Responses</th>
+                    <th class="p-3">Today</th>
+                    <th class="p-3">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for event in events %}
+                {% set m = event_metrics[event.id] %}
+
+                <tr class="border-t hover:bg-gray-50">
+
+                    <td class="p-3 font-medium">
+                        {{ event.name }}
+                        <div class="text-xs text-gray-400">
+                            {{ event.created_at.strftime('%b %d, %Y • %I:%M %p') }}
+                        </div>
+                    </td>
+
+                 <!--    <td class="p-3 text-sm text-gray-500">
+
+                    </td>
+ -->
+                    <td class="p-3">
+                        <span class="px-2 py-1 text-xs rounded bg-gray-100">
+                            {{ event.event_type }}
+                        </span>
+                    </td>
+
+                    <td class="p-3">
+                        {{ event.frequency or "-" }}
+                    </td>
+
+                    <td class="p-3">
+                        {% if event.is_active %}
+                            <span class="text-green-600 font-semibold">Active</span>
+                        {% else %}
+                            <span class="text-gray-400">Inactive</span>
+                        {% endif %}
+                    </td>
+
+                    <td class="p-3">
+                        {{ m.total_responses }}
+                    </td>
+
+                    <td class="p-3">
+                        <span class="font-semibold text-emerald-600">
+                            {{ m.today_responses }}
+                        </span>
+                    </td>
+
+                    <td class="p-3 space-x-2 whitespace-nowrap">
+
+                        <a href="{{ url_for('org.event_details', event_id=event.id) }}"
+                           class="text-xs text-emerald-600 hover:underline">
+                            View
+                        </a>
+
+                        <button onclick="openEditModal({{ event.id }}, '{{ event.name }}', '{{ event.frequency }}', '{{ event.audience_type }}')"
+                                class="text-xs text-blue-600 hover:underline">
+                            Edit
+                        </button>
+
+                        <button onclick="toggleEvent({{ event.id }})"
+                                class="text-xs {{ 'text-yellow-500' if event.is_active else 'text-green-600' }}">
+                            {{ 'Pause' if event.is_active else 'Activate' }}
+                        </button>
+
+                        <button onclick="openDeleteModal({{ event.id }}, '{{ event.name }}')"
+                                class="text-xs text-red-600 hover:underline">
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<!-- edit event modal -->
+<div id="editModal"
+     class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
+
+    <div class="bg-white p-6 rounded-xl w-full max-w-md">
+
+        <h3 class="text-lg font-bold mb-4">Edit Event</h3>
+
+        <form id="editForm" method="POST">
+
+            <input type="text"
+                   name="name"
+                   id="eventName"
+                   class="w-full border p-2 rounded mb-3"
+                   placeholder="Event name">
+
+            <select name="frequency" id="eventFrequency"
+                    class="w-full border p-2 rounded mb-3">
+
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+
+            </select>
+
+            <select name="audience_type" id="eventAudience"
+                    class="w-full border p-2 rounded mb-4">
+
+                <option value="all">All Users</option>
+                <option value="filtered">Filtered</option>
+
+            </select>
+
+            <div class="flex justify-end gap-2">
+
+                <button type="button"
+                        onclick="closeModal()"
+                        class="px-3 py-1 text-sm">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="px-4 py-2 bg-emerald-600 text-white rounded">
+                    Save
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- delete event modal -->
+<div id="deleteModal"
+     class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
+
+    <div class="bg-white p-6 rounded-xl w-full max-w-md">
+
+        <h3 class="text-lg font-bold text-red-600 mb-2">Delete Event</h3>
+
+        <p class="text-sm text-gray-600 mb-4">
+            Are you sure you want to delete
+            <span id="deleteEventName" class="font-semibold"></span>?
+            This action cannot be undone.
+        </p>
+
+        <form id="deleteForm" method="POST">
+
+            <div class="flex justify-end gap-3">
+
+                <button type="button"
+                        onclick="closeDeleteModal()"
+                        class="px-4 py-2 text-sm">
+                    Cancel
+                </button>
+
+                <button type="submit"
+                        class="px-4 py-2 bg-red-600 text-white rounded text-sm">
+                    Yes, Delete
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+// Delete modal
+
+function openDeleteModal(eventId, eventName) {
+
+    const modal = document.getElementById("deleteModal");
+    const form = document.getElementById("deleteForm");
+    const name = document.getElementById("deleteEventName");
+
+    // set form action dynamically
+    form.action = `/org/events/delete/${eventId}`;
+
+    // set name
+    name.textContent = eventName;
+
+    // show modal
+    modal.classList.remove("hidden");
+}
+
+function closeDeleteModal() {
+    document.getElementById("deleteModal").classList.add("hidden");
+}
+
+// Edit modal
+function openEditModal(id, name, frequency, audience) {
+
+    const modal = document.getElementById("editModal");
+    const form = document.getElementById("editForm");
+
+    form.action = `/org/events/${id}/update`;
+
+    document.getElementById("eventName").value = name;
+    document.getElementById("eventFrequency").value = frequency;
+    document.getElementById("eventAudience").value = audience;
+
+    modal.classList.remove("hidden");
+}
+
+function closeModal() {
+    document.getElementById("editModal").classList.add("hidden");
+}
+
+async function toggleEvent(id) {
+
+    const res = await fetch(`/org/events/${id}/toggle`, {
+        method: "POST"
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+        location.reload(); // simple refresh (we can make this smoother later)
+    }
+}
+
+</script>
+
+{% endblock %}

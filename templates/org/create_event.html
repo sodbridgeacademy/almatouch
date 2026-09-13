@@ -1,0 +1,187 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<form method="POST" action="{{ url_for('org.create_event') }}">
+
+<div class="max-w-[1200px] mx-auto p-xl">
+<div class="grid grid-cols-12 gap-gutter">
+
+<!-- LEFT -->
+<div class="col-span-12 lg:col-span-8 space-y-xl">
+
+<!-- ========================= -->
+<!-- BASIC INFO -->
+<!-- ========================= -->
+<section class="bg-white rounded-2xl border p-lg">
+
+    <h3 class="font-bold mb-4">Basic Info</h3>
+
+    <div class="grid md:grid-cols-2 gap-4">
+
+        <input
+            name="title"
+            class="w-full p-3 border rounded-xl"
+            placeholder="Event Name"
+            required
+        />
+
+        <select name="event_type" class="w-full p-3 border rounded-xl">
+            <option value="birthday">Birthday</option>
+            <option value="announcement">Announcement</option>
+            <option value="checkin" selected>Check-in</option>
+            <option value="custom">Custom</option>
+        </select>
+
+    </div>
+
+</section>
+
+<!-- ========================= -->
+<!-- TRIGGER -->
+<!-- ========================= -->
+<section class="bg-white rounded-2xl border p-lg">
+
+    <h3 class="font-bold mb-4">Trigger Settings</h3>
+
+    <!-- Trigger Type -->
+    <input type="hidden" name="trigger_type" id="trigger_type" value="date">
+
+    <div class="flex gap-2 mb-4">
+
+        <button type="button" onclick="setTrigger('date')"
+                class="px-3 py-2 border rounded-xl">
+            Date
+        </button>
+
+        <button type="button" onclick="setTrigger('recurring')"
+                class="px-3 py-2 border rounded-xl">
+            Recurring
+        </button>
+
+        <button type="button" onclick="setTrigger('user')"
+                class="px-3 py-2 border rounded-xl">
+            User
+        </button>
+
+    </div>
+
+    <select name="frequency" class="w-full p-3 border rounded-xl">
+        <option value="daily">Daily</option>
+        <option value="weekly" selected>Weekly</option>
+        <option value="monthly">Monthly</option>
+    </select>
+
+</section>
+
+<!-- ========================= -->
+<!-- MESSAGE -->
+<!-- ========================= -->
+<section class="bg-white rounded-2xl border p-lg">
+
+    <h3 class="font-bold mb-4">Message Template</h3>
+
+    <input
+        name="subject"
+        class="w-full p-3 border rounded-xl mb-3"
+        placeholder="Subject"
+    />
+
+    <textarea
+        name="body"
+        class="w-full p-3 border rounded-xl"
+        rows="4"
+        placeholder="Message body..."
+    ></textarea>
+
+</section>
+
+<!-- ========================= -->
+<!-- QUESTIONS -->
+<!-- ========================= -->
+<section class="bg-white rounded-2xl border p-lg">
+
+    <h3 class="font-bold mb-4">Questions</h3>
+
+    <div id="questions-container" class="space-y-3">
+
+        <input
+            name="questions"
+            class="w-full p-3 border rounded-xl"
+            placeholder="Enter question 1"
+        />
+
+        <input
+            name="questions"
+            class="w-full p-3 border rounded-xl"
+            placeholder="Enter question 2"
+        />
+
+    </div>
+
+    <button type="button"
+            onclick="addQuestion()"
+            class="mt-3 text-sm text-emerald-600">
+        + Add Question
+    </button>
+
+</section>
+
+<!-- ========================= -->
+<!-- AUDIENCE -->
+<!-- ========================= -->
+<section class="bg-white rounded-2xl border p-lg">
+
+    <h3 class="font-bold mb-4">Audience</h3>
+
+    <select name="audience_type" class="w-full p-3 border rounded-xl">
+        <option value="all">All Users</option>
+        <option value="filtered">Filtered</option>
+    </select>
+
+</section>
+
+</div>
+
+<!-- RIGHT -->
+<div class="col-span-12 lg:col-span-4 space-y-6">
+
+    <!-- PREVIEW -->
+    <div class="bg-white p-4 rounded-xl border">
+        <h4 class="font-bold mb-2">Preview</h4>
+        <p class="text-sm text-gray-500">Live preview will appear here</p>
+    </div>
+
+    <!-- ACTIONS -->
+    <button class="w-full bg-emerald-600 text-white p-3 rounded-xl">
+        Save Event
+    </button>
+
+</div>
+
+</div>
+</div>
+
+</form>
+
+<!-- ========================= -->
+<!-- JS -->
+<!-- ========================= -->
+<script>
+function setTrigger(type){
+    document.getElementById("trigger_type").value = type;
+}
+
+function addQuestion(){
+    const container = document.getElementById("questions-container");
+
+    const input = document.createElement("input");
+    input.name = "questions";
+    input.placeholder = "New question";
+    input.className = "w-full p-3 border rounded-xl mt-2";
+
+    container.appendChild(input);
+}
+</script>
+
+{% endblock %}

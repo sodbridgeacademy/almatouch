@@ -1,0 +1,494 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-xl max-w-7xl mx-auto">
+
+    <h2 class="text-2xl font-bold mb-6">Members - ({{total_members}})</h2>
+
+    <div class="bg-white rounded-xl border shadow">
+
+        <div class="overflow-x-auto">
+
+        <table class="w-full text-left">
+
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3">S/N</th>
+                    <th class="px-6 py-3">Email</th>
+                    <th class="px-6 py-3">Departments</th>
+                    <th class="px-6 py-3">Joined</th>
+                    <th class="px-6 py-3 text-right">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+
+                {% for user in members %}
+                <tr>
+                    <!-- S/N -->
+                     <td class="px-6 py-4">
+                        {{ loop.index }}
+                    </td>
+
+                    <!-- EMAIL -->
+                    <td class="px-6 py-4">
+                        <a href="{{ url_for('user.member_detail', user_id=user.id) }}"
+                           class="text-primary font-semibold hover:underline">
+                            {{ user.email }} 
+                        </a>
+                    </td>
+
+                    <!-- DEPARTMENTS (MANY-TO-MANY) -->
+                    <td class="px-6 py-4">
+
+                        {% if user.departments and user.departments|length > 0 %}
+
+                            <div class="flex flex-wrap gap-1">
+                                {% for link in user.departments %}
+                                    <span class="text-xs bg-gray-100 px-2 py-1 rounded">
+                                        {{ link.department.name }}
+                                    </span>
+                                {% endfor %}
+                            </div>
+
+                        {% else %}
+                            <span class="text-gray-400 text-sm">
+                                No departments
+                            </span>
+                        {% endif %}
+
+                    </td>
+
+                    <!-- JOINED DATE -->
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        {{ user.created_at.strftime('%Y-%m-%d') }}
+                    </td>
+
+                    <!-- ACTIONS -->
+                    <td class="px-6 py-4">
+                        <div class="flex justify-end gap-2">
+
+                            <!-- EDIT -->
+
+                            <button
+                                onclick='openEditMemberModal(
+                                    {{ user.id }},
+                                    {{ user.first_name|tojson }},
+                                    {{ user.last_name|tojson }},
+                                    {{ user.email|tojson }},
+                                    {{ (user.date_of_birth|string) | tojson }},
+                                    {{ user.role|tojson }},
+                                    {{ user.departments | map(attribute="department_id") | list | tojson }}
+                                )'
+                                class="p-2 text-gray-400 hover:text-primary">
+
+                                <span class="material-symbols-outlined">edit</span>
+
+                            </button>
+
+                            <!-- DELETE -->
+                            <button
+                                onclick="openMemberDeleteModal(
+                                    '{{ user.id }}',
+                                    '{{ user.first_name }} {{ user.last_name }}'
+                                )"
+                                class="p-2 text-gray-400 hover:text-red-500">
+
+                                <span class="material-symbols-outlined">delete</span>
+
+                            </button>
+
+                        </div>
+                    </td>
+
+                </tr>
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <!-- PAGINATION -->
+
+        <div class="flex items-center justify-between mt-6">
+
+    <!-- Prev -->
+    {% if pagination.has_prev %}
+        <a href="{{ url_for('user.list_members', page=pagination.prev_num) }}"
+           class="px-4 py-2 bg-white border rounded-lg hover:bg-gray-50">
+            ← Prev
+        </a>
+    {% else %}
+        <span class="px-4 py-2 text-gray-300 border rounded-lg">
+            ← Prev
+        </span>
+    {% endif %}
+
+    <!-- Page Info -->
+    <p class="text-sm text-gray-500">
+        Page {{ pagination.page }} of {{ pagination.pages }}
+    </p>
+
+    <!-- Next -->
+    {% if pagination.has_next %}
+        <a href="{{ url_for('user.list_members', page=pagination.next_num) }}"
+           class="px-4 py-2 bg-white border rounded-lg hover:bg-gray-50">
+            Next →
+        </a>
+    {% else %}
+        <span class="px-4 py-2 text-gray-300 border rounded-lg">
+            Next →
+        </span>
+    {% endif %}
+
+</div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MEMBER DELETE MODAL -->
+<div id="member-delete-modal"
+     class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-6 hidden z-50">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
+
+        <form method="POST" id="memberDeleteForm">
+
+            <!-- HEADER -->
+            <div class="p-6 border-b">
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-red-500">
+                            delete
+                        </span>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-semibold">
+                            Delete Member
+                        </h3>
+
+                        <p class="text-sm text-gray-500">
+                            This action cannot be undone.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BODY -->
+            <div class="p-6">
+
+                <p class="text-gray-600">
+                    Are you sure you want to remove:
+                </p>
+
+                <p class="font-semibold mt-2" id="memberDeleteName"></p>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="p-6 border-t flex justify-end gap-3">
+
+                <button type="button"
+                        onclick="closeMemberDeleteModal()"
+                        class="px-4 py-2 text-gray-500 hover:text-black transition">
+
+                    Cancel
+
+                </button>
+
+                <button type="submit"
+                        class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-xl transition">
+
+                    Delete
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- EDIT MEMBER MODAL -->
+<!-- EDIT MEMBER MODAL -->
+<div id="edit-member-modal"
+     class="fixed inset-0 bg-black/40 backdrop-blur-sm hidden z-50
+            flex items-start justify-center p-6
+            overflow-y-auto">
+
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-lg
+                my-6 max-h-[calc(100vh-3rem)] overflow-y-auto">
+
+        <form method="POST" id="editMemberForm">
+
+            <!-- HEADER -->
+            <div class="p-6 border-b sticky top-0 bg-white z-10">
+
+                <h3 class="text-xl font-semibold">
+                    Edit Member
+                </h3>
+
+                <p class="text-sm text-gray-500 mt-1">
+                    Update member information
+                </p>
+
+            </div>
+
+            <!-- BODY -->
+            <div class="p-6 space-y-5">
+
+                <!-- FIRST NAME -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        First Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="first_name"
+                        id="editMemberFirstName"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2
+                               focus:ring-primary">
+                </div>
+
+                <!-- LAST NAME -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Last Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="last_name"
+                        id="editMemberLastName"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2
+                               focus:ring-primary">
+                </div>
+
+                <!-- EMAIL -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        id="editMemberEmail"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2
+                               focus:ring-primary">
+                </div>
+
+                <!-- DOB -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Date of Birth
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date_of_birth"
+                        id="editMemberDob"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2
+                               focus:ring-primary">
+                </div>
+
+                <!-- DEPARTMENTS -->
+                <div>
+                    <label class="block text-sm font-medium mb-3">
+                        Departments
+                    </label>
+
+                    <div class="space-y-2 max-h-48 overflow-y-auto
+                                border rounded-xl p-4">
+
+                        {% for dept in departments %}
+                        <label class="flex items-center gap-3">
+
+                            <input
+                                type="checkbox"
+                                name="department_ids"
+                                value="{{ dept.id }}"
+                                class="department-checkbox w-4 h-4 rounded">
+
+                            <span>
+                                {{ dept.name }}
+                            </span>
+
+                        </label>
+                        {% endfor %}
+
+                    </div>
+                </div>
+
+                <!-- ROLE -->
+                <div>
+                    <label class="block text-sm font-medium mb-2">
+                        Role
+                    </label>
+
+                    <select
+                        name="role"
+                        id="editMemberRole"
+                        class="w-full border rounded-xl px-4 py-3
+                               focus:outline-none focus:ring-2
+                               focus:ring-primary">
+
+                        <option value="member">Member</option>
+                        <option value="admin">Admin</option>
+                        <option value="owner">Owner</option>
+
+                    </select>
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="p-6 border-t flex justify-end gap-3
+                        sticky bottom-0 bg-white">
+
+                <button
+                    type="button"
+                    onclick="closeEditMemberModal()"
+                    class="px-4 py-2 text-gray-500 hover:text-gray-800">
+
+                    Cancel
+
+                </button>
+
+                <button
+                    type="submit"
+                    class="bg-primary text-white px-6 py-2 rounded-xl">
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- Modal Scripts -->
+<script>
+// =========================
+// EDIT MEMBER MODAL
+// =========================
+
+function openEditMemberModal(
+    id,
+    firstName,
+    lastName,
+    email,
+    dob,
+    role = "member",
+    departmentIds = []
+) {
+
+    // First Name
+    document.getElementById(
+        "editMemberFirstName"
+    ).value = firstName || "";
+
+    // Last Name
+    document.getElementById(
+        "editMemberLastName"
+    ).value = lastName || "";
+
+    // Email
+    document.getElementById(
+        "editMemberEmail"
+    ).value = email || "";
+
+    // DOB
+    document.getElementById(
+        "editMemberDob"
+    ).value = dob || "";
+
+    // Role
+    document.getElementById(
+        "editMemberRole"
+    ).value = role || "member";
+
+    // Clear all department checkboxes
+    document
+        .querySelectorAll(".department-checkbox")
+        .forEach(box => {
+            box.checked = false;
+        });
+
+    // Select member's existing departments
+    departmentIds.forEach(deptId => {
+
+        const checkbox = document.querySelector(
+            `.department-checkbox[value="${deptId}"]`
+        );
+
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+    });
+
+    // Form action
+    document.getElementById(
+        "editMemberForm"
+    ).action = `/members/${id}/update`;
+
+    // Open modal
+    document
+        .getElementById("edit-member-modal")
+        .classList.remove("hidden");
+}
+
+
+function closeEditMemberModal() {
+
+    document
+        .getElementById("edit-member-modal")
+        .classList.add("hidden");
+}
+
+
+// Delete Member Modal
+function openMemberDeleteModal(userId, email) {
+
+    document.getElementById("memberDeleteName").innerText = email;
+
+    const form = document.getElementById("memberDeleteForm");
+
+    form.action = `/members/${userId}/delete`;
+
+    document
+        .getElementById("member-delete-modal")
+        .classList.remove("hidden");
+}
+
+function closeMemberDeleteModal() {
+
+    document
+        .getElementById("member-delete-modal")
+        .classList.add("hidden");
+}
+
+</script>
+{% endblock %}

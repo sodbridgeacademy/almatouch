@@ -1,0 +1,813 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="max-w-6xl mx-auto p-6 lg:p-8">
+
+    <!-- ========================================= -->
+    <!-- BACK -->
+    <!-- ========================================= -->
+
+    <div class="mb-6">
+
+        <a
+            href="{{ url_for('user.list_members') }}"
+            class="
+                inline-flex items-center gap-2
+                text-sm font-medium
+                text-gray-500
+                hover:text-primary
+                transition
+            "
+        >
+
+            <span class="material-symbols-outlined text-lg">
+                arrow_back
+            </span>
+
+            Back to Members
+
+        </a>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- PROFILE HEADER -->
+    <!-- ========================================= -->
+
+    <div class="
+        overflow-hidden
+        rounded-3xl
+        border
+        border-outline-variant/30
+        bg-white
+        shadow-sm
+    ">
+
+        <!-- COVER -->
+
+        <div class="h-32 bg-primary/10"></div>
+
+
+        <!-- PROFILE AREA -->
+
+        <div class="px-6 pb-6 lg:px-8">
+
+            <div class="
+                -mt-16
+                flex
+                flex-col
+                gap-5
+                lg:flex-row
+                lg:items-end
+                lg:justify-between
+            ">
+
+                <!-- LEFT -->
+
+                <div class="flex flex-col gap-4 sm:flex-row sm:items-end">
+
+                    <!-- PROFILE IMAGE -->
+
+                    <div class="
+                        h-28
+                        w-28
+                        shrink-0
+                        overflow-hidden
+                        rounded-3xl
+                        border-4
+                        border-white
+                        bg-primary/10
+                        shadow-lg
+                    ">
+
+                        {% if user.profile_pic %}
+
+                            <img
+                                src="{{ url_for('static', filename=user.profile_pic) }}"
+                                alt="{{ user.first_name }} {{ user.last_name }}"
+                                class="h-full w-full object-cover"
+                            >
+
+                        {% else %}
+
+                            <div class="
+                                flex
+                                h-full
+                                w-full
+                                items-center
+                                justify-center
+                                bg-primary/10
+                            ">
+
+                                <span class="
+                                    text-3xl
+                                    font-bold
+                                    text-primary
+                                ">
+                                    {{ user.first_name[:1] if user.first_name else "" }}{{ user.last_name[:1] if user.last_name else "" }}
+                                </span>
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- NAME -->
+
+                    <div class="pb-1">
+
+                        <div class="flex flex-wrap items-center gap-2">
+
+                            <h1 class="
+                                text-2xl
+                                font-bold
+                                text-gray-900
+                            ">
+                                {{ user.first_name }}
+                                {{ user.last_name }}
+                            </h1>
+
+
+                            {% if user.role == "owner" %}
+
+                                <span class="
+                                    inline-flex items-center
+                                    rounded-full
+                                    bg-purple-100
+                                    px-3 py-1
+                                    text-xs
+                                    font-semibold
+                                    text-purple-700
+                                ">
+                                    Owner
+                                </span>
+
+                            {% elif user.role == "admin" %}
+
+                                <span class="
+                                    inline-flex items-center
+                                    rounded-full
+                                    bg-blue-100
+                                    px-3 py-1
+                                    text-xs
+                                    font-semibold
+                                    text-blue-700
+                                ">
+                                    Admin
+                                </span>
+
+                            {% else %}
+
+                                <span class="
+                                    inline-flex items-center
+                                    rounded-full
+                                    bg-gray-100
+                                    px-3 py-1
+                                    text-xs
+                                    font-semibold
+                                    text-gray-700
+                                ">
+                                    Member
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <p class="mt-1 text-sm text-gray-500">
+                            {{ user.email }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACCOUNT STATUS -->
+
+                <div class="
+                    inline-flex
+                    items-center
+                    gap-2
+                    rounded-full
+                    bg-gray-50
+                    px-3 py-2
+                    text-xs
+                    font-medium
+                    text-gray-600
+                ">
+
+                    <span
+                        class="
+                            h-2
+                            w-2
+                            rounded-full
+                            {% if user.is_active %}
+                                bg-emerald-500
+                            {% else %}
+                                bg-gray-400
+                            {% endif %}
+                        "
+                    ></span>
+
+                    {% if user.is_active %}
+                        Active
+                    {% else %}
+                        Inactive
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- CONTENT GRID -->
+    <!-- ========================================= -->
+
+    <div class="
+        mt-6
+        grid
+        grid-cols-1
+        gap-6
+        lg:grid-cols-3
+    ">
+
+
+        <!-- ========================================= -->
+        <!-- MAIN INFORMATION -->
+        <!-- ========================================= -->
+
+        <div class="
+            lg:col-span-2
+            rounded-3xl
+            border
+            border-outline-variant/30
+            bg-white
+            p-6
+            shadow-sm
+        ">
+
+            <div class="mb-6">
+
+                <h2 class="text-lg font-semibold text-gray-900">
+                    Member Information
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-500">
+                    Basic information about this member.
+                </p>
+
+            </div>
+
+
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+
+                <!-- EMAIL -->
+
+                <div>
+
+                    <p class="
+                        text-[11px]
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-gray-400
+                    ">
+                        Email
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-gray-800">
+                        {{ user.email }}
+                    </p>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div>
+
+                    <p class="
+                        text-[11px]
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-gray-400
+                    ">
+                        Phone
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-gray-800">
+                        {{ user.phone or "Not provided" }}
+                    </p>
+
+                </div>
+
+
+                <!-- DATE OF BIRTH -->
+
+                <div>
+
+                    <p class="
+                        text-[11px]
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-gray-400
+                    ">
+                        Date of Birth
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-gray-800">
+
+                        {% if user.date_of_birth %}
+                            {{ user.date_of_birth.strftime("%B %d, %Y") }}
+                        {% else %}
+                            Not provided
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- JOINED DATE -->
+
+                <div>
+
+                    <p class="
+                        text-[11px]
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-gray-400
+                    ">
+                        Joined Organization
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-gray-800">
+
+                        {% if user.joined_date %}
+
+                            {{ user.joined_date.strftime("%B %d, %Y") }}
+
+                        {% elif user.created_at %}
+
+                            {{ user.created_at.strftime("%B %d, %Y") }}
+
+                        {% else %}
+
+                            Not provided
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- ACCOUNT CREATED -->
+
+                <div>
+
+                    <p class="
+                        text-[11px]
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-gray-400
+                    ">
+                        Account Created
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-gray-800">
+
+                        {% if user.created_at %}
+                            {{ user.created_at.strftime("%B %d, %Y") }}
+                        {% else %}
+                            Not available
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+
+                <!-- LAST LOGIN -->
+
+                <div>
+
+                    <p class="
+                        text-[11px]
+                        font-semibold
+                        uppercase
+                        tracking-wider
+                        text-gray-400
+                    ">
+                        Last Login
+                    </p>
+
+                    <p class="mt-2 text-sm font-medium text-gray-800">
+
+                        {% if user.last_login %}
+
+                            {{ user.last_login|localtime }}
+
+                        {% else %}
+
+                            Never
+
+                        {% endif %}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- DEPARTMENTS -->
+        <!-- ========================================= -->
+
+        <div class="
+            rounded-3xl
+            border
+            border-outline-variant/30
+            bg-white
+            p-6
+            shadow-sm
+        ">
+
+            <div class="mb-5">
+
+                <h2 class="text-lg font-semibold text-gray-900">
+                    Departments
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-500">
+                    Departments this member belongs to.
+                </p>
+
+            </div>
+
+
+            {% if user.departments %}
+
+                <div class="space-y-3">
+
+                    {% for link in user.departments %}
+
+                        <div class="
+                            flex
+                            items-center
+                            gap-3
+                            rounded-2xl
+                            bg-gray-50
+                            px-4
+                            py-3
+                        ">
+
+                            <div class="
+                                flex
+                                h-9
+                                w-9
+                                shrink-0
+                                items-center
+                                justify-center
+                                rounded-xl
+                                bg-primary/10
+                                text-primary
+                            ">
+
+                                <span class="
+                                    material-symbols-outlined
+                                    text-lg
+                                ">
+                                    account_tree
+                                </span>
+
+                            </div>
+
+                            <span class="
+                                text-sm
+                                font-medium
+                                text-gray-800
+                            ">
+                                {{ link.department.name }}
+                            </span>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="rounded-2xl bg-gray-50 p-5 text-center">
+
+                    <span class="
+                        material-symbols-outlined
+                        text-2xl
+                        text-gray-400
+                    ">
+                        account_tree
+                    </span>
+
+                    <p class="mt-2 text-sm text-gray-500">
+                        No departments assigned.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- ALMATOUCH STATUS -->
+        <!-- ========================================= -->
+
+        <div class="
+            lg:col-span-2
+            rounded-3xl
+            border
+            border-outline-variant/30
+            bg-white
+            p-6
+            shadow-sm
+        ">
+
+            <div class="mb-6">
+
+                <h2 class="text-lg font-semibold text-gray-900">
+                    AlmaTouch Profile Status
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-500">
+                    Account and participation status.
+                </p>
+
+            </div>
+
+
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+
+                <!-- EMAIL -->
+
+                <div class="rounded-2xl bg-gray-50 p-4">
+
+                    <div class="flex items-center gap-2">
+
+                        <span class="
+                            material-symbols-outlined
+                            text-lg
+                            {% if user.is_email_verified %}
+                                text-emerald-600
+                            {% else %}
+                                text-gray-400
+                            {% endif %}
+                        ">
+                            mail
+                        </span>
+
+                        <span class="text-xs font-medium text-gray-500">
+                            Email
+                        </span>
+
+                    </div>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        font-semibold
+                        text-gray-800
+                    ">
+                        {% if user.is_email_verified %}
+                            Verified
+                        {% else %}
+                            Not verified
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <!-- ONBOARDING -->
+
+                <div class="rounded-2xl bg-gray-50 p-4">
+
+                    <div class="flex items-center gap-2">
+
+                        <span class="
+                            material-symbols-outlined
+                            text-lg
+                            {% if user.is_onboarded %}
+                                text-emerald-600
+                            {% else %}
+                                text-gray-400
+                            {% endif %}
+                        ">
+                            checklist
+                        </span>
+
+                        <span class="text-xs font-medium text-gray-500">
+                            Onboarding
+                        </span>
+
+                    </div>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        font-semibold
+                        text-gray-800
+                    ">
+                        {% if user.is_onboarded %}
+                            Completed
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </p>
+
+                </div>
+
+
+                <!-- NOTIFICATIONS -->
+
+                <div class="rounded-2xl bg-gray-50 p-4">
+
+                    <div class="flex items-center gap-2">
+
+                        <span class="
+                            material-symbols-outlined
+                            text-lg
+                            {% if user.receive_notifications %}
+                                text-emerald-600
+                            {% else %}
+                                text-gray-400
+                            {% endif %}
+                        ">
+                            notifications
+                        </span>
+
+                        <span class="text-xs font-medium text-gray-500">
+                            Notifications
+                        </span>
+
+                    </div>
+
+                    <p class="
+                        mt-2
+                        text-sm
+                        font-semibold
+                        text-gray-800
+                    ">
+                        {% if user.receive_notifications %}
+                            Enabled
+                        {% else %}
+                            Disabled
+                        {% endif %}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ========================================= -->
+        <!-- QUICK DATES -->
+        <!-- ========================================= -->
+
+        <div class="
+            rounded-3xl
+            border
+            border-outline-variant/30
+            bg-white
+            p-6
+            shadow-sm
+        ">
+
+            <div class="mb-5">
+
+                <h2 class="text-lg font-semibold text-gray-900">
+                    Key Dates
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-500">
+                    Dates AlmaTouch keeps track of.
+                </p>
+
+            </div>
+
+
+            <div class="space-y-4">
+
+                <div class="
+                    flex items-center
+                    justify-between
+                    gap-4
+                ">
+
+                    <div class="flex items-center gap-3">
+
+                        <div class="
+                            flex
+                            h-9
+                            w-9
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-primary/10
+                            text-primary
+                        ">
+                            <span class="material-symbols-outlined text-lg">
+                                cake
+                            </span>
+                        </div>
+
+                        <span class="text-sm text-gray-600">
+                            Birthday
+                        </span>
+
+                    </div>
+
+                    <span class="text-xs font-medium text-gray-800">
+
+                        {% if user.date_of_birth %}
+                            {{ user.date_of_birth.strftime("%b %d") }}
+                        {% else %}
+                            —
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+
+                <div class="
+                    flex items-center
+                    justify-between
+                    gap-4
+                ">
+
+                    <div class="flex items-center gap-3">
+
+                        <div class="
+                            flex
+                            h-9
+                            w-9
+                            items-center
+                            justify-center
+                            rounded-xl
+                            bg-primary/10
+                            text-primary
+                        ">
+                            <span class="material-symbols-outlined text-lg">
+                                work_history
+                            </span>
+                        </div>
+
+                        <span class="text-sm text-gray-600">
+                            Work Anniversary
+                        </span>
+
+                    </div>
+
+                    <span class="text-xs font-medium text-gray-800">
+
+                        {% if user.joined_date %}
+                            {{ user.joined_date.strftime("%b %d") }}
+                        {% else %}
+                            —
+                        {% endif %}
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

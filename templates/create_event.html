@@ -1,0 +1,225 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<!-- Canvas Area -->
+<div class="max-w-[1200px] mx-auto p-xl">
+<div class="grid grid-cols-12 gap-gutter">
+<!-- Form Section (Left Column) -->
+<div class="col-span-12 lg:col-span-8 space-y-xl">
+<!-- Section 1: Basic Info -->
+<section class="bg-white rounded-2xl border border-[#E0E0E0] p-lg shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-lg bg-primary-container/10 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">info</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-slate-800">Basic Info</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-slate-600">Event Name</label>
+<input class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-primary focus:ring-primary/20 transition-all placeholder:text-slate-400 text-body-md" placeholder="e.g. Monthly Wellness Check-in" type="text"/>
+</div>
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-slate-600">Event Type</label>
+<select class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-primary focus:ring-primary/20 transition-all text-body-md">
+<option>Birthday</option>
+<option>Announcement</option>
+<option selected="">Check-in</option>
+<option>Custom</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Section 2: Trigger Settings -->
+<section class="bg-white rounded-2xl border border-[#E0E0E0] p-lg shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-lg bg-tertiary-fixed text-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">schedule</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-slate-800">Trigger Settings</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-slate-600">Trigger Type</label>
+<div class="flex gap-2">
+<button class="flex-1 py-2 px-4 rounded-lg bg-primary-container text-white text-sm font-medium transition-all">Date-based</button>
+<button class="flex-1 py-2 px-4 rounded-lg bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-slate-100 transition-all">Recurring</button>
+<button class="flex-1 py-2 px-4 rounded-lg bg-secondary-container text-on-secondary-container text-sm font-medium hover:bg-slate-100 transition-all">User-based</button>
+</div>
+</div>
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-slate-600">Frequency</label>
+<select class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-primary focus:ring-primary/20 transition-all text-body-md">
+<option>Daily</option>
+<option selected="">Weekly</option>
+<option>Twice a week</option>
+<option>Monthly</option>
+</select>
+</div>
+</div>
+</section>
+<!-- Section 3: Message Template -->
+<section class="bg-white rounded-2xl border border-[#E0E0E0] p-lg shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-lg bg-secondary-container text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">mail</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-slate-800">Message Template</h3>
+</div>
+<div class="space-y-lg">
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-slate-600">Subject Line</label>
+<input class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-primary focus:ring-primary/20 transition-all text-body-md" placeholder="How are you feeling today?" type="text"/>
+</div>
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-slate-600">Message Body</label>
+<textarea class="w-full px-4 py-3 rounded-xl border-slate-200 focus:border-primary focus:ring-primary/20 transition-all text-body-md resize-none" placeholder="Hi {{first_name}}, we're checking in to see how your day is going..." rows="4"></textarea>
+<p class="text-caption text-slate-400 mt-1 italic">Use {{first_name}}, {{last_name}}, or {{event_name}} to personalize.</p>
+</div>
+<div class="space-y-sm">
+<label class="block font-label-md text-label-md text-slate-600">Delivery Channel</label>
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer group">
+<input checked="" class="rounded text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-body-md text-slate-700 group-hover:text-primary transition-colors">Email</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer group">
+<input class="rounded text-primary focus:ring-primary/20" type="checkbox"/>
+<span class="text-body-md text-slate-700 group-hover:text-primary transition-colors">Push Notification</span>
+</label>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: Questions -->
+<section class="bg-white rounded-2xl border border-[#E0E0E0] p-lg shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+<div class="flex items-center justify-between mb-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-fixed-dim text-on-primary-fixed-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">quiz</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-slate-800">Check-in Questions</h3>
+</div>
+<span class="text-caption px-3 py-1 bg-slate-50 rounded-full text-slate-500 font-medium">1 / 5 Questions</span>
+</div>
+<div class="space-y-md">
+<div class="p-md border border-slate-100 rounded-xl bg-surface-container-lowest flex gap-4 items-start animate-fade-in">
+<div class="mt-2 text-slate-300">
+<span class="material-symbols-outlined">drag_indicator</span>
+</div>
+<div class="flex-1 space-y-md">
+<input class="w-full bg-transparent border-none focus:ring-0 font-medium text-slate-700 px-0" type="text" value="On a scale of 1-10, how is your energy level?"/>
+<div class="flex items-center gap-2">
+<div class="px-3 py-1 rounded-full bg-secondary-container/50 text-xs font-semibold text-secondary">Rating Scale</div>
+<div class="px-3 py-1 rounded-full bg-secondary-container/50 text-xs font-semibold text-secondary">Mandatory</div>
+</div>
+</div>
+<button class="text-slate-300 hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<button class="w-full py-4 border-2 border-dashed border-slate-100 rounded-xl flex items-center justify-center gap-2 text-slate-400 hover:border-primary/30 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="font-label-md text-label-md">Add Question</span>
+</button>
+</div>
+</section>
+<!-- Section 5: Target Audience -->
+<section class="bg-white rounded-2xl border border-[#E0E0E0] p-lg shadow-[0_4px_20px_rgba(0,0,0,0.02)] transition-all hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)]">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-8 h-8 rounded-lg bg-tertiary-fixed-dim text-on-tertiary-container flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">groups</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-slate-800">Target Audience</h3>
+</div>
+<div class="space-y-lg">
+<div class="flex gap-gutter">
+<label class="flex-1 cursor-pointer">
+<input checked="" class="hidden peer" name="audience" type="radio"/>
+<div class="p-md border-2 border-slate-100 rounded-xl peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="font-semibold text-slate-800">All Users</span>
+<span class="material-symbols-outlined text-primary scale-0 peer-checked:scale-100 transition-all" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-caption text-slate-500">Every member in the AlmaTouch community will receive this event.</p>
+</div>
+</label>
+<label class="flex-1 cursor-pointer">
+<input class="hidden peer" name="audience" type="radio"/>
+<div class="p-md border-2 border-slate-100 rounded-xl peer-checked:border-primary peer-checked:bg-primary/5 transition-all">
+<div class="flex items-center justify-between mb-2">
+<span class="font-semibold text-slate-800">Filtered Segment</span>
+<span class="material-symbols-outlined text-primary scale-0 peer-checked:scale-100 transition-all" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="text-caption text-slate-500">Define specific departments, classes, or activity roles to target.</p>
+</div>
+</label>
+</div>
+</div>
+</section>
+</div>
+<!-- Preview Sticky Sidebar (Right Column) -->
+<div class="col-span-12 lg:col-span-4">
+<div class="sticky top-24 space-y-lg">
+<!-- Section 6: Preview Card -->
+<div class="bg-white rounded-2xl border border-[#E0E0E0] overflow-hidden shadow-xl">
+<div class="bg-primary p-4 flex items-center justify-between">
+<span class="text-white font-semibold text-sm">Live Preview</span>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-white/50 text-xs">laptop</span>
+<span class="material-symbols-outlined text-white text-xs">smartphone</span>
+</div>
+</div>
+<div class="p-xl bg-background flex flex-col items-center">
+<!-- Mock Phone Frame -->
+<div class="w-full max-w-[280px] bg-white rounded-[40px] border-[8px] border-slate-800 aspect-[9/18] shadow-2xl relative overflow-hidden flex flex-col">
+<div class="w-1/3 h-6 bg-slate-800 self-center rounded-b-2xl mb-4"></div>
+<div class="flex-1 p-4 space-y-4">
+<div class="flex items-center gap-2 mb-4">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center text-white text-[10px]">
+<span class="material-symbols-outlined text-sm">local_florist</span>
+</div>
+<span class="text-[10px] font-bold text-slate-400">ALMATOUCH</span>
+</div>
+<div class="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm space-y-3">
+<h4 class="text-xs font-bold text-slate-800">How are you feeling today?</h4>
+<p class="text-[10px] text-slate-600 leading-relaxed">Hi Sarah, we're checking in to see how your day is going. Your well-being matters to us!</p>
+<div class="pt-2">
+<div class="w-full py-2 bg-primary-container text-white text-[10px] font-bold rounded-lg text-center">Respond Now</div>
+</div>
+</div>
+<div class="mt-4">
+<img class="w-full h-24 object-cover rounded-xl grayscale opacity-20" data-alt="A serene landscape of a misty forest at dawn, with soft green and grey tones. The lighting is diffused and calming, evoking a sense of tranquility and mental clarity. Minimalist and organic composition suitable for a wellness-themed application background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQ1Zn_FV71Nrsa2kWduVjXM0nN-9N1XvpJu0-77wMmGtfY4KXDVARzhOjJtbknPMOR4SFYGYRG-cmsyVrpG0WPacGA4ZsautAxJqLxUy94F_hmNEYOwJ2OW4o4kZ7AmQBCAwd_ikA_dlii8Ti13qk8XFB1O7XKkk1nK8YQHUfRu8dIcHnBR4UEBWyy9WDwzkAgJzzV2ys2vsqQ_xe_H1PbEYT8YpC_TsP4JgX98SUncUqqIx8Q69FZ2v3eO0ellOLCWwtJjM-kODs"/>
+</div>
+</div>
+<div class="h-1 w-1/3 bg-slate-200 self-center rounded-full mb-2"></div>
+</div>
+<p class="mt-lg text-caption text-slate-400 text-center px-lg">This is how your message will appear on a mobile device.</p>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-3">
+<button class="w-full py-4 bg-primary text-white rounded-xl font-semibold shadow-lg hover:bg-primary-container hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200">
+                                Save &amp; Activate
+                            </button>
+<button class="w-full py-4 bg-white border border-[#E0E0E0] text-slate-700 rounded-xl font-semibold hover:bg-slate-50 transition-all">
+                                Save Event
+                            </button>
+</div>
+<!-- Tooltip/Help Area -->
+<div class="p-lg bg-secondary-container/30 rounded-2xl border border-secondary-container/50">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-secondary">lightbulb</span>
+<div>
+<h4 class="text-sm font-bold text-secondary-fixed-variant">Pro Tip</h4>
+<p class="text-xs text-secondary-fixed-variant leading-relaxed mt-1">Events with personalized message bodies have a 40% higher response rate. Use tags to make members feel seen.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}

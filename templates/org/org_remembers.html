@@ -1,0 +1,1835 @@
+{% extends "org_base.html" %}
+
+{% block content %}
+
+<div class="p-xl max-w-[1200px] mx-auto space-y-xl">
+
+
+    <!-- ========================= -->
+    <!-- BACK -->
+    <!-- ========================= -->
+
+    <div>
+
+        <a
+            href="{{ url_for('org.org_dashboard') }}"
+            class="inline-flex items-center gap-2 text-secondary hover:text-primary transition-colors"
+        >
+
+            <span class="material-symbols-outlined text-xl">
+                arrow_back
+            </span>
+
+            <span class="text-sm font-medium">
+                Back to Dashboard
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PAGE HEADER -->
+    <!-- ========================= -->
+
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+        <div>
+
+            <p class="text-caption text-primary uppercase tracking-[0.15em] font-bold mb-1">
+                Remember
+            </p>
+
+            <h2 class="font-headline-lg text-on-surface">
+                Important Dates
+            </h2>
+
+            <p class="text-sm text-secondary mt-1">
+                Important dates, milestones and celebrations across your organization.
+            </p>
+
+        </div>
+
+
+        <!-- ADD ORGANIZATION REMEMBER -->
+
+        <button
+            type="button"
+            onclick="openAddRememberModal()"
+            class="
+                inline-flex
+                items-center
+                justify-center
+                gap-2
+                bg-primary
+                text-white
+                px-5
+                py-3
+                rounded-xl
+                font-semibold
+                hover:shadow-lg
+                transition-all
+            "
+        >
+
+            <span class="material-symbols-outlined text-xl">
+                add
+            </span>
+
+            Add Remember
+
+        </button>
+
+    </div>
+
+
+    <!-- ===================================================== -->
+    <!-- SUMMARY CARDS -->
+    <!-- ===================================================== -->
+
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-lg">
+
+
+        <!-- ORGANIZATION -->
+
+        <a
+            href="{{ url_for('org.org_remembers', source='organization') }}"
+            class="
+                bg-white
+                rounded-3xl
+                border
+                border-outline-variant/30
+                p-6
+                shadow-sm
+                hover:shadow-md
+                transition-all
+            "
+        >
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+
+                    <p class="text-caption text-secondary uppercase tracking-wide">
+                        Organization Remembers
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-on-surface mt-1">
+                        {{ organization_count }}
+                    </h3>
+
+                </div>
+
+
+                <div class="
+                    w-14
+                    h-14
+                    rounded-2xl
+                    bg-primary-fixed
+                    text-primary
+                    flex
+                    items-center
+                    justify-center
+                ">
+
+                    <span class="material-symbols-outlined text-3xl">
+                        business
+                    </span>
+
+                </div>
+
+            </div>
+
+            <p class="text-sm text-secondary">
+                Dates managed by your organization.
+            </p>
+
+        </a>
+
+
+        <!-- MEMBER -->
+
+        <a
+            href="{{ url_for('org.org_remembers', source='member') }}"
+            class="
+                bg-white
+                rounded-3xl
+                border
+                border-outline-variant/30
+                p-6
+                shadow-sm
+                hover:shadow-md
+                transition-all
+            "
+        >
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+
+                    <p class="text-caption text-secondary uppercase tracking-wide">
+                        Member Remembers
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-on-surface mt-1">
+                        {{ member_count }}
+                    </h3>
+
+                </div>
+
+
+                <div class="
+                    w-14
+                    h-14
+                    rounded-2xl
+                    bg-tertiary-fixed/30
+                    text-tertiary
+                    flex
+                    items-center
+                    justify-center
+                ">
+
+                    <span class="material-symbols-outlined text-3xl">
+                        groups
+                    </span>
+
+                </div>
+
+            </div>
+
+            <p class="text-sm text-secondary">
+                Birthdays and work anniversaries.
+            </p>
+
+        </a>
+
+
+        <!-- SHARED -->
+
+        <a
+            href="{{ url_for('org.org_remembers', source='shared') }}"
+            class="
+                bg-white
+                rounded-3xl
+                border
+                border-outline-variant/30
+                p-6
+                shadow-sm
+                hover:shadow-md
+                transition-all
+            "
+        >
+
+            <div class="flex items-center justify-between mb-5">
+
+                <div>
+
+                    <p class="text-caption text-secondary uppercase tracking-wide">
+                        Shared / National
+                    </p>
+
+                    <h3 class="text-3xl font-bold text-on-surface mt-1">
+                        {{ shared_count }}
+                    </h3>
+
+                </div>
+
+
+                <div class="
+                    w-14
+                    h-14
+                    rounded-2xl
+                    bg-secondary-container
+                    text-secondary
+                    flex
+                    items-center
+                    justify-center
+                ">
+
+                    <span class="material-symbols-outlined text-3xl">
+                        public
+                    </span>
+
+                </div>
+
+            </div>
+
+            <p class="text-sm text-secondary">
+                Shared and national dates.
+            </p>
+
+        </a>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- FILTERS -->
+    <!-- ===================================================== -->
+
+    <section>
+
+        <form
+            method="GET"
+            action="{{ url_for('org.org_remembers') }}"
+            class="
+                bg-white
+                rounded-3xl
+                border
+                border-outline-variant/30
+                shadow-sm
+                p-5
+            "
+        >
+
+            <div class="
+                flex
+                flex-col
+                md:flex-row
+                md:items-end
+                gap-4
+            ">
+
+
+                <!-- SOURCE -->
+
+                <div class="flex-1">
+
+                    <label
+                        for="source"
+                        class="
+                            block
+                            text-sm
+                            font-medium
+                            text-on-surface
+                            mb-2
+                        "
+                    >
+                        Source
+                    </label>
+
+                    <select
+                        id="source"
+                        name="source"
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            bg-white
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                        <option
+                            value="all"
+                            {% if source_filter == "all" %}selected{% endif %}
+                        >
+                            All sources
+                        </option>
+
+                        <option
+                            value="organization"
+                            {% if source_filter == "organization" %}selected{% endif %}
+                        >
+                            Organization
+                        </option>
+
+                        <option
+                            value="member"
+                            {% if source_filter == "member" %}selected{% endif %}
+                        >
+                            Members
+                        </option>
+
+                        <option
+                            value="shared"
+                            {% if source_filter == "shared" %}selected{% endif %}
+                        >
+                            Shared / National
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- TYPE -->
+
+                <div class="flex-1">
+
+                    <label
+                        for="type"
+                        class="
+                            block
+                            text-sm
+                            font-medium
+                            text-on-surface
+                            mb-2
+                        "
+                    >
+                        Type
+                    </label>
+
+                    <select
+                        id="type"
+                        name="type"
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            bg-white
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                        <option
+                            value="all"
+                            {% if type_filter == "all" %}selected{% endif %}
+                        >
+                            All types
+                        </option>
+
+                        <option
+                            value="birthday"
+                            {% if type_filter == "birthday" %}selected{% endif %}
+                        >
+                            Birthday
+                        </option>
+
+                        <option
+                            value="work_anniversary"
+                            {% if type_filter == "work_anniversary" %}selected{% endif %}
+                        >
+                            Work Anniversary
+                        </option>
+
+                        <option
+                            value="organization_anniversary"
+                            {% if type_filter == "organization_anniversary" %}selected{% endif %}
+                        >
+                            Organization Anniversary
+                        </option>
+
+                        <option
+                            value="founders_day"
+                            {% if type_filter == "founders_day" %}selected{% endif %}
+                        >
+                            Founder's Day
+                        </option>
+
+                        <option
+                            value="national"
+                            {% if type_filter == "national" %}selected{% endif %}
+                        >
+                            National
+                        </option>
+
+                        <option
+                            value="holiday"
+                            {% if type_filter == "holiday" %}selected{% endif %}
+                        >
+                            Holiday
+                        </option>
+
+                        <option
+                            value="custom"
+                            {% if type_filter == "custom" %}selected{% endif %}
+                        >
+                            Custom
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- APPLY -->
+
+                <button
+                    type="submit"
+                    class="
+                        px-5
+                        py-3
+                        rounded-xl
+                        bg-primary
+                        text-white
+                        font-semibold
+                        hover:shadow-md
+                        transition
+                    "
+                >
+                    Filter
+                </button>
+
+
+                <!-- CLEAR -->
+
+                {% if source_filter != "all" or type_filter != "all" %}
+
+                    <a
+                        href="{{ url_for('org.org_remembers') }}"
+                        class="
+                            px-5
+                            py-3
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            text-secondary
+                            font-medium
+                            hover:bg-surface-container-low
+                            transition
+                        "
+                    >
+                        Clear
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- ===================================================== -->
+    <!-- REMEMBER LIST -->
+    <!-- ===================================================== -->
+
+    <section>
+
+        <div class="flex items-center justify-between mb-5">
+
+            <div>
+
+                <h3 class="font-headline-md text-on-surface">
+                    All Remembers
+                </h3>
+
+                <p class="text-sm text-secondary mt-1">
+                    Important dates across your organization.
+                </p>
+
+            </div>
+
+
+            {% if total_items > 0 %}
+
+                <span class="
+                    px-3
+                    py-1.5
+                    rounded-full
+                    bg-surface-container
+                    text-on-surface-variant
+                    text-xs
+                    font-bold
+                ">
+                    {{ total_items }}
+                    result{% if total_items != 1 %}s{% endif %}
+                </span>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if remembers %}
+
+            <div class="
+                bg-white
+                rounded-3xl
+                border
+                border-outline-variant/30
+                shadow-sm
+                overflow-hidden
+            ">
+
+                <div class="divide-y divide-outline-variant/20">
+
+
+                    {% for remember in remembers %}
+
+                        <div class="
+                            p-5
+                            hover:bg-surface-container-low
+                            transition
+                        ">
+
+                            <div class="
+                                flex
+                                flex-col
+                                md:flex-row
+                                md:items-center
+                                md:justify-between
+                                gap-5
+                            ">
+
+
+                                <!-- ========================= -->
+                                <!-- DATE + DETAILS -->
+                                <!-- ========================= -->
+
+                                <div class="flex items-center gap-4">
+
+
+                                    <!-- DATE -->
+
+                                    <div class="
+                                        w-14
+                                        h-14
+                                        rounded-2xl
+                                        flex
+                                        flex-col
+                                        items-center
+                                        justify-center
+                                        shrink-0
+
+                                        {% if remember.source == 'member' %}
+
+                                            bg-tertiary-fixed/30
+
+                                        {% elif remember.source == 'organization' %}
+
+                                            bg-primary-fixed
+
+                                        {% else %}
+
+                                            bg-secondary-container
+
+                                        {% endif %}
+                                    ">
+
+                                        <span class="
+                                            text-[10px]
+                                            uppercase
+                                            tracking-wider
+                                            font-bold
+
+                                            {% if remember.source == 'member' %}
+
+                                                text-tertiary
+
+                                            {% elif remember.source == 'organization' %}
+
+                                                text-primary
+
+                                            {% else %}
+
+                                                text-secondary
+
+                                            {% endif %}
+                                        ">
+                                            {{ remember.date.strftime("%b") }}
+                                        </span>
+
+                                        <span class="
+                                            text-xl
+                                            font-bold
+                                            text-on-surface
+                                        ">
+                                            {{ remember.date.strftime("%d") }}
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- DETAILS -->
+
+                                    <div>
+
+                                        <div class="flex items-center gap-2 mb-1">
+
+                                            <h4 class="
+                                                text-base
+                                                font-semibold
+                                                text-on-surface
+                                            ">
+                                                {{ remember.name }}
+                                            </h4>
+
+                                        </div>
+
+
+                                        <p class="text-sm text-secondary">
+
+                                            {{ remember.date.strftime(
+                                                "%A, %B %d, %Y"
+                                            ) }}
+
+                                        </p>
+
+
+                                        <div class="
+                                            flex
+                                            flex-wrap
+                                            gap-2
+                                            mt-3
+                                        ">
+
+
+                                            <!-- TYPE -->
+
+                                            <span class="
+                                                inline-flex
+                                                px-2.5
+                                                py-1
+                                                rounded-full
+                                                text-xs
+                                                font-semibold
+
+                                                {% if remember.source == 'member' %}
+
+                                                    bg-tertiary-fixed/30
+                                                    text-tertiary
+
+                                                {% elif remember.source == 'organization' %}
+
+                                                    bg-primary-fixed
+                                                    text-primary
+
+                                                {% else %}
+
+                                                    bg-secondary-container
+                                                    text-secondary
+
+                                                {% endif %}
+                                            ">
+
+                                                {% if remember.type == "birthday" %}
+
+                                                    Birthday
+
+                                                {% elif remember.type == "work_anniversary" %}
+
+                                                    Work Anniversary
+
+                                                {% elif remember.type == "organization_anniversary" %}
+
+                                                    Organization Anniversary
+
+                                                {% elif remember.type == "founders_day" %}
+
+                                                    Founder's Day
+
+                                                {% elif remember.type == "national" %}
+
+                                                    National
+
+                                                {% elif remember.type == "holiday" %}
+
+                                                    Holiday
+
+                                                {% else %}
+
+                                                    {{ remember.type
+                                                       |replace("_", " ")
+                                                       |title }}
+
+                                                {% endif %}
+
+                                            </span>
+
+
+                                            <!-- SOURCE -->
+
+                                            <span class="
+                                                inline-flex
+                                                px-2.5
+                                                py-1
+                                                rounded-full
+                                                text-xs
+                                                font-medium
+                                                bg-surface-container
+                                                text-on-surface-variant
+                                            ">
+
+                                                {% if remember.source == "organization" %}
+
+                                                    Organization
+
+                                                {% elif remember.source == "member" %}
+
+                                                    Member
+
+                                                {% elif remember.source == "shared" %}
+
+                                                    Shared
+
+                                                {% else %}
+
+                                                    {{ remember.source|capitalize }}
+
+                                                {% endif %}
+
+                                            </span>
+
+
+                                            <!-- STATUS / NATURE -->
+
+                                            {% if remember.source == "organization" %}
+
+                                                {% if remember.kind == "organization" %}
+
+                                                    <span class="
+                                                        inline-flex
+                                                        px-2.5
+                                                        py-1
+                                                        rounded-full
+                                                        text-xs
+                                                        font-medium
+                                                        bg-surface-container
+                                                        text-on-surface-variant
+                                                    ">
+                                                        Managed
+                                                    </span>
+
+                                                {% endif %}
+
+                                            {% elif remember.source == "member" %}
+
+                                                <span class="
+                                                    inline-flex
+                                                    px-2.5
+                                                    py-1
+                                                    rounded-full
+                                                    text-xs
+                                                    font-medium
+                                                    bg-tertiary-fixed/20
+                                                    text-tertiary
+                                                ">
+                                                    Automatic
+                                                </span>
+
+                                            {% elif remember.source == "shared" %}
+
+                                                <span class="
+                                                    inline-flex
+                                                    px-2.5
+                                                    py-1
+                                                    rounded-full
+                                                    text-xs
+                                                    font-medium
+                                                    bg-secondary-container
+                                                    text-secondary
+                                                ">
+                                                    Shared
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+
+                                <!-- ========================= -->
+                                <!-- ACTIONS -->
+                                <!-- ========================= -->
+
+                                <div class="flex items-center gap-2 md:justify-end">
+
+
+                                    {% if remember.source == "organization" %}
+
+
+                                        <!-- EDIT -->
+
+                                        <button
+                                            type="button"
+                                            onclick='openEditRememberModal(
+                                                {{ remember.remember_id }},
+                                                {{ remember.name|tojson }},
+                                                {{ remember.original_date|tojson if remember.original_date is defined else remember.date.strftime("%Y-%m-%d")|tojson }},
+                                                {{ remember.type|tojson }},
+                                                {{ "true" if remember.is_recurring else "false" }}
+                                            )'
+                                            class="
+                                                inline-flex
+                                                items-center
+                                                gap-2
+                                                px-3
+                                                py-2
+                                                rounded-xl
+                                                text-sm
+                                                text-secondary
+                                                hover:bg-surface-container
+                                                transition
+                                            "
+                                        >
+
+                                            <span class="material-symbols-outlined text-lg">
+                                                edit
+                                            </span>
+
+                                            Edit
+
+                                        </button>
+
+
+                                        <!-- DELETE -->
+
+                                        <button
+                                            type="button"
+                                            onclick='openDeleteRememberModal(
+                                                {{ remember.remember_id }},
+                                                {{ remember.name|tojson }}
+                                            )'
+                                            class="
+                                                inline-flex
+                                                items-center
+                                                gap-2
+                                                px-3
+                                                py-2
+                                                rounded-xl
+                                                text-sm
+                                                text-red-500
+                                                hover:bg-red-50
+                                                transition
+                                            "
+                                        >
+
+                                            <span class="material-symbols-outlined text-lg">
+                                                delete
+                                            </span>
+
+                                            Delete
+
+                                        </button>
+
+
+                                    {% else %}
+
+                                        <span class="
+                                            inline-flex
+                                            items-center
+                                            gap-2
+                                            px-3
+                                            py-2
+                                            rounded-xl
+                                            text-xs
+                                            font-medium
+                                            text-secondary
+                                            bg-surface-container-low
+                                        ">
+
+                                            <span class="material-symbols-outlined text-base">
+                                                lock
+                                            </span>
+
+                                            Read only
+
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- PAGINATION -->
+                <!-- ================================================= -->
+
+                {% if total_pages > 1 %}
+
+                    <div class="
+                        px-5
+                        py-4
+                        border-t
+                        border-outline-variant/20
+                        flex
+                        items-center
+                        justify-between
+                    ">
+
+
+                        <!-- PREVIOUS -->
+
+                        <div>
+
+                            {% if has_prev %}
+
+                                <a
+                                    href="{{ url_for(
+                                        'org.org_remembers',
+                                        page=prev_page,
+                                        source=source_filter,
+                                        type=type_filter
+                                    ) }}"
+                                    class="
+                                        inline-flex
+                                        items-center
+                                        gap-2
+                                        px-4
+                                        py-2
+                                        rounded-xl
+                                        text-sm
+                                        font-medium
+                                        text-secondary
+                                        hover:bg-surface-container
+                                        transition
+                                    "
+                                >
+
+                                    <span class="material-symbols-outlined text-lg">
+                                        chevron_left
+                                    </span>
+
+                                    Previous
+
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- PAGE INFO -->
+
+                        <span class="text-sm text-secondary">
+
+                            Page
+                            <span class="font-semibold text-on-surface">
+                                {{ page }}
+                            </span>
+
+                            of
+
+                            <span class="font-semibold text-on-surface">
+                                {{ total_pages }}
+                            </span>
+
+                        </span>
+
+
+                        <!-- NEXT -->
+
+                        <div>
+
+                            {% if has_next %}
+
+                                <a
+                                    href="{{ url_for(
+                                        'org.org_remembers',
+                                        page=next_page,
+                                        source=source_filter,
+                                        type=type_filter
+                                    ) }}"
+                                    class="
+                                        inline-flex
+                                        items-center
+                                        gap-2
+                                        px-4
+                                        py-2
+                                        rounded-xl
+                                        text-sm
+                                        font-medium
+                                        text-primary
+                                        hover:bg-primary-fixed
+                                        transition
+                                    "
+                                >
+
+                                    Next
+
+                                    <span class="material-symbols-outlined text-lg">
+                                        chevron_right
+                                    </span>
+
+                                </a>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+        {% else %}
+
+            <!-- EMPTY FILTER RESULT -->
+
+            <div class="
+                bg-white
+                rounded-3xl
+                border
+                border-outline-variant/30
+                shadow-sm
+                p-10
+                text-center
+            ">
+
+                <div class="
+                    w-14
+                    h-14
+                    mx-auto
+                    rounded-2xl
+                    bg-surface-container
+                    flex
+                    items-center
+                    justify-center
+                    text-secondary
+                ">
+
+                    <span class="material-symbols-outlined text-2xl">
+                        event_busy
+                    </span>
+
+                </div>
+
+
+                <h4 class="
+                    text-lg
+                    font-semibold
+                    text-on-surface
+                    mt-5
+                ">
+                    No Remembers found
+                </h4>
+
+
+                <p class="
+                    text-sm
+                    text-secondary
+                    mt-2
+                ">
+                    Try changing your filters or add a new organization Remember.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- ADD REMEMBER MODAL -->
+<!-- ===================================================== -->
+
+<div
+    id="add-remember-modal"
+    class="
+        fixed
+        inset-0
+        bg-black/40
+        backdrop-blur-sm
+        hidden
+        z-50
+        flex
+        items-start
+        justify-center
+        p-6
+        overflow-y-auto
+    "
+>
+
+    <div class="
+        bg-white
+        rounded-3xl
+        shadow-xl
+        w-full
+        max-w-lg
+        my-6
+    ">
+
+        <form
+            method="POST"
+            action="{{ url_for('org.add_remember') }}"
+        >
+
+            <div class="
+                p-6
+                border-b
+                border-outline-variant/30
+            ">
+
+                <h3 class="text-xl font-semibold text-on-surface">
+                    Add Remember
+                </h3>
+
+                <p class="text-sm text-secondary mt-1">
+                    Add an important date for your organization.
+                </p>
+
+            </div>
+
+
+            <div class="p-6 space-y-5">
+
+
+                <!-- NAME -->
+
+                <div>
+
+                    <label class="
+                        block
+                        text-sm
+                        font-medium
+                        text-on-surface
+                        mb-2
+                    ">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        required
+                        placeholder="e.g. Founder's Day"
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div>
+
+                    <label class="
+                        block
+                        text-sm
+                        font-medium
+                        text-on-surface
+                        mb-2
+                    ">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date"
+                        required
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                </div>
+
+
+                <!-- TYPE -->
+
+                <div>
+
+                    <label class="
+                        block
+                        text-sm
+                        font-medium
+                        text-on-surface
+                        mb-2
+                    ">
+                        Type
+                    </label>
+
+                    <select
+                        name="remember_type"
+                        required
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                        <option value="organization_anniversary">
+                            Organization Anniversary
+                        </option>
+
+                        <option value="founders_day">
+                            Founder's Day
+                        </option>
+
+                        <option value="custom">
+                            Custom Date
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- RECURRING -->
+
+                <div class="flex items-start gap-3">
+
+                    <input
+                        type="checkbox"
+                        name="is_recurring"
+                        value="1"
+                        checked
+                        class="w-4 h-4 mt-1 rounded"
+                    >
+
+                    <div>
+
+                        <p class="text-sm font-medium text-on-surface">
+                            Recurs annually
+                        </p>
+
+                        <p class="text-xs text-secondary mt-1">
+                            AlmaTouch will remember this date every year.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="
+                p-6
+                border-t
+                border-outline-variant/30
+                flex
+                justify-end
+                gap-3
+            ">
+
+                <button
+                    type="button"
+                    onclick="closeAddRememberModal()"
+                    class="px-4 py-2 text-secondary hover:text-on-surface"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="
+                        bg-primary
+                        text-white
+                        px-6
+                        py-2
+                        rounded-xl
+                        font-semibold
+                    "
+                >
+                    Add Remember
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- EDIT REMEMBER MODAL -->
+<!-- ===================================================== -->
+
+<div
+    id="edit-remember-modal"
+    class="
+        fixed
+        inset-0
+        bg-black/40
+        backdrop-blur-sm
+        hidden
+        z-50
+        flex
+        items-start
+        justify-center
+        p-6
+        overflow-y-auto
+    "
+>
+
+    <div class="
+        bg-white
+        rounded-3xl
+        shadow-xl
+        w-full
+        max-w-lg
+        my-6
+    ">
+
+        <form
+            method="POST"
+            id="editRememberForm"
+        >
+
+            <div class="
+                p-6
+                border-b
+                border-outline-variant/30
+            ">
+
+                <h3 class="text-xl font-semibold text-on-surface">
+                    Edit Remember
+                </h3>
+
+                <p class="text-sm text-secondary mt-1">
+                    Update this organization date.
+                </p>
+
+            </div>
+
+
+            <div class="p-6 space-y-5">
+
+                <!-- NAME -->
+
+                <div>
+
+                    <label class="
+                        block
+                        text-sm
+                        font-medium
+                        text-on-surface
+                        mb-2
+                    ">
+                        Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="name"
+                        id="editRememberName"
+                        required
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div>
+
+                    <label class="
+                        block
+                        text-sm
+                        font-medium
+                        text-on-surface
+                        mb-2
+                    ">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="date"
+                        id="editRememberDate"
+                        required
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                </div>
+
+
+                <!-- TYPE -->
+
+                <div>
+
+                    <label class="
+                        block
+                        text-sm
+                        font-medium
+                        text-on-surface
+                        mb-2
+                    ">
+                        Type
+                    </label>
+
+                    <select
+                        name="remember_type"
+                        id="editRememberType"
+                        required
+                        class="
+                            w-full
+                            rounded-xl
+                            border
+                            border-outline-variant
+                            px-4
+                            py-3
+                            focus:outline-none
+                            focus:ring-2
+                            focus:ring-primary/20
+                        "
+                    >
+
+                        <option value="organization_anniversary">
+                            Organization Anniversary
+                        </option>
+
+                        <option value="founders_day">
+                            Founder's Day
+                        </option>
+
+                        <option value="custom">
+                            Custom Date
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- RECURRING -->
+
+                <div class="flex items-start gap-3">
+
+                    <input
+                        type="checkbox"
+                        name="is_recurring"
+                        value="1"
+                        id="editRememberRecurring"
+                        class="w-4 h-4 mt-1 rounded"
+                    >
+
+                    <div>
+
+                        <p class="text-sm font-medium text-on-surface">
+                            Recurs annually
+                        </p>
+
+                        <p class="text-xs text-secondary mt-1">
+                            AlmaTouch will remember this date every year.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="
+                p-6
+                border-t
+                border-outline-variant/30
+                flex
+                justify-end
+                gap-3
+            ">
+
+                <button
+                    type="button"
+                    onclick="closeEditRememberModal()"
+                    class="
+                        px-4
+                        py-2
+                        text-secondary
+                        hover:text-on-surface
+                    "
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="
+                        bg-primary
+                        text-white
+                        px-6
+                        py-2
+                        rounded-xl
+                        font-semibold
+                    "
+                >
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- DELETE REMEMBER MODAL -->
+<!-- ===================================================== -->
+
+<div
+    id="delete-remember-modal"
+    class="
+        fixed
+        inset-0
+        bg-black/40
+        backdrop-blur-sm
+        hidden
+        z-50
+        flex
+        items-center
+        justify-center
+        p-6
+    "
+>
+
+    <div class="
+        bg-white
+        rounded-3xl
+        shadow-xl
+        w-full
+        max-w-md
+        overflow-hidden
+    ">
+
+        <form
+            method="POST"
+            id="deleteRememberForm"
+        >
+
+            <div class="
+                p-6
+                border-b
+                border-outline-variant/30
+            ">
+
+                <h3 class="
+                    text-lg
+                    font-semibold
+                    text-on-surface
+                ">
+                    Delete Remember
+                </h3>
+
+                <p class="text-sm text-secondary mt-1">
+                    This action cannot be undone.
+                </p>
+
+            </div>
+
+
+            <div class="p-6">
+
+                <p class="text-sm text-secondary">
+                    Are you sure you want to remove:
+                </p>
+
+                <p
+                    id="deleteRememberName"
+                    class="
+                        font-semibold
+                        text-on-surface
+                        mt-2
+                    "
+                ></p>
+
+            </div>
+
+
+            <div class="
+                p-6
+                border-t
+                border-outline-variant/30
+                flex
+                justify-end
+                gap-3
+            ">
+
+                <button
+                    type="button"
+                    onclick="closeDeleteRememberModal()"
+                    class="
+                        px-4
+                        py-2
+                        text-secondary
+                        hover:text-on-surface
+                    "
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="
+                        bg-red-500
+                        hover:bg-red-600
+                        text-white
+                        px-6
+                        py-2
+                        rounded-xl
+                        font-semibold
+                    "
+                >
+                    Delete
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ===================================================== -->
+<!-- SCRIPTS -->
+<!-- ===================================================== -->
+
+<script>
+
+function openAddRememberModal() {
+
+    document
+        .getElementById("add-remember-modal")
+        .classList.remove("hidden");
+
+}
+
+
+function closeAddRememberModal() {
+
+    document
+        .getElementById("add-remember-modal")
+        .classList.add("hidden");
+
+}
+
+
+function openEditRememberModal(
+    id,
+    name,
+    date,
+    type,
+    recurring
+) {
+
+    document.getElementById(
+        "editRememberName"
+    ).value = name || "";
+
+    document.getElementById(
+        "editRememberDate"
+    ).value = date || "";
+
+    document.getElementById(
+        "editRememberType"
+    ).value = type || "custom";
+
+    document.getElementById(
+        "editRememberRecurring"
+    ).checked = recurring === true;
+
+    document.getElementById(
+        "editRememberForm"
+    ).action = `/org/remembers/${id}/edit`;
+
+    document
+        .getElementById("edit-remember-modal")
+        .classList.remove("hidden");
+
+}
+
+
+function closeEditRememberModal() {
+
+    document
+        .getElementById("edit-remember-modal")
+        .classList.add("hidden");
+
+}
+
+
+function openDeleteRememberModal(
+    id,
+    name
+) {
+
+    document.getElementById(
+        "deleteRememberName"
+    ).innerText = name || "";
+
+    document.getElementById(
+        "deleteRememberForm"
+    ).action = `/org/remembers/${id}/delete`;
+
+    document
+        .getElementById("delete-remember-modal")
+        .classList.remove("hidden");
+
+}
+
+
+function closeDeleteRememberModal() {
+
+    document
+        .getElementById("delete-remember-modal")
+        .classList.add("hidden");
+
+}
+
+</script>
+
+{% endblock %}
